@@ -1,0 +1,174 @@
+﻿<error errorId="5dbff2ce-8fa2-465d-b88b-c9ae9a6fbc74" application="/LM/W3SVC/2/ROOT" host="ALI-LAPTOP" type="System.InvalidOperationException" message="Multiple types were found that match the controller named 'Home'. This can happen if the route that services this request ('{*url}') does not specify namespaces to search for a controller that matches the request. If this is the case, register this route by calling an overload of the 'MapRoute' method that takes a 'namespaces' parameter.&#xD;&#xA;&#xD;&#xA;The request for 'Home' has found the following matching controllers:&#xD;&#xA;Comision.Ui.Areas.User.Controllers.HomeController&#xD;&#xA;Comision.Ui.Controllers.HomeController" source="System.Web.Mvc" detail="System.InvalidOperationException: Multiple types were found that match the controller named 'Home'. This can happen if the route that services this request ('{*url}') does not specify namespaces to search for a controller that matches the request. If this is the case, register this route by calling an overload of the 'MapRoute' method that takes a 'namespaces' parameter.&#xD;&#xA;&#xD;&#xA;The request for 'Home' has found the following matching controllers:&#xD;&#xA;Comision.Ui.Areas.User.Controllers.HomeController&#xD;&#xA;Comision.Ui.Controllers.HomeController&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.GetControllerTypeWithinNamespaces(RouteBase route, String controllerName, HashSet`1 namespaces)&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.GetControllerType(RequestContext requestContext, String controllerName)&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.System.Web.Mvc.IControllerFactory.GetControllerSessionBehavior(RequestContext requestContext, String controllerName)&#xD;&#xA;   at System.Web.Mvc.MvcRouteHandler.GetSessionStateBehavior(RequestContext requestContext)&#xD;&#xA;   at System.Web.Mvc.MvcRouteHandler.GetHttpHandler(RequestContext requestContext)&#xD;&#xA;   at System.Web.Mvc.MvcRouteHandler.System.Web.Routing.IRouteHandler.GetHttpHandler(RequestContext requestContext)&#xD;&#xA;   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)&#xD;&#xA;   at System.Web.Routing.UrlRoutingModule.OnApplicationPostResolveRequestCache(Object sender, EventArgs e)&#xD;&#xA;   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="stuamol@gamil.com" time="2016-12-25T12:26:04.1163857Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:image/webp,image/*,*/*;q=0.8&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, sdch, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.8&#xD;&#xA;HTTP_COOKIE:_culture=fa-ir; __RequestVerificationToken=eDCKo1swp1zZqP0erLiqyl9fnkGTi5njFsvs4DU-oXDNdYTTqFvngBhL0Afb3ByM3RQElUcUfOVZdusX94b4EQUvFEUgqUB0Y-Hs4T4u3n41; ASP.NET_SessionId=sesfw5slorvb0bxxiily5jlv; comisionLogin=NyHFe4F7124pHeiNud3PQj3dbV7RA23jRSre8Ca_33zEmBzdKnDTPL_142gUZP_85HqHo1wSqATe_ihvkcdrH89Tszz3xAy0c-Ug1bS4pjPTrnlERuoFuxXrngvYpLU1ARVKPXEv0RHasTLmUG9b_otiYi9meWLxvADZN-pP9a0zqvfVbWgfc3fAiMGIPZY3veme0yjuKChfFHUlMTIJCtBHDZmsJ9iSfJxMeat8Mvl6Qj3YlwhYKhiB5xR3Tdews8ER0C45Ijd0dnUGtH_UZp5XyCR0BwfKa7Ts0HoNKmAXIK01sGNU0c3QaKbOz4nOy7CI4iBEPqOJcL2ebClB6hq1SpSbb0q2eUaNskaZe-6uU1wFxcsXAhJRE97rHOwg3Jys8gg58cxr0Svs6MCWpijNHhoPhALzzA_3S-q43UBYhEff0al9NF1rctvVv5jHvFQ2JkuwHNYAX-EOD4-SmcxXoxXH2lwUZ04xaGNqBD0gx1-oLhwEc-ZSq6gMSlSPWijCsJTby41fVx5OOP1Ca-xRvefb6gO2Xe5DT3uEEGJeOG8qwVGP3PrVew0kxNLTTzTi-R7sfKl6p_241Ebzp-3-8XhKBgnMdXDuc9R6WhCYdfG2lcS4J5oMl1mJHBuyFzmh7_iw3nh_UmN3eK75AVlsEFGgqEhZTckKpWtUk43xMdXtGytnDO3gdg3sNFwgQamev161KNyFEosghwjb16VEFK4ZnRmaDYlDbQm5FcGX185VCsBeMIbn0U531awrliTvHJH4152YGZct3UJ8pHuap9jpVgI7Rg2_A-deeGDZu9s7CyPwSvx3gWOqy5hz; ComisionPermission18=permissions=ShowCartable,ConfirmRequest,ReturnRequest,AttachmentCartableShow&#xD;&#xA;HTTP_HOST:localhost:3298&#xD;&#xA;HTTP_REFERER:http://localhost:3298/Personel/Cartable&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: image/webp,image/*,*/*;q=0.8&#xD;&#xA;Accept-Encoding: gzip, deflate, sdch, br&#xD;&#xA;Accept-Language: en-US,en;q=0.8&#xD;&#xA;Cookie: _culture=fa-ir; __RequestVerificationToken=eDCKo1swp1zZqP0erLiqyl9fnkGTi5njFsvs4DU-oXDNdYTTqFvngBhL0Afb3ByM3RQElUcUfOVZdusX94b4EQUvFEUgqUB0Y-Hs4T4u3n41; ASP.NET_SessionId=sesfw5slorvb0bxxiily5jlv; comisionLogin=NyHFe4F7124pHeiNud3PQj3dbV7RA23jRSre8Ca_33zEmBzdKnDTPL_142gUZP_85HqHo1wSqATe_ihvkcdrH89Tszz3xAy0c-Ug1bS4pjPTrnlERuoFuxXrngvYpLU1ARVKPXEv0RHasTLmUG9b_otiYi9meWLxvADZN-pP9a0zqvfVbWgfc3fAiMGIPZY3veme0yjuKChfFHUlMTIJCtBHDZmsJ9iSfJxMeat8Mvl6Qj3YlwhYKhiB5xR3Tdews8ER0C45Ijd0dnUGtH_UZp5XyCR0BwfKa7Ts0HoNKmAXIK01sGNU0c3QaKbOz4nOy7CI4iBEPqOJcL2ebClB6hq1SpSbb0q2eUaNskaZe-6uU1wFxcsXAhJRE97rHOwg3Jys8gg58cxr0Svs6MCWpijNHhoPhALzzA_3S-q43UBYhEff0al9NF1rctvVv5jHvFQ2JkuwHNYAX-EOD4-SmcxXoxXH2lwUZ04xaGNqBD0gx1-oLhwEc-ZSq6gMSlSPWijCsJTby41fVx5OOP1Ca-xRvefb6gO2Xe5DT3uEEGJeOG8qwVGP3PrVew0kxNLTTzTi-R7sfKl6p_241Ebzp-3-8XhKBgnMdXDuc9R6WhCYdfG2lcS4J5oMl1mJHBuyFzmh7_iw3nh_UmN3eK75AVlsEFGgqEhZTckKpWtUk43xMdXtGytnDO3gdg3sNFwgQamev161KNyFEosghwjb16VEFK4ZnRmaDYlDbQm5FcGX185VCsBeMIbn0U531awrliTvHJH4152YGZct3UJ8pHuap9jpVgI7Rg2_A-deeGDZu9s7CyPwSvx3gWOqy5hz; ComisionPermission18=permissions=ShowCartable,ConfirmRequest,ReturnRequest,AttachmentCartableShow&#xD;&#xA;Host: localhost:3298&#xD;&#xA;Referer: http://localhost:3298/Personel/Cartable&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="G:\ALI\Lesson\ComponyProject\Commission\Comision.Ui\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="ApplicationCookie" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="stuamol@gamil.com" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="stuamol@gamil.com" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="stuamol@gamil.com" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Personel/~/Content/Images/Avatars/" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="G:\ALI\Lesson\ComponyProject\Commission\Comision.Ui\Personel\~\Content\Images\Avatars\" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="12951" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Personel/~/Content/Images/Avatars/" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="3298" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/Personel/~/Content/Images/Avatars/" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="image/webp,image/*,*/*;q=0.8" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, sdch, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.8" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="_culture=fa-ir; __RequestVerificationToken=eDCKo1swp1zZqP0erLiqyl9fnkGTi5njFsvs4DU-oXDNdYTTqFvngBhL0Afb3ByM3RQElUcUfOVZdusX94b4EQUvFEUgqUB0Y-Hs4T4u3n41; ASP.NET_SessionId=sesfw5slorvb0bxxiily5jlv; comisionLogin=NyHFe4F7124pHeiNud3PQj3dbV7RA23jRSre8Ca_33zEmBzdKnDTPL_142gUZP_85HqHo1wSqATe_ihvkcdrH89Tszz3xAy0c-Ug1bS4pjPTrnlERuoFuxXrngvYpLU1ARVKPXEv0RHasTLmUG9b_otiYi9meWLxvADZN-pP9a0zqvfVbWgfc3fAiMGIPZY3veme0yjuKChfFHUlMTIJCtBHDZmsJ9iSfJxMeat8Mvl6Qj3YlwhYKhiB5xR3Tdews8ER0C45Ijd0dnUGtH_UZp5XyCR0BwfKa7Ts0HoNKmAXIK01sGNU0c3QaKbOz4nOy7CI4iBEPqOJcL2ebClB6hq1SpSbb0q2eUaNskaZe-6uU1wFxcsXAhJRE97rHOwg3Jys8gg58cxr0Svs6MCWpijNHhoPhALzzA_3S-q43UBYhEff0al9NF1rctvVv5jHvFQ2JkuwHNYAX-EOD4-SmcxXoxXH2lwUZ04xaGNqBD0gx1-oLhwEc-ZSq6gMSlSPWijCsJTby41fVx5OOP1Ca-xRvefb6gO2Xe5DT3uEEGJeOG8qwVGP3PrVew0kxNLTTzTi-R7sfKl6p_241Ebzp-3-8XhKBgnMdXDuc9R6WhCYdfG2lcS4J5oMl1mJHBuyFzmh7_iw3nh_UmN3eK75AVlsEFGgqEhZTckKpWtUk43xMdXtGytnDO3gdg3sNFwgQamev161KNyFEosghwjb16VEFK4ZnRmaDYlDbQm5FcGX185VCsBeMIbn0U531awrliTvHJH4152YGZct3UJ8pHuap9jpVgI7Rg2_A-deeGDZu9s7CyPwSvx3gWOqy5hz; ComisionPermission18=permissions=ShowCartable,ConfirmRequest,ReturnRequest,AttachmentCartableShow" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:3298" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:3298/Personel/Cartable" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="_culture">
+      <value string="fa-ir" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="eDCKo1swp1zZqP0erLiqyl9fnkGTi5njFsvs4DU-oXDNdYTTqFvngBhL0Afb3ByM3RQElUcUfOVZdusX94b4EQUvFEUgqUB0Y-Hs4T4u3n41" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="sesfw5slorvb0bxxiily5jlv" />
+    </item>
+    <item name="comisionLogin">
+      <value string="NyHFe4F7124pHeiNud3PQj3dbV7RA23jRSre8Ca_33zEmBzdKnDTPL_142gUZP_85HqHo1wSqATe_ihvkcdrH89Tszz3xAy0c-Ug1bS4pjPTrnlERuoFuxXrngvYpLU1ARVKPXEv0RHasTLmUG9b_otiYi9meWLxvADZN-pP9a0zqvfVbWgfc3fAiMGIPZY3veme0yjuKChfFHUlMTIJCtBHDZmsJ9iSfJxMeat8Mvl6Qj3YlwhYKhiB5xR3Tdews8ER0C45Ijd0dnUGtH_UZp5XyCR0BwfKa7Ts0HoNKmAXIK01sGNU0c3QaKbOz4nOy7CI4iBEPqOJcL2ebClB6hq1SpSbb0q2eUaNskaZe-6uU1wFxcsXAhJRE97rHOwg3Jys8gg58cxr0Svs6MCWpijNHhoPhALzzA_3S-q43UBYhEff0al9NF1rctvVv5jHvFQ2JkuwHNYAX-EOD4-SmcxXoxXH2lwUZ04xaGNqBD0gx1-oLhwEc-ZSq6gMSlSPWijCsJTby41fVx5OOP1Ca-xRvefb6gO2Xe5DT3uEEGJeOG8qwVGP3PrVew0kxNLTTzTi-R7sfKl6p_241Ebzp-3-8XhKBgnMdXDuc9R6WhCYdfG2lcS4J5oMl1mJHBuyFzmh7_iw3nh_UmN3eK75AVlsEFGgqEhZTckKpWtUk43xMdXtGytnDO3gdg3sNFwgQamev161KNyFEosghwjb16VEFK4ZnRmaDYlDbQm5FcGX185VCsBeMIbn0U531awrliTvHJH4152YGZct3UJ8pHuap9jpVgI7Rg2_A-deeGDZu9s7CyPwSvx3gWOqy5hz" />
+    </item>
+    <item name="ComisionPermission18">
+      <value string="permissions=ShowCartable,ConfirmRequest,ReturnRequest,AttachmentCartableShow" />
+    </item>
+  </cookies>
+</error>

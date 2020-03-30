@@ -1,0 +1,84 @@
+﻿@*@using Comision.Resources*@
+@model Comision.Ui.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="user-login-5">
+    <div class="row bs-reset">
+        <div class="col-md-6 login-container bs-reset">
+            <img class="login-logo login-6" src="~/Content/Images/App/uni-logo.gif" style="width: 72px; height: 100px"/>
+            <div class="login-content">
+
+                <p>سامانه تحت وب کمسیون موارد خاص</p>
+                <h1>ورود به حساب کاربری</h1>
+                <p>جهت ورود به سیستم نام کاربری(آدرس ایمیل) و رمز عبور خود را وارد کنید</p>
+                <p>در صورت نداشتن نام کاربری <a href="@Url.Action(MVC.Account.RegisterUser())">ثبت نام</a> کنید
+                </p>
+                @using (Html.BeginForm(MVC.Account.Login(), FormMethod.Post, new {id = "loginForm", @class = "login-form form-horizontal", role = "form"}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationMessage("InvalidUser", new {@class = "text-danger"})
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = "آدرس ایمیل"})
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.PasswordFor(m => m.Password, new {@class = "form-control", placeholder = "کلمه عبور"})
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Captcha, new {@class = "form-control", style = "margin-top: 5px;", placeholder = "تصویر امنیتی"})
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group pull-left">
+                                <img id="image" class="captcha-image" src="@Url.Action(MVC.Home.Image())" alt="بارگذاری تصویر" />&nbsp;
+                                <a href="#" style="text-decoration: none" class="refresh-captcha fa fa-refresh fa-2x"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="">
+                                <p> مرا بخاطر بسپار !
+                                    <span>@Html.CheckBoxFor(m => m.RememberMe, new {@class = "rem-checkbox"}) </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <div class="forgot-password">
+                                <a href="@Url.Action(MVC.Account.ForgetPassword())">رمز عبور خود را فراموش کردم</a>
+                            </div>
+                            <button class="btn blue" type="submit">ورود</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="login-footer">
+                <div class="row bs-reset">
+                    <div class="col-xs-4 bs-reset">
+                    </div>
+                    <div class="col-xs-8 bs-reset">
+                        <div class="login-copyright text-right">
+                            <p>Copyright &copy; Fekreman 2016</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 bs-reset">
+            <div class="login-bg"> </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $.validator.unobtrusive.parse('#loginForm');
+        
+    </script>
+ 
+}

@@ -1,0 +1,671 @@
+﻿@using Comision.Helper.Utility
+@using Comision.Model.Enum
+@using Comision.Service.Model
+@model Comision.Service.Model.CommissionModel
+@{
+    ViewBag.Title = "ویرایش پرونده کمسیون";
+    //Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/persianDate/css")
+<link href="~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+<link href="~/content/assets/global/plugins/bootstrap-select/css/bootstrap-select-rtl.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/assets/global/plugins/dropzone/dropzone.min.css" rel="stylesheet" type="text/css">
+<link href="~/Content/assets/global/plugins/dropzone/basic.min.css" rel="stylesheet" type="text/css">
+<style>
+    #dropzoneForm {
+        border: 2px dashed #028AF4;
+        background: #fff;
+        padding: 20px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .dropzone .dz-preview .dz-image {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+<style>
+    .dropdown-menu li {
+        font-family: 'tahoma';
+        font-size: 16px;
+    }
+</style>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">خانه</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span> درخواست کمسیون موارد خاص</span>
+        </li>
+    </ul>
+
+    <div style="float: left; margin-top: 4px" class="actions">
+        @Html.SecureActionLink(null, null, null, AccessLevel.AttachmentCommissionShow, "پیوست<i class='fa fa-paperclip'></i>", null, new Dictionary<string, object> { { "class", "btn btn-sm btn-circle purple btn-outline" }, { "onclick", "showDialogAttachment()" }, { "data-toggle", "modal" }, { "href", "javascript:void(0)" } })
+        @*<button type="button" data-target="#attachModal" data-toggle="modal"
+                    class="btn btn-sm btn-circle purple btn-outline">
+                افزودن پیوست
+                <i class="fa fa-paperclip"></i>
+            </button>*@
+        @Html.SecureActionLink(null, null, null, AccessLevel.SendCommissionToCartable, "ارسال به کارتابل<i class='fa fa-share-square'></i>", null, new Dictionary<string, object> { { "class", "btn btn-circle btn-inline green-dark" }, { "data-toggle", "modal" }, { "onclick", "showModalConfirm()" }, { "href", "javascript:void(0)" } })
+        @*<a href="#" onclick="showModalConfirm();" class="btn btn-circle btn-inline green-dark" data-toggle="modal">
+                ارسال به کارتابل
+                <i class="fa fa-share-square"></i>
+            </a>*@
+        <a href="@Url.Action(MVC.Personel.Request.Index())" type="button"
+           class="btn btn-sm btn-circle yellow btn-outline">
+            <i class="fa fa-undo"></i>
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase">ویرایش درخواست کمسیون</span>
+                </div>
+                <button type="button" style="float: left" class="btn default" onclick="ClearEdit();">انصراف</button>
+                @Html.SecureActionLink(null, null, null, AccessLevel.UpdateCommission, "<i class='fa fa-save'></i> ذخیره", null, new Dictionary<string, object> { { "class", "btn btn-inline blue" }, { "style", "float: left" }, { "onclick", "editRequest()" }, { "href", "javascript:void(0)" } })
+                @*<button type="button" style="float: left" class="btn blue" onclick="editRequest();">ذخیره</button>*@
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm(MVC.Personel.Commission.Update(), FormMethod.Post, new { id = "requestform", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                {
+                    <div class="form-body">
+                        @*<div class="form-group">
+                                    @Html.LabelFor(m => m.CommissionNumber, new { @class = "col-md-2 control-label" })
+                                    <div class="col-md-2">
+                                        <div class="input-icon">
+                                            @Html.TextBoxFor(m => m.CommissionNumber, new { @class = "form-control", style = "max-width: none" })
+                                        </div>
+                                    </div>
+                                    @Html.LabelFor(m => m.Date, new { @class = "col-md-2 control-label" })
+                                    <div class="col-md-2">
+                                        <div class="input-icon">
+                                            @Html.EditorFor(m => m.Date, new { @class = "form-control", style = "max-width: none;height:100px" })
+                                        </div>
+                                    </div>
+                            </div>*@
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr style="font-size: 10px">
+                                    @*<th class="numeric" width="25%" style="font-size: 12px"> @Html.LabelFor(m => m.CommissionNumber, new { @class = "col-md-1 control-label" }) </th>*@
+                                    <th width="25%" style="font-size: 12px"> @Html.LabelFor(m => m.Date, new { @class = "col-md-1 control-label" }) </th>
+                                    <th class="numeric" width="25%" style="font-size: 12px"> شماره دانشجویی </th>
+                                    <th width="25%" style="font-size: 12px">  </th>
+                                    <th width="25%" style="font-size: 12px">  </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="numeric">
+                                        @Html.EditorFor(m => m.Date, new { @class = "form-control", style = "max-width: none;height:100px" })
+                                        @Html.HiddenFor(m => m.CommissionNumber)
+                                        @*  @Html.TextBoxFor(m => m.CommissionNumber, new { @class = "form-control", style = "max-width: none" })*@
+                                    </td>
+                                    <td class="numeric">
+                                        @Html.TextBoxFor(m => m.StudentNumber, new { id = "txtStudentNumber", @class = "form-control" })
+                                    </td>
+                                    <td>
+                                        @Html.SecureActionLink(null, null, null, AccessLevel.SaveStudentProfile, "<i class='fa fa-plus'> اضافه کردن اطلاعات دانشجوی جدید  </i>", null, new Dictionary<string, object>
+                                    {{"class", "btn btn-icon grey-cascade"}, {"href", "javascript:void(0)"}, {"data-toggle", "modal"}, {"onclick", "showModalProfile()"}})
+
+                                    </td>
+                                    <td>
+                                  
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <thead class="flip-content">
+                                <tr style="font-size: 10px">
+                                    <th width="25%" style="font-size: 12px"> نام و نام خانوادگی </th>
+                                    <th class="numeric" width="25%" style="font-size: 12px"> شماره ملی </th>
+                                    <th width="25%" style="font-size: 12px"> جنسیت </th>
+                                    <th class="" width="25%" style="font-size: 12px"> نظام وظیفه </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Id)
+                                        @Html.HiddenFor(m => m.PersonId, new { id = "txtPersonId" })
+                                        @Html.HiddenFor(m => m.RequestType)
+                                        @Html.HiddenFor(m => m.RequestStatus)
+                                        @Html.HiddenFor(m => m.FieldofStudyId)
+                                        @Html.TextBoxFor(m => m.NameFamily, new { @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td class="numeric">
+                                        @Html.TextBoxFor(m => m.NationalCode, new { id = "txtNationalCode", @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.GenderString, new { id = "txtGender", @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td class="">
+                                        @Html.TextBoxFor(m => m.MilitaryServiceStatusString, new { id = "txtMilitaryServiceStatus", @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <thead class="flip-content">
+                                <tr style="font-size: 10px">
+                                    <th width="25%" style="font-size: 12px"> رشته تحصیلی </th>
+                                    <th class="" width="25%" style="font-size: 12px"> مقطع تحصیلی </th>
+                                    <th class="numeric" width="25%" style="font-size: 12px"> تعداد واحد گذرانده </th>
+                                    <th class="numeric" width="25%" style="font-size: 12px"> تعداد واحد باقیمانده </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="">
+                                        @Html.TextBoxFor(m => m.FieldofStudy, new { id = "txtFieldofStudy", disabled = "disabled", @class = "form-control", })
+                                    </td>
+                                    <td class="">
+                                        @Html.TextBoxFor(m => m.GradeString, new { id = "txtGrade", @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td class="numeric">
+                                        @Html.TextBoxFor(m => m.NumberofSpentUnits, new { @class = "form-control" })
+                                    </td>
+                                    <td class="numeric">
+                                        @Html.TextBoxFor(m => m.NumberofRemainingUnits, new { @class = "form-control" })
+                                        @*<input class="form-control" placeholder="">*@
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th width="50%"> موارد خاص آموزشی </th>
+                                    <th width="50%">توضیحات </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div id="dlSpecialEducation"></div>
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "10" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="modalConfirm" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">تایید و ارسال</h4>
+            </div>
+            <div class="modal-body">
+                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                <div class="form-group">
+                    @Html.TextArea("Description", new {id = "ConfirmDescription", @class = "form-control", rows = "2"})
+                    @*<input class="form-control" type="text" data-tabindex="1">*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                <button id="btnConfirm" type="button" data-dismiss="modal" class="btn green" onclick="SendToCartable();">تایید و ارسال</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="attachModal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">افزودن پیوست</h4>
+            </div>
+            <div class="modal-body">
+                <p> پیوست های مربوط به درخواست خود را در این فرم ثبت نمائید</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="@Url.Action(MVC.Personel.Commission.SaveUploadFiles())" method="post" enctype="multipart/form-data" class="dropzone dropzone-file-area dz-clickable" id="dropzoneForm">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple/>
+                                <input type="submit" value="Upload"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div id="modalProfile" class="modal fade bs-modal-lg in" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; padding-right: 17px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="btnCloseModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">ثبت اطلاعات دانشجو</h4>
+            </div>
+            <div id="dataModalProfile" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn blue" onclick="SaveStudent();">ذخیره</button>
+                <a href='javascript:void(0);' class="btn default" onclick="">انصراف</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div id="dialogSelectText">
+
+</div>
+<div id="modalAttachment" class="easyui-dialog" modal="true" style="width: 900px; height: 500px;" closed="true">
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/PersianDate")
+    <script src="~/content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/content/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/dropzone/dropzone.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/pages/scripts/form-dropzone.min.js" type="text/javascript"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var chub = $.connection.cartableHub;
+        $.connection.hub.logging = true;
+
+        chub.client.reloadRequest = function() {
+            $('#dgRequest').datalist('reload');
+        };
+        $.connection.hub.start().done(function() {
+            $('#btnConfirm').click(function() {
+                var requestId = Number($('#Id').val());
+                if (requestId <= 0) {
+                    mynotification('کمیسیون مورد نظر معتبر نمی باشد!', 'ruby');
+                    return $(this).form('validate');
+                }
+                var desc = $("#ConfirmDescription").val();
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.ajax({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Commission.SendCommissionToCartable(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: { requestId: requestId, rowNumber: 1, description: desc,fieldofStudyId:$("#FieldofStudyId").val() },
+                    success: function(result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            chub.server.addNewCartableNotification().done(function() {
+                                mynotification(result.Message, 'lime');
+                                var url = '@Url.Action(MVC.Personel.Request.Index())';
+                                window.location.href = url;
+                            });
+                        }
+                    },
+                    error: function(xhr, status) {
+                        $.unblockUI();
+                        alert(xhr.responseText());
+                    }
+                });
+                return $(this).form('validate');
+            });
+        });
+
+        $('#requestform').ajaxForm();
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        function showModalProfile() {
+            var studentNumber = Number($('#txtStudentNumber').val());
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Commission.GetStudentProfile(), "http")',
+                type: 'get',
+                datatype: 'html',
+                data: { studentNumber: studentNumber,requestType:@((int)RequestType.Comision) },
+                success: function (data) {
+                    $.unblockUI();
+                    $('#dataModalProfile').html(data);
+                    $('#modalProfile').modal('show');
+                },
+                error: function (xhr, status) {
+                    ClearStudent();
+                    $.unblockUI();
+                    mynotification("خطا در عملیات", 'ruby');
+                }
+            });
+        }
+
+        $('#dlSpecialEducation').datalist(
+        {
+            fit: true,
+            loadMsg: 'شکیبا باشید...',
+            singleSelect: false,
+
+            valueField: 'id',
+            checkbox: true,
+            lines: true,
+            queryParams: { requestId: Number($('#Id').val()) },
+            url: '@Url.Action(MVC.Personel.Commission.GetListSpecialEducationforRequest())',
+            onLoadSuccess: function(data) {
+                for (var i = 0; i < data.rows.length; ++i) {
+                    if (data.rows[i]['checked'] === true) {
+                        $(this).datalist('checkRow', i);
+                    }
+                }
+            }
+        });
+
+        $("#txtStudentNumber").blur(function() {
+            var studentNumber = Number(this.value);
+            GetStudent(studentNumber);
+        });
+
+        function GetStudent(studentNumber) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Account.IsStudentExist(), "http")',
+                type: 'post',
+                datatype: 'json',
+                data: { studentNumber: studentNumber,requestType:@((int)RequestType.Comision) },
+                success: function (data) {
+                    $.unblockUI();
+                    if (data.IsError) {
+                        mynotification(data.Message, 'ruby');
+                        ClearStudent();
+                    } else {
+                        $("#txtStudentNumber").val(data.Data.StudentNumber);
+                        $("#txtPersonId").val(data.Data.PersonId);
+                        $("#NameFamily").val(data.Data.Name);
+                        $("#txtNationalCode").val(data.Data.NationalCode);
+                        $('#txtFieldofStudy').val(data.Data.FieldofStudyString);
+                        $('#FieldofStudyId').val(data.Data.FieldofStudyId);
+                        $("#txtGender").val(data.Data.GenderString);
+                        $("#txtGrade").val(data.Data.GradeString);
+                        $("#NumberofRemainingUnits").val(data.Data.NumberofRemainingUnits);
+                        $("#NumberofSpentUnits").val(data.Data.NumberofSpentUnits);
+                        $("#txtMilitaryServiceStatus").val(data.Data.MilitaryServiceStatusString);
+                    }
+                },
+                error: function (xhr, status) {
+                    ClearStudent();
+                    $.unblockUI();
+                    mynotification("خطا در لود اطلاعات دانشجویی!", 'ruby');
+                }
+            });
+        }
+        function ClearStudent() {
+            //$("#StudentNumber").val("");
+            $("#txtPersonId").val(0);
+            $("#NameFamily").val("");
+            $("#txtNationalCode").val("");
+            $("#txtFieldofStudy").val("");
+            $('#FieldofStudyId').val(0);
+            //$("#RequestType").val(0);
+            //$("#RequestStatus").val(0);
+            $("#txtGender").val("");
+            $("#txtGrade").val("");
+            $("#NumberofRemainingUnits").val("");
+            $("#NumberofSpentUnits").val("");
+            $("#txtMilitaryServiceStatus").val("");
+        }
+
+        function showModalConfirm() {
+            var requestId = $('#Id').val();
+            if (requestId <= 0) {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            $("#ConfirmDescription").val("");
+            $('#modalConfirm').modal('show');
+        }
+
+        function SaveStudent() {
+            if (Number($('#StudentNumber').val())<=0 ) {
+                mynotification('لطفا شماره دانشجویی را وارد کنید!', 'ruby');
+                return $(this).form('validate');
+            }
+            if ($('#cmbFieldofStudy').val() < 0) {
+                mynotification('لطفا رشته تحصیلی را وارد کنید!', 'ruby');
+                return $(this).form('validate');
+            }
+            if ($('#saveStudentProfile').valid()) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $('#saveStudentProfile').ajaxSubmit({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Commission.SaveStudentProfile(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    //data: { special: strSpecialEducation },
+                    success: function (result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            mynotification(result.Message, 'lime');
+                            GetStudent($("#StudentNumber").val());
+                            $('#btnCloseModal').click();
+                        }
+                    },
+                    error: function (xhr, status) {
+                        $.unblockUI();
+                        mynotification("خطا در ثبت اطلاعات دانشجویی!", 'ruby');
+                    }
+                });
+            } else {
+                mynotification('خطا در ورود اطلاعات.', 'ruby');
+                return $(this).form('validate');
+            }
+            return $(this).form('validate');
+        }
+
+        function editRequest() {
+            if (Number($('#Id').val()) <= 0) {
+                mynotification('کمیسیون مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            //if (Number($('#CommissionNumber').val()) < 0) {
+            //    mynotification('لطفا شماره کمیسیون را درست وارد کنید!', 'ruby');
+            //    return $(this).form('validate');
+            //}
+            if (Number($('#txtPersonId').val()) <= 0) {
+                mynotification('کمیسیون مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            //if (Number($('#StudentNumber').val()) <= 0) {
+            //    mynotification('لطفا شماره دانشجویی را درست وارد کنید!', 'ruby');
+            //    return $(this).form('validate');
+            //}
+            //if (Number($('#NationalCode').val()) <= 0) {
+            //    mynotification('لطفا شماره ملی را بصورت عددی وارد کنید!', 'ruby');
+            //    return $(this).form('validate');
+            //}
+            var specialEducations = {
+                lineas: []
+            };
+            var strSpecialEducation = "";
+            var specialEducation;
+            var row = $('#dlSpecialEducation').datalist('getChecked');
+            if (row.length < 1) {
+                mynotification('لطفا موارد خاص آموزشی را انتخاب کنید!', 'ruby');
+                return $(this).form('validate');
+            }
+            for (var i = 0; i < row.length; i++) {
+                specialEducation = row[i];
+                specialEducations.lineas.push({
+                    "Id": specialEducation.value,
+                    "Name": specialEducation.text
+                });
+                strSpecialEducation =
+                    strSpecialEducation +
+                    specialEducation.value + "," +
+                    specialEducation.text + "&";
+                @*@Model.CommissionSpecialEducations.Add(new CommissionSpecialEducation() {CommissionId = Convert.ToInt64(Model.Id),SpecialEducationId = specialEducation.id })*@
+            }
+            if ($('#requestform').valid()) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $('#requestform').ajaxSubmit({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Commission.Update(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: { special: strSpecialEducation },
+                    success: function(result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            mynotification(result.Message, 'lime');
+                            @*var url = '@Url.Action(MVC.Personel.Request.Index())';
+                            window.location.href = url;*@
+                        }
+                    },
+                    error: function(xhr, status) {
+                        $.unblockUI();
+                        mynotification("خطا در ثبت اطلاعات دانشجویی!", 'ruby');
+                    }
+                });
+            } else {
+                mynotification('خطا در ورود اطلاعات.', 'ruby');
+                return $(this).form('validate');
+            }
+            return $(this).form('validate');
+        }
+
+        function showDialogAttachment() {
+            var requestId = $('#Id').val();
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Commission.Attachment())',
+                dataType: 'html',
+                data: {requestId : requestId },
+                type: 'get',
+                success: function (result) {
+                    $('#modalAttachment').html(result);
+                    $('#modalAttachment').dialog('open').dialog('setTitle', 'مدیریت پیوست');
+                    $('#modalAttachment').dialog('center');
+                },
+                error: function () {
+                    mynotification("خطا در بازیابی اطلاعات پیوست!", 'ruby');
+                }
+            });
+        }
+    </script>
+    @*<script>
+        Dropzone.options.dropzoneForm = {
+            maxFilesize: 2, // MB
+            thumbnailWidth: 50,
+            thumbnailHeight: 50,
+            addRemoveLinks: true,
+            acceptedFiles: ".jpeg,.jpg,.png,.pdf,.doc,.docx,.xls,.xlsx",
+            dictDefaultMessage: "پیوست های خود را در این کادر رها کنید و یا اینکه کلیک نمائید و فایل های خود را انتخاب نمائید",
+            init: function() {
+                var thisDropzone = this;
+                this.on("sending", function(file, xhr, formData) {
+                    formData.append("requestId", @Model.Id);
+                }),
+                    this.on("complete", function(data) {
+                        //var res = eval('(' + data.xhr.responseText + ')');
+                        var res = JSON.parse(data.xhr.responseText);
+                    }),
+                    loadFiles(thisDropzone);
+            },
+            removedfile: function(file) {
+                $('#attachModal').modal('hide');
+                $.messager.confirm('confirm', 'حذف شود؟', function(r) {
+                    if (r) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action(MVC.Personel.Commission.DeleteFile())',
+                            data: "id=" + file.name,
+                            dataType: 'json',
+                            success: function(result) {
+                                if (result.isError) {
+                                    $('#attachModal').modal('show');
+                                    mynotification(result.Message, 'ruby');
+                                } else {
+                                    $('#attachModal').modal('show');
+                                    mynotification(result.Message, 'lime');
+                                }
+                            },
+                            error: function(xhr, status) {
+                                $('#attachModal').modal('show');
+                                $.unblockUI();
+                                mynotification('خطای سیستمی! لطفا با پشتیبانی شرکت تماس حاصل فرمائید', 'lime');
+                            }
+                        });
+                        var _ref;
+                        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                    } else {
+                        $('#attachModal').modal('show');
+                        return;
+                    }
+                });
+
+            },
+            openfile: function(file) {},
+            accept: function(file, done) {
+                var thumbnail = $('.dropzone .dz-preview.dz-file-preview .dz-image:last');
+                switch (file.type) {
+                    case 'application/pdf':
+                        thumbnail.css('background', 'url(/content/images/App/pdf.png');
+                        break;
+                    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                        thumbnail.css('background', 'url(/content/images/App/word.png');
+                    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                        thumbnail.css('background', 'url(/content/images/App/excel.png');
+                        break;
+                }
+                done();
+            }
+        };
+
+        function loadFiles(dropzone) {
+            $.getJSON("@Url.Action(MVC.Personel.Commission.GetAttachments(Model.Id))").done(function(data) {
+                if (data.Data != '') {
+                    $.each(data.Data, function(index, item) {
+                        //// Create the mock file:
+                        var mockFile = {
+                            name: item.FileName,
+                            size: item.Size,
+                            extention: item.Extention
+                        };
+                        // Call the default addedfile event handler
+                        dropzone.emit("addedfile", mockFile);
+
+                        // And optionally show the thumbnail of the file:
+                        dropzone.emit("thumbnail", mockFile,
+                            mockFile.extention === '.doc' || mockFile.extention === '.docx' ? "/Content/Images/App/word.png"
+                            : mockFile.extention === '.pdf' ? "/Content/Images/App/pdf.png"
+                            : mockFile.extention === '.xls' || mockFile.extention === '.xlsx' ? "/Content/Images/App/excel.png"
+                            : mockFile.extention === '.jpg' || mockFile.extention === '.jpeg' || mockFile.extention === '.png' ? "/Content/Images/App/image.png"
+                            : "/Content/Images/App/attach_document.png");
+
+                    });
+                }
+                $(".dz-progress").remove();
+            });
+        }
+    </script>*@
+
+}

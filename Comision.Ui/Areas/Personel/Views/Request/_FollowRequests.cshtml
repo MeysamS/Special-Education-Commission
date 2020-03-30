@@ -1,0 +1,92 @@
+﻿@using Comision.Model.Enum
+@using Comision.Utility
+@model IEnumerable<Comision.Model.Domain.Request>
+@{
+    var person = @Model.FirstOrDefault()?.Person;
+    string namefamily = person?.Profile.Name + " " + person?.Profile.Family;
+    string filedofstudy = person?.Student.FieldofStudy.OrganizationStructureName.Name;
+    string avatar = person?.Profile.Avatar;
+}
+
+<div class="portlet blue-hoki box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>اطلاعات دانشجو
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row static-info">
+                    <div class="col-md-5 name"> نام دانشجو: </div>
+                    <div class="col-md-7 value"> @namefamily </div>
+                </div>
+                <div class="row static-info">
+                    <div class="col-md-5 name"> رشته تحصیلی: </div>
+                    <div class="col-md-7 value"> @filedofstudy </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img class="todo-userpic" src="@Url.Content("~/Content/Images/Avatars/" + avatar)" width="64px" height="64px">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div  class="timeline">
+    @foreach (var item in Model)
+    {
+        if (item.RequestType == RequestType.Comision)
+        {
+            <a href="javascript:;" data-id="@item.Id" class="icon-btn"> 
+                <i class="fa fa-folder-open-o"></i>
+                <div> پرونده شماره @item.Commission.CommissionNumber </div>
+                <div> تاریخ @item.CreatedDate.ToPeString() </div>
+                <span class="badge badge-primary"> کمسیون </span>
+            </a>
+        }
+        else
+        {
+            <a href="javascript:;" data-id="@item.Id" class="icon-btn">
+                <i class="fa fa-folder-open"></i>
+                <div> پرونده شماره @item.Council.CouncilNumber </div>
+                <div>تاریخ @item.CreatedDate.ToPeString() </div>
+                <span class="badge badge-success"> شورا </span>
+            </a>
+        }
+
+    }
+
+    <div id="dvRequestFollow"></div>
+</div>
+
+<script>
+    $('a.icon-btn').click(function () {
+
+        $(this).parent().each(function() {
+            $(this).find(".icon-btn").css('background-color', '#fafafa');
+        })
+        $(this).css('background-color', 'yellowgreen');
+
+        $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+        $.ajax({
+            cashe: false,
+            url: '@Url.Action(MVC.Personel.Request.GetFollowByRequestId())',
+            type: 'get',
+            dataType: 'html',
+            data: { reqId: $(this).attr("data-id") },
+            success: function (result) {
+                $.unblockUI();
+                $('#dvRequestFollow').html(result);
+            },
+            error: function (xhr, status) {
+                $.unblockUI();
+            }
+        });
+    });
+
+
+
+</script>
+

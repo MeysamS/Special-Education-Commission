@@ -1,0 +1,299 @@
+﻿@model Comision.Service.Model.AuthenticationModel
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <span>مدیریت احراز هویت</span>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> مدیریت احراز هویت</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="tabbable-line">
+                        <ul class="nav nav-tabs ">
+                            <li id="li1" class="active">
+                                <a href="#tab_1" data-toggle="tab" aria-expanded="true"> روش ورود اطلاعات</a>
+                            </li>
+                            <li id="li2">
+                                <a href="#tab_2" data-toggle="tab">  روش انتخاب فایل اکسل </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                <!-- BEGIN FORM-->
+                                @using (Html.BeginForm(MVC.Admin.Authentication.AddorUpdate(), FormMethod.Post, new { id = "addAuthenticationForm", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                                {
+                                    @Html.HiddenFor(f => f.Id)
+                                    @*<form class="form-horizontal" role="form">*@
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">کد شناسایی</label>
+                                            <div class="col-md-4">
+                                                <div class="input-icon">
+                                                    @Html.TextBoxFor(m => m.IdentityCode, new { @class = "form-control", placeholder = "کد شناسایی" })
+                                                    @*<input class="form-control" placeholder="">*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">سطح احراز هویت</label>
+                                            <div class="col-md-4">
+                                                <div class="input-icon">
+                                                    @Html.DropDownListFor(m => m.AuthenticationType, ViewData["AuthenticationType"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "ddlAuthenticationType1", @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="button" class="btn blue" onclick="saveAuthentication();">ذخیره</button>
+                                            <button type="button" class="btn default" onclick="ClearEdit();">انصراف</button>
+                                        </div>
+                                    </div>
+                                    @*</form>*@
+                                }
+                                <!-- END FORM-->
+                            </div>
+                            <div class="tab-pane" id="tab_2">
+                                @using (Html.BeginForm(MVC.Admin.Authentication.FileUpload(), FormMethod.Post, new { id = "FileUploadform", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                                {
+                                    <div class="form-body">
+                                        <div class="note note-success">
+                                            فایل اکسل حداقل باید حاوی یک ستون با عنوان باشد.
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">انتخاب فایل</label>
+                                            <div class="col-md-4">
+                                                <div class="input-icon">
+                                                    <input type="file" id="excelFile" name="excelFile" class="form-control" accept=".xls,.xlsx" style="width: 100%" placeholder="انتخاب فایل"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">نوع کاربر</label>
+                                            <div class="col-md-4">
+                                                <div class="input-icon">
+                                                    @Html.DropDownListFor(model => model.AuthenticationType, ViewData["AuthenticationType"] as IEnumerable<SelectListItem>, "---انتخاب---", new {id = "ddlAuthenticationType2", @class = "form-control", placeholder = "انتخاب نوع کاربر"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="button" class="btn blue" onclick="FileUpload();">انتقال</button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="form-section">کدهای شناسایی ثبت شده</h3>
+                <div id="dgAuthentication">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        $('#dgAuthentication').datagrid(
+        {
+            fit: true,
+            idField: 'Id',
+            loadMsg: 'شکیبا باشید...',
+            rownumbers: true,
+            height: 480,
+            singleSelect: true,
+            fitColumns: true,
+            pagination: true,
+            pagePosition: 'bottom',
+            striped: 'true',
+            pageSize: 10,
+            url: '@Url.Action(MVC.Admin.Authentication.GetAuthentication())',
+            saveUrl: '@Url.Action("", "")',
+            updateUrl: '@Url.Action("", "")',
+            destroyUrl: '@Url.Action("", "")',
+            onSuccess: function (index, row) {
+
+            },
+            onError: function (index, row) {
+
+                $(this).datagrid('cancelEdit', index);
+                $(this).datagrid('reload');
+            },
+            columns: [
+                [
+                    { field: 'Id', width: 300, hidden: 'hidden', editor: { type: 'validatebox', width: 300 } },
+                    { field: 'AuthenticationTypeId', width: 300, hidden: 'hidden', editor: { type: 'validatebox', width: 300 } },
+                    { field: 'IdentityCode', title: 'کد شناسایی(کد ملی)', width: 300, editor: { type: 'validatebox', width: 300, options: { required: true } } },
+                    { field: 'AuthenticationType', title: 'سطح احراز هویت', width: 300, editor: { type: 'validatebox', width: 300, options: { required: true } } },
+                    {
+                        field: 'Active', title: 'فعال/غیر فعال', width: 100, align: 'center',
+                        formatter: function (value, rows, index) {
+                            return value ? '<input class="colored-success" checked="checked" type="checkbox" disabled="disabled"/><span class="text"></span>'
+                                : '<input type="checkbox" disabled="disabled"/><span class="text"></span>';
+                        }
+                    },
+                    {
+                        field: 'Action', title: 'عملیات', width: 100, align: 'center',
+                        formatter: function (value, rows, index) {
+                            return '<a href="javascript:void(0)"  onclick="deleteAuthentication(' + rows.Id + ',' + rows.Active + ')">' +
+                                '<img class="delete"  src="/content/jquery-easyui-1.4.2/themes/icons/cancel.png"/></a>' +
+                                '<a  href="javascript:void(0)" onclick="editAuthentication(' + index + ')">' +
+                                '<img src="/content/jquery-easyui-1.4.2/themes/icons/pencil.png" title="ویرایش"/></a>&nbsp&nbsp&nbsp';
+                        }
+                    }
+                ]
+            ]
+        });
+        var pager = $('#dgAuthentication').datagrid('getPager');
+        $(pager).pagination({
+            pageSize: 10,
+            showPageList: true,
+            pageList: [10, 20, 50],
+            beforePageText: 'صفحه',
+            afterPageText: 'از {pages}',
+            displayMsg: 'نمایش اطلاعات  {from} تا {to} از {total}'
+        });
+
+        function ClearEdit() {
+            $('#IdentityCode').val("");
+            $('#Id').val(0);
+            $('#ddlAuthenticationType1').val(0);
+        }
+
+        function editAuthentication(rowIndex) {
+            $('#li2').removeClass("active");
+            $('#li1').addClass("active");
+
+            $('#tab_2').removeClass("in active");
+            $('#tab_1').addClass("in active");
+
+            $("#dgAuthentication").datagrid("selectRow", rowIndex);
+            var data = $("#dgAuthentication").datagrid("getSelected");
+            $('#IdentityCode').val(data.IdentityCode);
+            $('#Id').val(data.Id);
+            $('#ddlAuthenticationType1').val(data.AuthenticationTypeId);
+        }
+        function saveAuthentication() {
+            if ($('#ddlAuthenticationType1').val() === "") {
+                mynotification("لطفا سطح احراز هویت را انتخاب کنید!", 'ruby');
+                return;
+            }
+            if ($('#addAuthenticationForm').valid()) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $('#addAuthenticationForm').ajaxSubmit({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Admin.Authentication.AddorUpdate(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: $('#addAuthenticationForm').serialize(),
+                    success: function (result) {
+                        $.unblockUI();
+                        if (!result.IsError) {
+                            $('#dgAuthentication').datagrid('reload');
+                            ClearEdit();
+                            mynotification(result.Message, 'lime');
+                        } else {
+                            mynotification(result.Message, 'ruby');
+                        }
+                    },
+                    error: function (xhr, status) {
+                        $.unblockUI();
+                        var response = xhr.responseText.match(/.*<body.*>([\s\S]*)<\/body>.*/);
+                        mynotification(response, 'ruby');
+                    }
+                });
+            } else {
+                $.unblockUI();
+                return $(this).form('validate');
+            }
+        }
+
+        function deleteAuthentication(id, active) {
+            if (id === null) {
+                mynotification("خطا در حذف رکورد مورد نظر!", 'ruby');
+                return;
+            }
+            if (active === true) {
+                mynotification("این رکورد قابل حذف نمی باشد!", 'ruby');
+                return;
+            }
+            $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+                if (r) {
+                    $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                    $.post('@Url.Action(MVC.Admin.Authentication.Delete(), "http")', { id: id }, function (result) {
+                        $.unblockUI();
+                        if (!result.IsError) {
+                            $('#dgAuthentication').datagrid('reload');
+                            mynotification(result.Message, 'lime');
+                        }
+                        else
+                            mynotification(result.Message, 'ruby');
+                    }, 'json');
+                }
+            });
+        }
+
+        $('input[type=file]').change(function (e) {
+            ValidateFileUpload(this, 1000000, ['xls', 'xlsx']);
+        });
+
+        function FileUpload() {
+            if ($('#ddlAuthenticationType2').val() === "") {
+                mynotification("لطفا نوع کاربر را انتخاب کنید!", 'ruby');
+                return;
+            }
+            if ($('#FileUploadform').valid()) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $('#FileUploadform').ajaxSubmit({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Admin.Authentication.FileUpload(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: $('#FileUploadform').serialize(),
+                    success: function (result) {
+                        $.unblockUI();
+                        if (!result.IsError) {
+                            $('#dgAuthentication').datagrid('reload');
+                            $('#excelFile').val("");
+                            $('#ddlAuthenticationType2').val(0);
+                            mynotification(result.Message, 'lime');
+                        }
+                        else
+                            mynotification(result.Message, 'ruby');
+                    },
+                    error: function (xhr, status) {
+                        $.unblockUI();
+                        mynotification(xhr.responseText(), 'ruby');
+                    }
+                });
+            } else {
+                $.unblockUI();
+                return $(this).form('validate');
+            }
+        }
+    </script>
+}
+
+
+
+

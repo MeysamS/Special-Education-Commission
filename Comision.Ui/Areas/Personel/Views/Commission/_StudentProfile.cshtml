@@ -1,0 +1,107 @@
+﻿@model Comision.Service.Model.StudentProfileModel
+
+@using (Html.BeginForm(MVC.Personel.Commission.SaveStudentProfile(), FormMethod.Post, new { id = "saveStudentProfile", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+{
+    @Html.HiddenFor(m => m.PersonId, new { id = "PersonId" })
+    <div class="form-group">
+        @Html.LabelFor(x => x.StudentNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.StudentNumber, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+        @Html.LabelFor(x => x.NationalCode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.NationalCode, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+        @Html.LabelFor(x => x.Family, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.Family, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Gender, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                <div class="icheck-inline">
+                    @Html.DropDownListFor(m => m.Gender, TempData["Gender"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "cmbGender", @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        @Html.LabelFor(x => x.MilitaryServiceStatus, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.DropDownListFor(m => m.MilitaryServiceStatus, TempData["MilitaryServiceStatus"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "cmbMilitaryServiceStatus", @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Grade, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.DropDownListFor(m => m.Grade, TempData["Grade"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "cmbGrade", @class = "form-control" })
+            </div>
+        </div>
+        @Html.LabelFor(x => x.FieldofStudyId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.DropDownListFor(m => m.FieldofStudyId, TempData["FieldofStudy"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "cmbFieldofStudy", @class = "form-control" })
+            </div>
+        </div>
+    </div>
+        @*<hr />
+        <div class="form-group">
+            <div class="col-md-2"> </div>
+            <button type="button" class="btn blue" onclick="SaveStudent();">ذخیره</button>
+            <a href='javascript:void(0);' class="btn default" onclick="">انصراف</a>
+        </div>*@
+}
+
+<script>
+    $(document).ready(function () {
+        var value = $('#cmbGender').val();
+        if (value === '2') {
+            $("#cmbMilitaryServiceStatus").prop("disabled", true);
+        } else {
+            $("#cmbMilitaryServiceStatus").prop("disabled", false);
+        }
+    });
+
+    $('#cmbGender').change(function () {
+        var value = $(this).val();
+        if (value === '2') {
+            $('#cmbMilitaryServiceStatus').val('5');
+            $("#cmbMilitaryServiceStatus").prop("disabled", true);
+        } else {
+            $('#cmbMilitaryServiceStatus').val('');
+            $("#cmbMilitaryServiceStatus").prop("disabled", false);
+        }
+    });
+
+    function ClearStudentProfile() {
+        //$("#StudentNumber").val("");
+        $("#PersonId").val(0);
+        $("#Name").val("");
+        $("#Family").val("");
+        $("#NationalCode").val("");
+        $("#cmbFieldofStudyId").selectpicker('val', 0);
+        $("#cmbGender").val(0);
+        $("#cmbGrade").val(0);
+        $("#NumberofRemainingUnits").val("");
+        $("#NumberofSpentUnits").val("");
+        $("#cmbMilitaryServiceStatus").val(0);
+    }
+</script>
+

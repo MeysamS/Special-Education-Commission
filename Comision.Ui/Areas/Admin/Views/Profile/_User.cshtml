@@ -1,0 +1,85 @@
+﻿@model Comision.Service.Model.UserModel
+
+@using (Html.BeginForm(MVC.Admin.Profile.SaveUser(), FormMethod.Post, new { id = "saveUser", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+{
+    @Html.HiddenFor(m => m.PersonId, new { id = "PersonId4" })
+    <div class="form-group">
+        @Html.LabelFor(x => x.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+        @Html.LabelFor(x => x.EmailConfirmed, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            <div class="input-icon">
+                @Html.EditorFor(f => f.EmailConfirmed, new { @class = "form-control", style = "max-width: none;height:100px" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(f => f.UserName, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+        @Html.LabelFor(x => x.Active, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            <div class="input-icon">
+                @Html.EditorFor(f => f.Active, new { @class = "form-control", style = "max-width: none;height:100px" })
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <div class="col-md-2"></div>
+        <button type="button" class="btn blue" onclick="SaveUser();">ذخیره</button>
+        <a href='@Url.Action(MVC.Admin.Person.Index())' class="btn default">انصراف</a>
+    </div>
+}
+
+<script>
+    function SaveUser() {
+        $('#UserModel_PersonId').val($('#ProfileModel_PersonId').val());
+        if (Number($('#UserModel_PersonId').val()) <= 0) {
+            mynotification('اطلاعات مورد نظر قابل ذخیره سازی نمی باشد!', 'ruby');
+            return $(this).form('validate');
+        }
+        if ($('#Email').val() == null) {
+            mynotification('لطفا ایمیل را وارد کنید!', 'ruby');
+            return $(this).form('validate');
+        }
+        if ($('#UserName').val() == null) {
+            mynotification('لطفا نام کاربری را وارد کنید!', 'ruby');
+            return $(this).form('validate');
+        }
+        $('#PersonId4').val($('#PersonId').val());
+        if ($('#saveUser').valid()) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $('#saveUser').ajaxSubmit({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.Profile.SaveUser(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                //data: { special: strSpecialEducation },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+        } else {
+            mynotification('خطا در ورود اطلاعات.', 'ruby');
+            return $(this).form('validate');
+        }
+        return $(this).form('validate');
+    }
+</script>

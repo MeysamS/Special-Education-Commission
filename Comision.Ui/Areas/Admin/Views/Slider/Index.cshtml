@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/assets/global/plugins/JqueryUploadFile/uploadfile.min.css" rel="stylesheet" />
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <span> مدیریت اسلایدر</span>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>اسلایدر</span>
+        </li>
+    </ul>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-social-dribbble font-purple-soft"></i>
+                    <span class="caption-subject font-purple-soft bold uppercase">مدیریت اسلایدر</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div id="sliderUpload">بارگزاری تصاویر</div>
+                    <div id="divimages">
+                        @{
+                            Html.RenderAction(MVC.Admin.Slider.ActionNames.GetSliders);
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/assets/global/plugins/JqueryUploadFile/jquery.uploadfile.min.js"></script>
+
+    <script>
+
+        $("#sliderUpload").uploadFile({
+            url: "@Url.Action(MVC.Admin.Slider.Create())",
+            autoSubmit: true,
+            multiple: true,
+            showDelete: true,
+            dragDropStr: "<span><b>تصاویر را برای ارسال، کشیده و در اینجا رها کنید</b></span>",
+            abortStr: "توقف",
+            cancelStr: "انصراف",
+            doneStr: "اتمام",
+            allowedTypes: "png,gif,jpg,jpeg",
+            fileName: "sliderUpload",
+            onSuccess: function (files, data, xhr) {
+                $("#divimages").html(data.Html);
+            }
+
+        });
+
+    </script>
+
+}

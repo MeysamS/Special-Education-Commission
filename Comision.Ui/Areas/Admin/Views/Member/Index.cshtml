@@ -1,0 +1,304 @@
+﻿@using Comision.Model.Enum
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var memberType = (RequestType)ViewBag.RequestType;
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+
+            @if (memberType == RequestType.Comision)
+            {<a href="index.html">اعضای کمسیون</a>}
+            else
+            { <a href="index.html">اعضای شورا </a> }
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    @if (memberType == RequestType.Comision)
+                    {<span class="caption-subject bold uppercase"> مدیریت اعضای کمسیون</span>}
+                    else
+                    {<span class="caption-subject bold uppercase"> مدیریت اعضای شورا</span> }
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="form-section">جدول پایه</h3>
+                        <div style="height: 480px" id="dgMaster">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="form-section">تعریف اعضاء</h3>
+                        <div id="dgDetail">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/Content/jquery-easyui-1.4.2/edatagrid.js"></script>
+
+    <script>
+
+        $('#dgMaster').edatagrid(
+        {
+
+            idField: 'Id',
+            loadMsg: 'شکیبا باشید...',
+            rownumbers: true,
+            height: '400',
+            singleSelect: true,
+            fitColumns: true,
+            url: '@Url.Action(MVC.Admin.Member.GetMembers(memberType))',
+            saveUrl: '@Url.Action(MVC.Admin.Member.CreateMember())',
+            updateUrl: '@Url.Action(MVC.Admin.Member.EditMaster())',
+            destroyUrl: '@Url.Action(MVC.Admin.Member.DeleteMember())',
+            columns: [
+                [
+                    { field: 'Id', title: 'Id',hidden: 'hidden',  editor: { type: 'textbox'} },
+                    { field: 'Date', title: 'تاریخ', width: 300, editor: { type: 'textbox', width: 300, options: { required: true } } },
+                    { field: 'Name', title: 'عنوان', width: 300, editor: { type: 'textbox', width: 300, options: { required: true } } },
+                    { field: 'RequestType', hidden: "hidden", editor: { type: 'textbox', options: { required: true } } }
+                ]
+            ],
+            toolbar:
+            [
+                {
+                    text: 'جدید',
+                    iconCls: 'icon-add',
+                    handler: function() {
+                        $('#dgMaster').edatagrid('addRow');
+                    }
+                }, '-',
+                {
+                    text: 'حذف',
+                    iconCls: 'icon-remove',
+                    handler: function() {
+                        $('#dgMaster').edatagrid('destroyRow');
+                    }
+                }, '-',
+                {
+                    text: 'ذخیره',
+                    iconCls: 'icon-save',
+                    handler: function() {
+                        $('#dgMaster').edatagrid('saveRow');
+                    }
+                }, '-',
+                {
+                    text: 'انصراف',
+                    iconCls: 'icon-undo',
+                    handler: function() {
+                        $('#dgMaster').edatagrid('cancelRow');
+                    }
+                }
+            ],
+            onBeforeSave: function(index) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            },
+            onSuccess: function(index, row) {
+                $.unblockUI();
+                if (row.IsError) {
+                    mynotification(row.Message, 'ruby');
+                } else {
+                    mynotification(row.Message, 'lime');
+                }
+                //$('#dgMaster').edatagrid('refreshRow',index);
+            },
+            onDestroy(index, row) {
+                if (row.IsError) {
+                    mynotification("خطا رخ داده است!", 'ruby');
+                }
+            },
+            onLoadSuccess: function(data) {
+                if (data != null) {
+                    $('#dgMaster').edatagrid('selectRow', 0);
+                }
+
+            },
+            onError: function(index, row) {
+                $(this).edatagrid('deleteRow', index);
+                $.unblockUI();
+                mynotification(row.Message, 'ruby');
+                $(this).datagrid('cancelEdit', index);
+                $(this).edatagrid('reload');
+            },
+            onSelect: function(index, row) {
+                loadGridDetail(row.Id);
+            },
+            onBeginEdit: function (index, row) {
+                var edRequestType = $('#dgMaster').edatagrid('getEditor', { index: index, field: 'RequestType' });
+                $(edRequestType.target).textbox('setValue', @((int)memberType));
+            }
+        });
+
+
+        function loadGridDetail(id) {
+            var rowEditing;
+            var edPersonId;
+            $('#dgDetail').edatagrid(
+            {
+
+                idField: 'Id',
+                loadMsg: 'شکیبا باشید...',
+                rownumbers: true,
+                height: '400',
+                singleSelect: true,
+                fitColumns: true,
+                queryParams: { masterId: id },
+                toolbar:
+                [
+                    {
+                        text: 'جدید',
+                        iconCls: 'icon-add',
+                        handler: function() {
+                            $('#dgDetail').edatagrid('addRow');
+                        }
+                    }, '-',
+                    {
+                        text: 'حذف',
+                        iconCls: 'icon-remove',
+                        handler: function() {
+                            $('#dgDetail').edatagrid('destroyRow');
+                        }
+                    }, '-',
+                    {
+                        text: 'ذخیره',
+                        iconCls: 'icon-save',
+                        handler: function() {
+                            $('#dgDetail').edatagrid('saveRow');
+                        }
+                    }, '-',
+                    {
+                        text: 'انصراف',
+                        iconCls: 'icon-undo',
+                        handler: function() {
+                            $('#dgDetail').edatagrid('cancelRow');
+                        }
+                    }
+                ],
+                url: '@Url.Action(MVC.Admin.Member.GetDetails())',
+                saveUrl: '@Url.Action(MVC.Admin.Member.CreateDetail())',
+                updateUrl: '@Url.Action(MVC.Admin.Member.EditDetail())',
+                destroyUrl: '@Url.Action(MVC.Admin.Member.DeleteDetail())',
+                onSuccess: function(index, row) {
+                    $.unblockUI();
+                    if (row.IsError) {
+                        mynotification(row.Message, 'ruby');
+                    } else {
+                        mynotification(row.Message, 'lime');
+                    }
+                },
+                onBeginEdit: function(index, row) {
+                    rowEditing = row;
+                    var rowMaster = $('#dgMaster').edatagrid('getSelected');
+                    if (rowMaster == null || rowMaster === 0) {
+                        $.messager.alert('پیام سیستم', 'جدول پایه انتخاب نشده است!');
+                        $('#dgDetail').edatagrid('cancelRow');
+                        return;
+                    }
+                    var edMasterId = $('#dgDetail').edatagrid('getEditor', { index: index, field: 'MemberMasterId' });
+                    $(edMasterId.target).textbox('setValue', rowMaster.Id);
+                    edPersonId = $('#dgDetail').edatagrid('getEditor', { index: index, field: 'PersonId' });
+                },
+                onError: function(index, row) {
+                    $.unblockUI();
+                    mynotification(row.Message, 'ruby');
+                    $(this).datagrid('cancelEdit', index);
+                    $(this).edatagrid('reload');
+                },
+                onBeforeSave: function(index) {
+                    var edrowNumber = $('#dgDetail').edatagrid('getEditor', { index: index, field: 'RowNumber' });
+                    var currentRowNumber = $(edrowNumber.target).val();
+                    var myRows = $(this).edatagrid('getData').rows;
+                    $.each(myRows, function(index, value) {
+                        if (myRows[index].RowNumber === currentRowNumber) {
+                            $.messager.alert('پیام سیستم', 'مقدار الویت تکراری می باشد');
+                            return;
+                        }
+                    });
+                    $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                },
+                columns: [
+                    [
+                        { field: 'Id', title: 'Id',hidden: 'hidden',  editor: { type: 'textbox'} },
+                        { field: 'MemberMasterId', hidden: 'hidden', editor: { type: 'textbox', options: { required: true } } },
+                        //{ field: 'PersonId', hidden: 'hidden', editor: { type: 'textbox', options: { required: true } } },
+                        {
+                            field: 'PersonName',
+                            title: 'انتخاب شخص',
+                            width: 150,
+                            editor: {
+                                type: 'combogrid', options: {
+                                    required: true, idField: 'NameFamily', textField: 'NameFamily', method: 'get',
+                                    panelWidth: 300,fit: true,fitColumns: true,
+                                    url: '@Url.Action(MVC.Admin.Member.GetListPersonel())',
+                                    columns: [[
+                                        //{ field: 'PersonId', hidden: 'hidden' },
+                                        { field: 'NameFamily', title: 'لطفا یک مورد را انتخاب کنید!', width: 150 },
+                                        { field: 'NationalCode', title: 'شماره ملی', width: 100 },
+                                        { field: 'EmployeeNumber', title: 'شماره استخدامی', width: 100 },
+                                        { field: 'DateOfEmployeement', hidden: 'hidden', title: 'تاریخ استخدام', width: 100 }
+                                    ]],
+                                    onLoadSuccess: function (data) {
+                                        //$(this).combogrid('setValue', rowEditing.PersonId);
+                                    },
+                                    onSelect: function (index, row) {
+                                        //$(edPersonId.target).textbox('setValue', row.PersonId);
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            field: 'PostName',
+                            title: 'انتخاب سمت',
+                            width: 150,
+                            editor: {
+                                type: 'combogrid', options: {
+                                    required: true, idField: 'PostName', textField: 'PostName', method: 'get',
+                                    panelWidth: 300,fit: true,fitColumns: true,
+                                    url: '@Url.Action(MVC.Admin.Member.GetPosts())',
+                                    columns: [[
+                                        { field: 'PostName', title: 'لطفا یک مورد را انتخاب کنید!', width: 150 }
+                                    ]],
+                                    onLoadSuccess: function (data) {
+                                        //$(this).combogrid('setValue', rowEditing.PersonId);
+                                    },
+                                    onSelect: function (index, row) {
+                                        //$(edPersonId.target).textbox('setValue', row.PersonId);
+                                    }
+                                }
+                            }
+                        },
+                        //{ field: 'PostName', title: 'پست ها', width: 150, editor: { type: 'textbox', width: 150, autoRowHeight: true, options: { required: true } } },
+                        { field: 'RowNumber', title: 'الویت', width: 50, editor: { type: 'validatebox', width: 50, options: { required: true } } }
+                    ]
+                ]
+            });
+        }
+
+    </script>
+}
+
+
+
+
+

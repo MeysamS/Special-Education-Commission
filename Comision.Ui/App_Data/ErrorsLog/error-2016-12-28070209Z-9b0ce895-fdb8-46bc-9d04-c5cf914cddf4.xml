@@ -1,0 +1,174 @@
+﻿<error errorId="9b0ce895-fdb8-46bc-9d04-c5cf914cddf4" application="/LM/W3SVC/2/ROOT" host="ALI-LAPTOP" type="System.ArgumentException" message="The parameters dictionary contains a null entry for parameter 'personelId' of non-nullable type 'System.Int64' for method 'System.Web.Mvc.ActionResult DeleteSignature(Int64)' in 'Comision.Ui.Areas.Admin.Controllers.ProfileController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.&#xD;&#xA;Parameter name: parameters" source="System.Web.Mvc" detail="System.ArgumentException: The parameters dictionary contains a null entry for parameter 'personelId' of non-nullable type 'System.Int64' for method 'System.Web.Mvc.ActionResult DeleteSignature(Int64)' in 'Comision.Ui.Areas.Admin.Controllers.ProfileController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.&#xD;&#xA;Parameter name: parameters&#xD;&#xA;   at System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)&#xD;&#xA;   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;BeginInvokeSynchronousActionMethod&gt;b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3d()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;&gt;c__DisplayClass46.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3f()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;&gt;c__DisplayClass46.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3f()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass33.&lt;BeginInvokeActionMethodWithFilters&gt;b__32(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__15(IAsyncResult asyncResult, Controller controller)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="admin@mail.com" time="2016-12-28T07:02:09.9175459Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_CONTENT_LENGTH:0&#xD;&#xA;HTTP_ACCEPT:application/json, text/javascript, */*; q=0.01&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.5&#xD;&#xA;HTTP_COOKIE:__RequestVerificationToken=um6NTnbzxUQ5ImZfsi7LTJI3ak9Aj56QfOhlrefeytXhwiqKc6LpyP9dNcGet-DV8eD22ZbHpplByByb2vOyw44ARl9CO9qe9Mal33bOM681; ASP.NET_SessionId=gu440fbdltdtgpamb2o1yzyd; comisionLogin=uUYybVHlCfhp_oYGGvfBGpu6iUTHqSFLHFIaFTnYD1zX79ICglB9ehz8lON-6VCbc4Re4o_ehY48M_WtVOyG-UJo-RmIJs2x90yeGFswQhgOz1GrkfPNIJp0hjANI7k0-7TXxBRx4l3G4otDO12Z_Q3EdaWd3fQpg207lBDkxGr8LAda8dA1nUKJJ7BRKJ4uaihbw6Vg3zVaY7vWc60iLY2yaSinTvXSCI5ZdNQ6aHpNwoDNlniyrePlVYAQOv3PMLt7FK3u7ircKUFetp-vEC6e8JiRVWOu30weit8HuuUtkE1XZE5Gjm3IvQGBgmkHeWBMNEc6C2-L67w_YI9FRnC0SUpUnBq2SNgCn99erdfnUTSDQisw829C__jV4-5SOqyJLRIWxOhQLi6FMmhZUoqna02Y7gW_LRnTaJYcX-0kqTJiuwR4QR02ewgHn5e4iXpqxuEKr5_L0xXB_08bTjN6ciU5Cem9J2JJb9Ugn3wQeuFMrkTInVh8F96iCso8nOQkyjR_fAsg6qnFCWiYoJvqOVutAsVgqDTQrrHoytbr_EIAhh7I2pInak82198Epf0dTKDfVIxCAKnHPojl4ZeGjFhLDfLLtbdoz_kadcfV35_D_4xflshXwH9kSH-Cg4cc2OdLyDKk0heHsp-9J5styAGPB7jVObeyjHsKgEdeo7DiVJn6XNh0TmKulFROowqeLvdoQroEyOdr9rVxYAPst4-rNue-q5rG70HkdzWCHSMQE26j5W1HlIaH_Y2GBJxVDhtedFxmhpf9jRii8z9Q--Ex77FlRJkZcFzknjBRDOFuacI4Z23aH_ePEI6iPkI-NxSYo_VzEXqa5Ppx53xL9TD79tQhSmA77rdZFQo5G5V1z4pxoNKuS14YrZESIZmZGr4BJbzhz2SkXaaQ1Q&#xD;&#xA;HTTP_HOST:localhost:3298&#xD;&#xA;HTTP_REFERER:http://localhost:3298/Admin/Profile?personId=2&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0&#xD;&#xA;HTTP_X_REQUESTED_WITH:XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Content-Length: 0&#xD;&#xA;Accept: application/json, text/javascript, */*; q=0.01&#xD;&#xA;Accept-Encoding: gzip, deflate&#xD;&#xA;Accept-Language: en-US,en;q=0.5&#xD;&#xA;Cookie: __RequestVerificationToken=um6NTnbzxUQ5ImZfsi7LTJI3ak9Aj56QfOhlrefeytXhwiqKc6LpyP9dNcGet-DV8eD22ZbHpplByByb2vOyw44ARl9CO9qe9Mal33bOM681; ASP.NET_SessionId=gu440fbdltdtgpamb2o1yzyd; comisionLogin=uUYybVHlCfhp_oYGGvfBGpu6iUTHqSFLHFIaFTnYD1zX79ICglB9ehz8lON-6VCbc4Re4o_ehY48M_WtVOyG-UJo-RmIJs2x90yeGFswQhgOz1GrkfPNIJp0hjANI7k0-7TXxBRx4l3G4otDO12Z_Q3EdaWd3fQpg207lBDkxGr8LAda8dA1nUKJJ7BRKJ4uaihbw6Vg3zVaY7vWc60iLY2yaSinTvXSCI5ZdNQ6aHpNwoDNlniyrePlVYAQOv3PMLt7FK3u7ircKUFetp-vEC6e8JiRVWOu30weit8HuuUtkE1XZE5Gjm3IvQGBgmkHeWBMNEc6C2-L67w_YI9FRnC0SUpUnBq2SNgCn99erdfnUTSDQisw829C__jV4-5SOqyJLRIWxOhQLi6FMmhZUoqna02Y7gW_LRnTaJYcX-0kqTJiuwR4QR02ewgHn5e4iXpqxuEKr5_L0xXB_08bTjN6ciU5Cem9J2JJb9Ugn3wQeuFMrkTInVh8F96iCso8nOQkyjR_fAsg6qnFCWiYoJvqOVutAsVgqDTQrrHoytbr_EIAhh7I2pInak82198Epf0dTKDfVIxCAKnHPojl4ZeGjFhLDfLLtbdoz_kadcfV35_D_4xflshXwH9kSH-Cg4cc2OdLyDKk0heHsp-9J5styAGPB7jVObeyjHsKgEdeo7DiVJn6XNh0TmKulFROowqeLvdoQroEyOdr9rVxYAPst4-rNue-q5rG70HkdzWCHSMQE26j5W1HlIaH_Y2GBJxVDhtedFxmhpf9jRii8z9Q--Ex77FlRJkZcFzknjBRDOFuacI4Z23aH_ePEI6iPkI-NxSYo_VzEXqa5Ppx53xL9TD79tQhSmA77rdZFQo5G5V1z4pxoNKuS14YrZESIZmZGr4BJbzhz2SkXaaQ1Q&#xD;&#xA;Host: localhost:3298&#xD;&#xA;Referer: http://localhost:3298/Admin/Profile?personId=2&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0&#xD;&#xA;X-Requested-With: XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="G:\ALI\Lesson\ComponyProject\Commission\Comision.Ui\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="ApplicationCookie" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="admin@mail.com" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="admin@mail.com" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="admin@mail.com" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Admin/Profile/DeleteSignature" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="G:\ALI\Lesson\ComponyProject\Commission\Comision.Ui\Admin\Profile\DeleteSignature" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="27626" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="POST" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Admin/Profile/DeleteSignature" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="3298" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/Admin/Profile/DeleteSignature" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="application/json, text/javascript, */*; q=0.01" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.5" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__RequestVerificationToken=um6NTnbzxUQ5ImZfsi7LTJI3ak9Aj56QfOhlrefeytXhwiqKc6LpyP9dNcGet-DV8eD22ZbHpplByByb2vOyw44ARl9CO9qe9Mal33bOM681; ASP.NET_SessionId=gu440fbdltdtgpamb2o1yzyd; comisionLogin=uUYybVHlCfhp_oYGGvfBGpu6iUTHqSFLHFIaFTnYD1zX79ICglB9ehz8lON-6VCbc4Re4o_ehY48M_WtVOyG-UJo-RmIJs2x90yeGFswQhgOz1GrkfPNIJp0hjANI7k0-7TXxBRx4l3G4otDO12Z_Q3EdaWd3fQpg207lBDkxGr8LAda8dA1nUKJJ7BRKJ4uaihbw6Vg3zVaY7vWc60iLY2yaSinTvXSCI5ZdNQ6aHpNwoDNlniyrePlVYAQOv3PMLt7FK3u7ircKUFetp-vEC6e8JiRVWOu30weit8HuuUtkE1XZE5Gjm3IvQGBgmkHeWBMNEc6C2-L67w_YI9FRnC0SUpUnBq2SNgCn99erdfnUTSDQisw829C__jV4-5SOqyJLRIWxOhQLi6FMmhZUoqna02Y7gW_LRnTaJYcX-0kqTJiuwR4QR02ewgHn5e4iXpqxuEKr5_L0xXB_08bTjN6ciU5Cem9J2JJb9Ugn3wQeuFMrkTInVh8F96iCso8nOQkyjR_fAsg6qnFCWiYoJvqOVutAsVgqDTQrrHoytbr_EIAhh7I2pInak82198Epf0dTKDfVIxCAKnHPojl4ZeGjFhLDfLLtbdoz_kadcfV35_D_4xflshXwH9kSH-Cg4cc2OdLyDKk0heHsp-9J5styAGPB7jVObeyjHsKgEdeo7DiVJn6XNh0TmKulFROowqeLvdoQroEyOdr9rVxYAPst4-rNue-q5rG70HkdzWCHSMQE26j5W1HlIaH_Y2GBJxVDhtedFxmhpf9jRii8z9Q--Ex77FlRJkZcFzknjBRDOFuacI4Z23aH_ePEI6iPkI-NxSYo_VzEXqa5Ppx53xL9TD79tQhSmA77rdZFQo5G5V1z4pxoNKuS14YrZESIZmZGr4BJbzhz2SkXaaQ1Q" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:3298" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:3298/Admin/Profile?personId=2" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0" />
+    </item>
+    <item name="HTTP_X_REQUESTED_WITH">
+      <value string="XMLHttpRequest" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="__RequestVerificationToken">
+      <value string="um6NTnbzxUQ5ImZfsi7LTJI3ak9Aj56QfOhlrefeytXhwiqKc6LpyP9dNcGet-DV8eD22ZbHpplByByb2vOyw44ARl9CO9qe9Mal33bOM681" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="gu440fbdltdtgpamb2o1yzyd" />
+    </item>
+    <item name="comisionLogin">
+      <value string="uUYybVHlCfhp_oYGGvfBGpu6iUTHqSFLHFIaFTnYD1zX79ICglB9ehz8lON-6VCbc4Re4o_ehY48M_WtVOyG-UJo-RmIJs2x90yeGFswQhgOz1GrkfPNIJp0hjANI7k0-7TXxBRx4l3G4otDO12Z_Q3EdaWd3fQpg207lBDkxGr8LAda8dA1nUKJJ7BRKJ4uaihbw6Vg3zVaY7vWc60iLY2yaSinTvXSCI5ZdNQ6aHpNwoDNlniyrePlVYAQOv3PMLt7FK3u7ircKUFetp-vEC6e8JiRVWOu30weit8HuuUtkE1XZE5Gjm3IvQGBgmkHeWBMNEc6C2-L67w_YI9FRnC0SUpUnBq2SNgCn99erdfnUTSDQisw829C__jV4-5SOqyJLRIWxOhQLi6FMmhZUoqna02Y7gW_LRnTaJYcX-0kqTJiuwR4QR02ewgHn5e4iXpqxuEKr5_L0xXB_08bTjN6ciU5Cem9J2JJb9Ugn3wQeuFMrkTInVh8F96iCso8nOQkyjR_fAsg6qnFCWiYoJvqOVutAsVgqDTQrrHoytbr_EIAhh7I2pInak82198Epf0dTKDfVIxCAKnHPojl4ZeGjFhLDfLLtbdoz_kadcfV35_D_4xflshXwH9kSH-Cg4cc2OdLyDKk0heHsp-9J5styAGPB7jVObeyjHsKgEdeo7DiVJn6XNh0TmKulFROowqeLvdoQroEyOdr9rVxYAPst4-rNue-q5rG70HkdzWCHSMQE26j5W1HlIaH_Y2GBJxVDhtedFxmhpf9jRii8z9Q--Ex77FlRJkZcFzknjBRDOFuacI4Z23aH_ePEI6iPkI-NxSYo_VzEXqa5Ppx53xL9TD79tQhSmA77rdZFQo5G5V1z4pxoNKuS14YrZESIZmZGr4BJbzhz2SkXaaQ1Q" />
+    </item>
+  </cookies>
+</error>

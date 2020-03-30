@@ -1,0 +1,376 @@
+﻿@using Comision.Helper.Filters
+@using Comision.Helper.Utility
+@using Comision.Model.Enum
+@using Comision.Service.Model
+@using Comision.Utility
+@model Comision.Service.Model.DetailRequestModel
+@{
+    ViewBag.Title = "Detail";
+    var ordinalSign = false;
+    var listSigner = User.ListSigner().Split('#');
+}
+@*@Styles.Render("~/Content/persianDate/css")*@
+
+<div class="row">
+    <div class="col-md-12">
+        <div style="float: left; margin-top: 4px" class="actions">
+            @*@if ((row.RequestTypeId === ((int) RequestType.Council) && listSigner.Any(a => a == "7") ||
+                (row.RequestTypeId === ((int)RequestType.Comision) && listSigner.Any(a => a == "5"))
+                {*@
+            @(Model.RequestType == RequestType.Comision ? Html.SecureActionLink(null, null, null, AccessLevel.PrintCommision, "چاپ پرونده<i class='fa fa-print'></i>", null, new Dictionary<string, object> { { "class", "btn btn-circle btn-inline yellow-crusta" }, { "data_toggle", "modal" }, { "href", "javascript:void(0)" }, { "onclick", "PrintRequest()" } }) :
+                Html.SecureActionLink(null, null, null, AccessLevel.PrintCouncil, "چاپ پرونده<i class='fa fa-print'></i>", null, new Dictionary<string, object> { { "class", "btn btn-circle btn-inline yellow-crusta" }, { "data_toggle", "modal" }, { "href", "javascript:void(0)" }, { "onclick", "PrintRequest()" } }))
+        </div>
+        <div class="portlet light ">
+            @using (Html.BeginForm(MVC.Personel.Commission.Update(), FormMethod.Post, new { id = "requestform", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+            {
+                @Html.HiddenFor(x => x.RequestId)
+                @Html.HiddenFor(x => x.RequestType)
+                <div class="portlet-title">
+                    <div class="caption font-red-sunglo">
+                        <i class="icon-settings font-red-sunglo"></i>
+                        <span class="caption-subject bold uppercase">جزئیات @Model.RequestType.GetDescription()</span>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">شماره @Model.RequestType.GetDescription()</label>
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    <b>@Html.DisplayFor(m => m.CommissionNumber, new { @class = "form-control", style = "max-width: none" })</b>
+                                </div>
+                            </div>
+                            <label class="col-md-2 control-label">تاریخ @Model.RequestType.GetDescription()</label>
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    <b>
+                                        @Model.Date.ToPeString()
+                                        @*@Html.DisplayFor(m => m.Date, new {@class = "form-control", style = "max-width: none"})*@
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th class="numeric" width="12%" style="font-size: 11px"> شماره دانشجویی </th>
+                                    <th width="11%" style="font-size: 11px"> نام </th>
+                                    <th width="11%" style="font-size: 11px"> نام خانوادگی </th>
+                                    @*<th class="numeric" width="10%" style="font-size: 12px"> شماره ملی </th>
+                                        <th width="6%" style="font-size: 12px"> جنسیت </th>*@
+                                    <th width="15%" style="font-size: 11px"> رشته تحصیلی </th>
+                                    <th class="numeric" width="8%" style="font-size: 11px"> تعداد واحد گذرانده </th>
+                                    <th class="numeric" width="8%" style="font-size: 11px"> تعداد واحد باقیمانده </th>
+                                    <th class="" width="13%" style="font-size: 11px"> مقطع تحصیلی </th>
+                                    <th class="" width="12%" style="font-size: 11px"> وضعیت نظام وظیفه </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="numeric" style="font-size: 13px">
+                                        <b>@Html.DisplayFor(m => m.StudentNumber, new { @class = "form-control" })</b>
+                                    </td>
+                                    <td style="font-size: 13px">
+                                        <b>@Html.DisplayFor(m => m.Name, new { @class = "form-control" }) </b>
+                                    </td>
+                                    <td style="font-size: 13px">
+                                        <b>@Html.DisplayFor(m => m.Family, new { @class = "form-control" })</b>
+                                    </td>
+                                    @*<td class="numeric">
+                                            <b>@Html.DisplayFor(m => m.NationalCode, new { @class = "form-control" })</b>
+                                        </td>
+                                        <td>
+                                            <b>@Model.Gender.GetDescription()</b>
+                                        </td>*@
+                                    <td style="font-size: 13px">
+                                        <b>@Html.DisplayFor(m => m.FieldofStudy, new { @class = "form-control" })</b>
+                                    </td>
+                                    <td class="numeric" style="font-size: 13px">
+                                        <b>@Html.DisplayFor(m => m.NumberofSpentUnits, new { @class = "form-control" })</b>
+                                    </td>
+                                    <td class="numeric" style="font-size: 13px">
+                                        <b>@Html.DisplayFor(m => m.NumberofRemainingUnits, new { @class = "form-control" })</b>
+                                    </td>
+                                    <td class="" style="font-size: 13px">
+                                        <b>
+                                            @Model.Grade.GetDescription()
+                                            @*@Html.DisplayFor(m => m.Gender, new {@class = "form-control"})*@
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            @Model.MilitaryServiceStatus.GetDescription()
+                                        </b>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th width="50%">@(Model.RequestType == RequestType.Comision ? "موارد خاص آموزشی" : "مشکل آموزشی")</th>
+                                    <th width="50%">توضیحات </th>
+                                </tr>
+                            </thead>
+                            <thead class="flip-content">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @if (Model.RequestType == RequestType.Comision)
+                                        {
+                                            <div id="dlSpecialEducation" disabled="disabled"></div>
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(m => m.ProblemsCouncil, new { @class = "form-control", rows = "7", disabled = "disabled" })
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "7", disabled = "disabled" })
+                                        @*<textarea disabled="disabled" class="form-control" rows="10"></textarea>*@
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center; vertical-align: middle">
+                                        @(Model.RequestType == RequestType.Comision ? "رای کمیسیون موارد خاص" : "رای شورای آموزشی")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center; vertical-align: middle">
+                                        @Html.TextAreaFor(m => m.VoteText, new { @class = "form-control", rows = "3", disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <tbody>
+                                @for (var i = 1; i <= 3; i++)
+                                {
+                                    <tr>
+                                        @foreach (var item in Model.DetailRequestSignerModels)
+                                        {
+                                            var percentWidth = 100 / Model.DetailRequestSignerModels.Count;
+                                            var imgWidth = Model.DetailRequestSignerModels.Count * 1;
+                                            var imgHeight = Model.DetailRequestSignerModels.Count * 1;
+
+                                            <td style="text-align: center; vertical-align: middle" width="@percentWidth%">
+                                                @switch (i)
+                                                {
+                                                    case 1:
+                                                        @*if (item.RowNumber>1 && item.RowNumber < 5 && !item.Signed)
+                                                            {
+                                                            if (!ViewBag.ordinal || !ordinalSign)
+                                                            {
+                                                            ordinalSign = true;
+                                                            <a href="#" data-toggle="modal" data-UserId="@item.PersonId" data-postId="@item.PostId" data-RowId="@item.RowNumber" class="btn btn-icon-only default signer">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            }
+                                                            }*@
+                                                        @(" امضای " + item.PostName)
+
+                                                        break;
+                                                    case 2:
+                                                        @item.PersonName
+                                                        ;
+                                                        break;
+                                                    default:
+                                                        if (string.IsNullOrEmpty(item.Signature))
+                                                        {
+                                                            <img src="" alt="ندارد" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="@Url.Content(item.Signature)" width="130" height="100" alt="" />
+                                                        }
+
+                                                        break;
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div id="modalConfirm" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">تایید و ارسال</h4>
+            </div>
+            <div class="modal-body">
+                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                <div class="form-group">
+                    @Html.TextArea("Description", new { id = "ConfirmDescription", @class = "form-control", rows = "2" })
+                    @*<input class="form-control" type="text" data-tabindex="1">*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                <button id="btnConfirm" type="button" data-dismiss="modal" class="btn green">تایید و ارسال</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@Scripts.Render("~/bundles/PersianDate")*@
+<script src="~/signalr/hubs"></script>
+<script>
+    var chub = $.connection.cartableHub;
+    $.connection.hub.logging = true;
+
+    chub.client.sendNewCartable = function() {
+        $('#dgCartable').datalist('reload');
+    };
+    $.connection.hub.start().done(function() {
+        $('#btnConfirm').click(function() {
+            var requestId = $('#RequestId').val();
+            if (requestId <= 0) {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return;
+            }
+            var desc = $("#ConfirmDescription").val();
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Cartable.ConfirmOnBehalfof(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: { userId: uId, requestId: requestId, postId: pId, rowNumber: rowId, description: desc },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        chub.server.addNewCartableNotification().done(function() {
+                            mynotification(result.Message, 'lime');
+                            var obj = runSigner.parent().find('img');
+                            $(obj).attr('src', result.ImgSigner);
+                            alert(obj);
+                            runSigner.remove();
+                            @*var url = '@Url.Action(MVC.Personel.Request.DetailRequest())?requestId=' + requestId + '&rootUrl=@ViewBag.rootUrl';
+                            window.location.href = url;*@
+                        });
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+        });
+    });
+
+    var uId = -1;
+    var pId = -1;
+    var rowId = -1;
+    var runSigner;
+
+    $('#dlSpecialEducation').datalist(
+    {
+        fit: true,
+        loadMsg: 'شکیبا باشید...',
+        singleSelect: false,
+        valueField: 'id',
+        //checkbox: true,
+        lines: true,
+        queryParams: { requestId: Number(@Model.RequestId) },//$('#Id').val()
+        url: '@Url.Action(MVC.Personel.Request.GetListSpecialEducationforRequest())'
+        //onLoadSuccess: function (data) {
+        //    //for (var i = 0; i < data.rows.length; ++i) {
+        //    //    if (data.rows[i]['checked'] === true) {
+        //    //        $(this).datalist('checkRow', i);
+        //    //    }
+        //    //}
+        //}
+    });
+
+    $('a.btn.btn-icon-only.default.signer').click(function() {
+        runSigner = $(this);
+        uId = Number($(this).attr('data-UserId'));
+        pId = Number($(this).attr('data-PostId'));
+        rowId = Number($(this).attr('data-RowId'));
+        if (uId <= 0 || pId <= 0 || rowId <= 0) {
+            mynotification('خطا در تایید درخواست!', 'ruby');
+            return;
+        }
+        $("#ConfirmDescription").val("");
+        $('#modalConfirm').modal('show');
+
+    });
+
+    //$('#btnConfirm').click(function () {
+    //    Confirm(uId, pId, rowId);
+    //});
+
+
+    @*function Confirm(userId, postId, rowNumber) {
+            var requestId = $('#RequestId').val();
+            if (requestId <= 0) {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return;
+            }
+            var desc = $("#ConfirmDescription").val();
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Cartable.ConfirmOnBehalfof(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: { userId: userId, requestId: requestId, postId: postId, rowNumber: rowNumber, description: desc },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                        var obj = runSigner.parent().find('img');
+                        $(obj).attr('src', result.ImgSigner);
+                        alert(obj);
+                        runSigner.remove();
+                        @*var url = '@Url.Action(MVC.Personel.Request.DetailRequest())?requestId=' + requestId + '&rootUrl=@ViewBag.rootUrl';
+                        window.location.href = url;
+    }
+    },
+    error: function (xhr, status) {
+        $.unblockUI();
+        alert(xhr.responseText());
+    }
+    });
+    }*@
+
+    function PrintRequest() {
+        var requestId = Number($('#RequestId').val());
+        var requestType = Number($('#RequestType').val());
+        var requestTypestring = ($('#RequestType').val());
+        if (requestId <= 0 || requestType<=0) {
+            mynotification('پرونده نامعتبر می باشد!', 'ruby');
+            return;
+        }
+        var url = "";
+        if (requestType === @((int)RequestType.Comision) || requestTypestring==='Comision')
+            url = '@Url.Action(MVC.Personel.Report.PrintCommision())?commisionId= ' + requestId;
+        else
+            url = '@Url.Action(MVC.Personel.Report.PrintCouncil())?councilId= ' + requestId;
+        window.location.href = url;
+    }
+</script>
+
+
+
+

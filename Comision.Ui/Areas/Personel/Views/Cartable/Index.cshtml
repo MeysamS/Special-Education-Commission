@@ -1,0 +1,746 @@
+﻿@using Comision.Helper.Filters
+@using Comision.Helper.Utility
+@using Comision.Model.Enum
+@using Comision.Service.Model
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+    var listSigner = User.ListSigner().Split('#');
+}
+<link href="~/Content/assets/pages/css/profile-2-rtl.min.css" rel="stylesheet" />
+@*<div id="dlgReport" class="easyui-dialog" modal="true" style="width: 70%; min-height: 650px;"
+         closed="true">
+    </div>*@
+<style>
+    .datagrid-cell {
+        border-bottom: 1px solid;
+    }
+
+    tr:hover {
+        background-color: #ffe48d;
+        color: #000;
+        cursor: default;
+    }
+
+    .datagrid-row-even {
+        background-color: lavender;
+    }
+
+    .datagrid-row-odd {
+        background-color: #ffffff;
+    }
+
+    .datagrid-row-return {
+        background-color: mistyrose;
+    }
+
+    .datagrid-row-end {
+        background-color: aquamarine;
+    }
+
+    .datagrid-row-selected {
+        background: #ffe48d;
+        color: #000000;
+    }
+</style>
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">مدیریت کارتابل</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> مدیریت کارتابل</span>
+                </div>
+                @*<div class="actions">
+                        <a href="javascript:void(0)" onclick="DetailRequest()" class="btn btn-circle btn-inline yellow-gold" data-toggle="modal">
+                            جزئیات درخواست
+                            <i class="fa fa-ticket"></i>
+                        </a>
+                    </div>*@
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <table id="dgCartable"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalConfirm" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">تایید و ارسال</h4>
+            </div>
+            <div class="modal-body">
+                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                <div class="form-group">
+                    @Html.TextArea("Description", new { id = "ConfirmDescription", @class = "form-control", rows = "2" })
+                    @*<input class="form-control" type="text" data-tabindex="1">*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                <button id="btnConfirm" type="button" data-dismiss="modal" class="btn green" onclick="Confirm();">تایید و ارسال</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalReturn" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">برگشت</h4>
+            </div>
+            <div class="modal-body">
+                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                <div class="form-group">
+                    @Html.TextArea("Description", new { id = "ReturnDescription", @class = "form-control", rows = "2" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                <button id="btnReturn" type="button" data-dismiss="modal" class="btn red" onclick="Return();">برگشت</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalAgree" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">موافقت با رای </h4>
+            </div>
+            <div class="modal-body">
+                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                <div class="form-group">
+                    @Html.TextArea("Description", new { id = "AgreeDescription", @class = "form-control", rows = "2" })
+                    @*<input class="form-control" type="text" data-tabindex="1">*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                <button id="btnAgree" type="button" data-dismiss="modal" class="btn green" onclick="Agree();">موافقت با رای</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDisAgree" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">مخالفت با رای</h4>
+            </div>
+            <div class="modal-body">
+                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                <div class="form-group">
+                    @Html.TextArea("Description", new { id = "DisAgreeDescription", @class = "form-control", rows = "2" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                <button id="btnDisAgree" type="button" data-dismiss="modal" class="btn red" onclick="DisAgree();">مخالف با رای</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryAjaxForm")
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var chub = $.connection.cartableHub;
+        $.connection.hub.logging = true;
+
+        chub.client.sendNewCartable = function() {
+            $('#dgCartable').datalist('reload');
+        };
+        $.connection.hub.start().done(function() {
+            //$(document).ready(function () {
+            //    chub.server.addNewCartableNotification();
+            //});
+
+            $('#btnConfirm').click(function() {
+                var selected = $('#dgCartable').datagrid('getSelected');
+                if (selected == null) {
+                    mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                    return;
+                }
+                var desc = $("#ConfirmDescription").val();
+                $.blockUI({
+                    boxed: !0,
+                    message:
+                        '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>'
+                });
+                $.ajax({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Cartable.Confirm(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: {
+                        requestId: selected.Id,
+                        postId: selected.PostId,
+                        rowNumber: selected.RowNumber,
+                        description: desc,
+                        fieldofStudyId: selected.FieldofStudyId
+                    },
+                    success: function(result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            chub.server.addNewCartableNotification().done(function() {
+                                mynotification(result.Message, 'lime');
+                                $('#dgCartable').datagrid('reload');
+                            });
+                        }
+                    },
+                    error: function(xhr, status) {
+                        $.unblockUI();
+                        alert(xhr.responseText());
+                    }
+                });
+            });
+            $('#btnReturn').click(function() {
+                var selected = $('#dgCartable').datagrid('getSelected');
+                if (selected == null) {
+                    mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                    return;
+                }
+                var desc = $("#ReturnDescription").val();
+                $.blockUI({
+                    boxed: !0,
+                    message:
+                        '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>'
+                });
+                $.ajax({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Cartable.Return(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: {
+                        requestId: selected.Id,
+                        postId: selected.PostId,
+                        rowNumber: selected.RowNumber,
+                        description: desc,
+                        fieldofStudyId: selected.FieldofStudyId
+                    },
+                    success: function(result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Messagfunction, 'ruby');
+                        } else {
+                            chub.server.addNewCartableNotification().done(function() {
+                                mynotification(result.Message, 'lime');
+                                $('#dgCartable').datagrid('reload');
+                            });
+                        }
+                    },
+                    error: function(xhr, status) {
+                        $.unblockUI();
+                        mynotification(xhr.responseText(), 'ruby');
+                    }
+                });
+            });
+            $('#btnAgree').click(function() {
+                var selected = $('#dgCartable').datagrid('getSelected');
+                if (selected == null) {
+                    mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                    return;
+                }
+                var desc = $("#AgreeDescription").val();
+                $.blockUI({
+                    boxed: !0,
+                    message:
+                        '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>'
+                });
+                $.ajax({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Cartable.AgreetoVote(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: {
+                        requestId: selected.Id,
+                        postId: selected.PostId,
+                        rowNumber: selected.RowNumber,
+                        description: desc,
+                        fieldofStudyId: selected.FieldofStudyId
+                    },
+                    success: function(result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            chub.server.addNewCartableNotification().done(function() {
+                                mynotification(result.Message, 'lime');
+                                $('#dgCartable').datagrid('reload');
+                            });
+                        }
+                    },
+                    error:
+                        function(xhr, status) {
+                            $.unblockUI();
+                            alert(xhr.responseText());
+                        }
+                });
+            });
+            $('#btnDisAgree').click(function() {
+                var selected = $('#dgCartable').datagrid('getSelected');
+                if (selected == null) {
+                    mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                    return;
+                }
+                var desc = $("#DisAgreeDescription").val();
+                $.blockUI({
+                    boxed: !0,
+                    message:
+                        '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>'
+                });
+                $.ajax({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Cartable.OppositiontoVote(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: {
+                        requestId: selected.Id,
+                        postId: selected.PostId,
+                        rowNumber: selected.RowNumber,
+                        description: desc,
+                        fieldofStudyId: selected.FieldofStudyId
+                    },
+                    success: function(result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            chub.server.addNewCartableNotification().done(function() {
+                                mynotification(result.Message, 'lime');
+                                $('#dgCartable').datagrid('reload');
+                            });
+                        }
+                    },
+                    error:
+                        function(xhr, status) {
+                            $.unblockUI();
+                            alert(xhr.responseText());
+                        }
+                });
+            });
+        });
+
+        $('#dgCartable').datalist(
+        {
+            //title: 'لیست درخواست های جدید',
+            idField: 'Id',
+            loadMsg: 'شکیبا باشید...',
+            rownumbers: true,
+            height: 600,
+            singleSelect: true,
+            collapsible: true,
+            fitColumns: true,
+            url: '@Url.Action(MVC.Personel.Cartable.GetListCartable())',
+            textFormatter: function(value, row, index) {
+                var result = '<div class="profile"><div class="row">' +
+                    '<div class="col-md-8 profile-info">' +
+                    '<img style="width:48px;height:48px" class="item-pic rounded" src="@Url.Content("~/Content/Images/Avatars/")' +
+                    (row.Avatar == null ? "profilepicture.png" : row.Avatar) +
+                    '" alt=""/>' +
+                    '<b class="font-green sbold uppercase">' +
+                    row.StudentFullName +
+                    '</b>' +
+                    '<b> - شماره دانشجویی : ' +
+                    row.StudentNumber +
+                    '</b>' +
+                    '<b> - رشته تحصیلی : ' +
+                    row.FieldofStudyName +
+                    '</b>' +
+                    '<b style="white-space:normal"> - شماره درخواست : ' +
+                    row.Id +
+                    '</b>' +
+                    '<p style="white-space:normal"> ' +
+                    row.Description +
+                    '</p>' +
+                    '<ul class="list-inline">' +
+                    '<li><i class="fa fa-map-marker"></i> ' +
+                    row.DateComission +
+                    ' </li>' +
+                    '<li><i class="fa fa-calendar"></i> ' +
+                    row.RelativeTimeCreateDate +
+                    ' </li>';
+
+                if ((row.RequestTypeId === @((int) RequestType.Council) && row.RowNumber === row.LastCouncilSigner) ||
+                    (row.RequestTypeId === @((int) RequestType.Comision) && row.RowNumber === row.LastCommissionSigner))
+//اگر امضاکننده مرحله آخر باشد؟
+                {
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.AgreetoVote)' === 'True')
+                        result += '<li><a href="javascript:void(0)" onclick="showModalAgree(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline green-dark btn-sm" data-toggle="modal">' +
+                            'موافقت با رای' +
+                            '<i class="fa fa-arrow-right fa-fw"></i></a>';
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.OppositiontoVote)' === 'True')
+                        result += '<a href="javascript:void(0)" onclick="showModalDisAgree(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline red btn-sm" data-toggle="modal">' +
+                            'مخالفت با رای' +
+                            '<i class="fa fa-arrow-left fa-fw"></i></a></li>';
+                } else if (row.RowNumber === 5) //اگر صادر کننده رای باشد؟
+                {
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.ShowVote)' === 'True')
+                        result += '<li><a href="javascript:void(0)" onclick="VoteView(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline green-dark btn-sm" data-toggle="modal">' +
+                            'صدور رای' +
+                            '<i class="fa fa-ticket"></i></a>';
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.ReturnRequest)' === 'True')
+                        result += '<a href="javascript:void(0)" onclick="showModalReturn(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline red btn-sm" data-toggle="modal">' +
+                            'برگشت درخواست' +
+                            '<i class="fa fa-arrow-left fa-fw"></i></a></li>';
+                } else if (row.RequestTypeId === @((int) RequestType.Council) && row.RowNumber === 6)
+                {
+                    // اگر شورا باشد و مرحله 6 باشید
+                     if ('@HtmlExtensions.CanAccess(null, AccessLevel.AgreetoVote)' === 'True')
+                        result += '<a href="javascript:void(0)" onclick="showModalAgree(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline green-dark btn-sm" data-toggle="modal">' +
+                            'موافقت با رای' +
+                            '<i class="fa fa-arrow-right fa-fw"></i></a>';
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.OppositiontoVote)' === 'True')
+                        result += '<a href="javascript:void(0)" onclick="showModalDisAgree(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline red btn-sm" data-toggle="modal">' +
+                            'مخالفت با رای' +
+                             '<i class="fa fa-arrow-left fa-fw"></i></a>';
+                     if ('@HtmlExtensions.CanAccess(null, AccessLevel.ConfirmRequest)' === 'True')
+                        result += '<a href="javascript:void(0)" onclick="showModalConfirm(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline green-dark btn-sm" data-toggle="modal">' +
+                            'بررسی سنوات' +
+                            '<i class="fa fa-arrow-right fa-fw"></i></a>';
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.ReturnRequest)' === 'True')
+                        result += '<a href="javascript:void(0)" onclick="showModalReturn(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline red btn-sm" data-toggle="modal">' +
+                            'برگشت درخواست' +
+                            '<i class="fa fa-arrow-left fa-fw"></i></a>';
+                }
+                else //اگر امضاکننده باشد و مرحله آخر نباشد؟
+                {
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.ConfirmRequest)' === 'True')
+                        result += '<li><a href="javascript:void(0)" onclick="showModalConfirm(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline green-dark btn-sm" data-toggle="modal">' +
+                            'تایید درخواست' +
+                            '<i class="fa fa-arrow-right fa-fw"></i></a>';
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.ReturnRequest)' === 'True')
+                        result += '<a href="javascript:void(0)" onclick="showModalReturn(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline red btn-sm" data-toggle="modal">' +
+                            'برگشت درخواست' +
+                            '<i class="fa fa-arrow-left fa-fw"></i></a></li>';
+                }
+                result += '</ul>' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                    '<div class="portlet sale-summary">' +
+                    '<div class="portlet-title">' +
+                    '<div class="caption font-red sbold"> ' +
+                    row.RequestType +
+                    ' </div>' +
+                    '<div class="tools">';
+                //if ((row.RowNumber === row.LastCouncilSigner) && (row.RequestTypeId === @((int) RequestType.Council))) {
+                    if ('@HtmlExtensions.CanAccess(null, AccessLevel.PrintCouncil)' === 'True')
+                        result +=
+                            '<a style="height:22px;padding-top: 0;" href="javascript:void(0)" onclick="PrintRequest(' +
+                            index +
+                            ')" class="btn btn-circle btn-outline yellow-gold btn-sm" data-toggle="modal">' +
+                            'چاپ' +
+                            '<i class="fa fa-print"></i></a>';
+                //}
+                if ('@HtmlExtensions.CanAccess(null, AccessLevel.DetailRequest)' === 'True')
+                    result +=
+                        '<a style="height:22px;padding-top: 0;" href="javascript:void(0)" onclick="DetailRequest(' +
+                        index +
+                        ')" class="btn btn-circle btn-outline blue btn-sm" data-toggle="modal">' +
+                        'جزئیات' +
+                        '<i class="fa fa-ticket"></i></a>';
+                result += '</div></div>' +
+                    '<div class="portlet-body">' +
+                    '<ul class="list-unstyled">' +
+                    '<li>' +
+                    '<span class="sale-info"> شماره ' +
+                    row.RequestType +
+                    ' ' +
+                    '<i class="fa fa-img-down"></i>' +
+                    '</span>' +
+                    '<span class="sale-num"> ' +
+                    row.CommissionNumber +
+                    ' </span>' +
+                    '</li>' +
+                    '<li>' +
+                    '<span class="sale-info"> مرحله جاری: ' +
+                    row.RowNumber +
+                    '' +
+                    '<i class="fa fa-img-up"></i>' +
+                    '</span>' +
+                    '<span class="sale-num"> ' +
+                    row.PostName +
+                    ' </span>' +
+                    '</li>' +
+                    '</ul>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+                return result;
+            },
+            onError: function(index, row) {
+                mynotification(result.Message, 'ruby');
+            },
+            onSuccess: function(index, row) {
+                mynotification(result.Message, 'ruby');
+            }
+        });
+
+        function showModalConfirm(rowIndex) {
+            if (!hasGridSelectedValid(rowIndex))
+                return;
+            $("#ConfirmDescription").val("");
+            $('#modalConfirm').modal('show');
+        }
+        @*function Confirm() {
+            var selected = $('#dgCartable').datagrid('getSelected');
+            if (selected==null) {
+                mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                return;
+            }
+            var desc = $("#ConfirmDescription").val();
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Cartable.Confirm(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: { requestId: selected.Id, postId: selected.PostId, rowNumber: selected.RowNumber, description: desc,fieldofStudyId:selected.FieldofStudyId },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                        $('#dgCartable').datagrid('reload');
+                        $('#dlgConfirm').dialog().close();
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+        }*@
+
+        function showModalReturn(rowIndex) {
+            if (!hasGridSelectedValid(rowIndex))
+                return;
+            $("#ReturnDescription").val("");
+            $('#modalReturn').modal('show');
+        }
+
+        @*function Return() {
+            var selected = $('#dgCartable').datagrid('getSelected');
+            if (selected == null) {
+                mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                return;
+            }
+            var desc = $("#ReturnDescription").val();
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Cartable.Return(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: { requestId: selected.Id, postId: selected.PostId, rowNumber: selected.RowNumber, description: desc,fieldofStudyId:selected.FieldofStudyId },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Messagfunction, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                        $('#dgCartable').datagrid('reload');
+                        $('#modalReturn').dialog().close();
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    mynotification(xhr.responseText(), 'ruby');
+                }
+            });
+        }*@
+
+        function VoteView(rowIndex) {
+            if (!hasGridSelectedValid(rowIndex))
+                return;
+            var selected = $('#dgCartable').datalist('getSelected');
+            var url = '@Url.Action(MVC.Personel.Cartable.Vote())?requestId= ' +
+                selected.Id +
+                '&postId=' +
+                selected.PostId +
+                '&rowNumber=' +
+                selected.RowNumber +
+                '&requestType=' +
+                selected.RequestTypeId;
+            window.location.href = url;
+        }
+
+        function DetailRequest(rowIndex) {
+            if (!hasGridSelectedValid(rowIndex))
+                return;
+            var selected = $('#dgCartable').datalist('getSelected');
+            var rootUrl = '@Url.Action(MVC.Personel.Cartable.Index())';
+            var url = '@Url.Action(MVC.Personel.Request.DetailRequest())?requestId= ' +
+                selected.Id +
+                '&postId= ' +
+                selected.PostId +
+                '&rowNumber= ' +
+                selected.RowNumber +
+                '&lastCommissionSigner= ' +
+                selected.LastCommissionSigner +
+                '&lastCouncilSigner= ' +
+                selected.LastCouncilSigner +
+                '&rootUrl= ' +
+                rootUrl;
+            window.location.href = url;
+        }
+
+        function hasGridSelectedValid(rowIndex) {
+            $('#dgCartable').datagrid('selectRow', rowIndex);
+            var selected = $('#dgCartable').datalist('getSelected');
+            if (selected == null) {
+                mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                return false;
+            }
+            if (selected.Id <= 0) {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return false;
+            }
+            return true;
+        }
+
+        function showModalAgree(rowIndex) {
+            if (!hasGridSelectedValid(rowIndex))
+                return;
+            $("#AgreeDescription").val("");
+            $('#modalAgree').modal('show');
+        }
+
+        @*function Agree() {
+            var selected = $('#dgCartable').datagrid('getSelected');
+            if (selected == null) {
+                mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                return;
+            }
+            var desc = $("#AgreeDescription").val();
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Cartable.AgreetoVote(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: { requestId: selected.Id, postId: selected.PostId, rowNumber: selected.RowNumber, description: desc,fieldofStudyId:selected.FieldofStudyId },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                        $('#dgCartable').datagrid('reload');
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+        }*@
+
+        function showModalDisAgree(rowIndex) {
+            if (!hasGridSelectedValid(rowIndex))
+                return;
+            $("#DisAgreeDescription").val("");
+            $('#modalDisAgree').modal('show');
+        }
+
+        @*function DisAgree() {
+            var selected = $('#dgCartable').datagrid('getSelected');
+            if (selected == null) {
+                mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                return;
+            }
+            var desc = $("#DisAgreeDescription").val();
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Cartable.OppositiontoVote(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: { requestId: selected.Id, postId: selected.PostId, rowNumber: selected.RowNumber, description: desc,fieldofStudyId:selected.FieldofStudyId },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                        $('#dgCartable').datagrid('reload');
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+        }*@
+
+        function PrintRequest(rowIndex) {
+            $('#dgCartable').datagrid('selectRow', rowIndex);
+            var selected = $('#dgCartable').datalist('getSelected');
+            if (selected.Id <= 0) {
+                mynotification('پرونده نامعتبر می باشد!', 'ruby');
+                return;
+            }
+            var url = "";
+            if (selected.RequestTypeId === @((int) RequestType.Comision))
+                url = '@Url.Action(MVC.Personel.Report.PrintCommision())?commisionId= ' + selected.Id;
+            else
+                url = '@Url.Action(MVC.Personel.Report.PrintCouncil())?councilId= ' + selected.Id;
+            window.location.href = url;
+        }
+    </script>
+}
+
+
+
+
+
+
+
+

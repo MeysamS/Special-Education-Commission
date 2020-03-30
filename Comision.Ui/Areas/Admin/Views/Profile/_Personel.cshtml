@@ -1,0 +1,169 @@
+﻿@model Comision.Service.Model.PersonelModel
+
+@using (Html.BeginForm(MVC.Admin.Profile.SavePersonel(), FormMethod.Post, new { id = "savePersonel", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+{
+    @Html.HiddenFor(m => m.PersonId, new { id = "PersonId2" })
+    @Html.HiddenFor(m => m.Signature)
+    <div class="form-group">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(x => x.EmployeeNumber, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        @Html.TextBoxFor(m => m.EmployeeNumber, new { @class = "form-control", style = "max-width: none" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Grade, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        @Html.DropDownListFor(m => m.Grade, TempData["Grade"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "cmbPersonelGrade", @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.DateOfEmployeement, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        @Html.EditorFor(f => f.DateOfEmployeement, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Active, new { @class = "col-md-4 control-label" })
+                <div class="col-md-2">
+                    <div class="input-icon">
+                        @Html.EditorFor(f => f.Active, new { @class = "form-control", style = "max-width: none;height:100px" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-4 control-label">تصویر امضا(حداکثر 60kb)</label>
+                <div class="col-md-8">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                            <img id="imgSignature" src="~/Content/Images/Signature/@Model.Signature" class="header-avatar" />
+                        </div>
+                        <div id="divImageSignature" class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
+                        <div>
+                            <span class="btn default btn-file">
+                                <span class="fileinput-new"> انتخاب تصویر امضا </span>
+                                <span class="fileinput-exists"> تغییر </span>
+                                <input type="hidden" value="" name="..."><input id="signatureFile" type="file" name="signatureFile">
+                            </span>
+                            <a href="javascript:;" class="btn red" onclick="DeleteSignaturePicture(@Model.PersonId);"> حذف </a>
+                            @*<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> حذف </a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <div class="col-md-2"> </div>
+        <button type="button" class="btn blue" onclick="SavePersonel();">ذخیره</button>
+        <a href='@Url.Action(MVC.Admin.Person.Index())' class="btn default">انصراف</a>
+        <a href="javascript:;" onclick="DeletePersonel('@Model.PersonId');" class="btn red">حذف اطلاعات پرسنلی</a>
+    </div>
+}
+
+<script>
+    function DeleteSignaturePicture(personelId) {
+        $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+            if (r) {
+                $.blockUI({ boxed: true, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.post('@Url.Action(MVC.Admin.Profile.DeleteSignature(), "http")', { personelId: personelId }, function (result) {
+                    $.unblockUI();
+                    if (!result.isError) {
+                        $('#Signature').val("");
+                        $('#signatureFile').val("");
+                        $('#imgSignature').attr("src", "");
+                        $('#divImageSignature').children().attr("src", "");
+                        mynotification(result.Message, 'lime');
+                    } else {
+                        mynotification(result.Message, 'ruby');
+                    }
+                }, 'json');
+            }
+        });
+    }
+
+    function ClearPersonelFields() {
+        $('#PersonId').val(0);
+        $('#Signature').val("");
+        $('#EmployeeNumber').val("");
+        $('#cmbPersonelGrade').val("");
+        $('#DateOfEmployeement').val("");
+        $('#Active').attr('checked', false);;
+        $('#signatureFile').val("");
+        $('#imgSignature').attr("src", "");
+    }
+    function SavePersonel() {
+        $('#PersonelModel_PersonId').val($('#ProfileModel_PersonId').val());
+        if (Number($('#PersonelModel_PersonId').val()) <= 0) {
+            mynotification('اطلاعات مورد نظر قابل ذخیره سازی نمی باشد!', 'ruby');
+            return $(this).form('validate');
+        }
+        if ($('#EmployeeNumber').val() == null) {
+            mynotification('لطفا شماره استخدامی را وارد کنید!', 'ruby');
+            return $(this).form('validate');
+        }
+        //if ($('#PersonelModel_DateOfEmployeement').val() == null) {
+        //    mynotification('لطفا تاریخ استخدامی را وارد کنید!', 'ruby');
+        //    return $(this).form('validate');
+        //}
+        $('#PersonId2').val($('#PersonId').val());
+        if ($('#savePersonel').valid()) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $('#savePersonel').ajaxSubmit({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.Profile.SavePersonel(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                //data: { special: strSpecialEducation },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+        } else {
+            mynotification('خطا در ورود اطلاعات.', 'ruby');
+            return $(this).form('validate');
+        }
+        return $(this).form('validate');
+    }
+
+    function DeletePersonel(personId2) {
+        var personId = $('#PersonId').val();
+        if (personId == null || personId <= 0) {
+            mynotification("خطا در حذف رکورد مورد نظر", 'ruby');
+            return;
+        }
+        $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+            if (r) {
+                $.blockUI({ boxed: true, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.post('@Url.Action(MVC.Admin.Profile.DeletePersonel(), "http")', { personId: personId }, function (result) {
+                    $.unblockUI();
+                    if (!result.isError) {
+                        ClearPersonelFields();
+                        mynotification(result.Message, 'lime');
+                    } else {
+                        mynotification(result.Message, 'ruby');
+                    }
+                }, 'json');
+            }
+        });
+    }
+</script>

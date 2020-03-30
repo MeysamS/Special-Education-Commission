@@ -1,0 +1,79 @@
+﻿
+@model IEnumerable<Comision.Model.Domain.Slider>
+<style>
+    div.img {
+        margin: 5px;
+        padding: 5px;
+        border: 1px solid #0000ff;
+        height: auto;
+        width: auto;
+        float: left;
+        text-align: center;
+    }
+
+        div.img img {
+            display: inline;
+            margin: 5px;
+            border: 1px solid #ffffff;
+        }
+
+        div.img a:hover img {
+            border: 1px solid #0000ff;
+        }
+
+    div.desc {
+        text-align: center;
+        font-weight: normal;
+        width: 120px;
+        margin: 5px;
+    }
+</style>
+
+@if (Model.Any())
+{
+    <div style="margin-top: 10px; border-bottom: 1px solid Red;"></div>
+ 
+        foreach (var image in Model)
+        {
+            <div class="img">
+                <a target="_blank" href="#">
+                    <img src="@Url.Content("~/Content/Images/SliderImage/" + image.ImageName)" alt="Klematis" width="110" height="120">
+                </a>
+                <div class="desc">
+                    <button class="removeImg" onclick="removeSlide(this)" type="button" imageid="@image.Id">حذف</button>
+                </div>
+            </div>
+        }
+  
+}
+
+<script>
+    function removeSlide(element) {
+        var imageId = $(element).attr("imageid");
+        var btnremove = $(element);
+            $.ajax({
+                url: '@Url.Action(MVC.Admin.Slider.RemoveSlider())',
+                type: 'post',
+                dataType: 'json',
+                data: { sliderId: imageId },
+                success: function (result) {
+                    if (result.Success) {
+                        btnremove.parent().parent().remove();
+                        eval(result.Msg);
+                    }
+                },
+                error: {
+
+                }
+            });
+    }
+    $(function () {
+
+        
+        $('button.removeImg').click(function (e) {
+            e.preventDefault();
+          
+        });
+    });
+
+</script>

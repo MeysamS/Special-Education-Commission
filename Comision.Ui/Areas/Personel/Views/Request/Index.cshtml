@@ -1,0 +1,374 @@
+﻿@using Comision.Helper.Utility
+@using Comision.Model.Enum
+@using Comision.Service.Model
+@using Comision.Utility
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">مدیریت درخواست</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>لیست درخواست ها</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="todo-content">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption font-red-sunglo">
+                        <i class="icon-settings font-red-sunglo"></i>
+                        <span class="caption-subject bold uppercase"> مدیریت درخواست</span>
+                    </div>
+                    <div class="actions">
+                        @*@Html.EncodedActionLink("جزئیات", null, null,null,null, new Dictionary<string, object> { { "class", "btn btn-circle btn-inline yellow-gold" }, { "data_toggle", "modal" }, { "href", "javascript:void(0)" }, { "onclick", "DetailRequest()" } })*@
+                        @Html.SecureActionLink(null, null, null, AccessLevel.DetailRequest, "جزئیات درخواست <i class='fa fa-align-justify'></i>", null, new Dictionary<string, object> {{"class", "btn btn-circle btn-inline yellow-gold"}, {"data_toggle", "modal"}, {"href", "javascript:void(0)"}, {"onclick", "DetailRequest()"}})
+                        @Html.SecureActionLink(null, null, null, AccessLevel.CreateCouncil, "ایجاد شورا <i class='fa fa-file-o'></i>", null, new Dictionary<string, object> {{"class", "btn btn-circle btn-inline blue"}, {"data_toggle", "modal"}, {"href", Url.Action(MVC.Personel.Council.Create())}})
+                        @Html.SecureActionLink(null, null, null, AccessLevel.CreateCommission, "ایجاد کمیسیون <i class='fa fa-file-o'></i>", null, new Dictionary<string, object> {{"class", "btn btn-circle btn-inline blue"}, {"data_toggle", "modal"}, {"href", Url.Action(MVC.Personel.Commission.Create())}})
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="todo-tasklist">
+                                <div id="dgRequest"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="modalConfirm" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">تایید و ارسال</h4>
+            </div>
+            <div class="modal-body">
+                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                <div class="form-group">
+                    @Html.TextArea("Description", new { id = "ConfirmDescription", @class = "form-control", rows = "2" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                <button id="btnConfirm" type="button" data-dismiss="modal" class="btn green">تایید و ارسال</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @*@Scripts.Render("~/bundles/jqueryAjaxForm")*@
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var chub = $.connection.cartableHub;
+        $.connection.hub.logging = true;
+
+        chub.client.reloadRequest = function() {
+            $('#dgRequest').datalist('reload');
+        };
+        $.connection.hub.start().done(function() {
+            //$(document).ready(function () {
+            //    chub.server.addNewCartableNotification();
+            //});
+
+            $('#btnConfirm').click(function() {
+                var selectedRow = $('#dgRequest').datagrid('getSelected');
+                if (selectedRow === null || selectedRow == undefined) {
+                    mynotification('لطفا رکورد مورد نظر را انتخاب کنید!', 'ruby');
+                    return $(this).form('validate');
+                }
+                var requestId = selectedRow.Id;
+                var requestTypeId = selectedRow.RequestTypeId;
+                if ((requestId <= 0) || (requestTypeId <= 0)) {
+                    mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                    return $(this).form('validate');
+                }
+                var urlSend = "";
+                if (requestTypeId === @((int) RequestType.Comision))
+                    urlSend = '@Url.Action(MVC.Personel.Commission.SendCommissionToCartable(), "http")';
+                else {
+                    urlSend = '@Url.Action(MVC.Personel.Council.SendCouncilToCartable(), "http")';
+                }
+                var desc = $("#ConfirmDescription").val();
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.ajax({
+                    cashe: false,
+                    url: urlSend,
+                    type: 'Post',
+                    dataType: 'json',
+                    data: { requestId: requestId, rowNumber: @ViewBag.rowNumber, description: desc,fieldofStudyId:selectedRow.FieldofStudyId },
+                    success: function(result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            chub.server.addNewCartableNotification().done(function() {
+                                mynotification(result.Message, 'lime');
+                                $('#dgRequest').datagrid('reload');
+                            });
+                        }
+                    },
+                    error: function(xhr, status) {
+                        $.unblockUI();
+                        mynotification("خطا در ارسال کارتابل!", 'ruby');
+                    }
+                });
+                return $(this).form('validate');
+            });
+        });
+
+        $('#dgRequest').datalist(
+        {
+            //title: 'لیست درخواست های جدید',
+            idField: 'Id',
+            loadMsg: 'شکیبا باشید...',
+            rownumbers: true,
+            height: 600,
+            singleSelect: true,
+            collapsible: true,
+            fitColumns: true,
+            url: '@Url.Action(MVC.Personel.Request.GetListRequest())',
+            textFormatter: function(value, row, index) {
+                var result = '<ul class="feeds">' +
+                    '<li>' +
+                    '<div class="col1">' +
+                    '<div class="cont">' +
+                    '<div class="cont-col1">' +
+                    '<div class="label label-sm">' +
+                    '<img class="todo-userpic pull-left" src="@Url.Content("~/Content/Images/Avatars/")' + (row.Avatar == null ? "profilepicture.png" : row.Avatar) + '" width="28px" height="28px">' +
+                    '</div></div>' +
+                    '<div class="cont-col2">' +
+                    '<div class="desc"> نام دانشجو : <span style=color:blue>' + row.NameFamily + '</span> - شماره دانشجویی : <span style=color:blue>' + row.StudentNumber +
+                    '</span> - رشته تحصیلی : <span style=color:blue>' + row.FieldofStudy + '</span></div>' +
+                    '<div class="desc"> شماره درخواست : <span style=color:green>' + row.Id + '</span> - تاریخ درخواست : <span style=color:green>' + row.CreateDate +
+                    '</span> - نوع پرونده : <span style=color:red>' + row.RequestType + '</span> - شماره : <span style=color:red>' + row.Number +
+                    '</span> - وضعیت : ';
+
+                if (row.RequestStatusId === @((int) RequestStatus.Waiting))
+                    result += '<span class="badge badge-warning"> @(RequestStatus.Waiting.GetDescription()) </span>';
+                else if (row.RequestStatusId === @((int) RequestStatus.Returned))
+                    result += '<span class="badge badge-danger"> @(RequestStatus.Returned.GetDescription()) </span>';
+                else if (row.RequestStatusId === @((int) RequestStatus.Verdict))
+                    {
+                    if (row.VoteTypeId === @((int) VoteType.FavorVote))
+                    result += '<span class="badge badge-success"> @(VoteType.FavorVote.GetDescription()) </span>';
+                else
+                    result += '<span class="badge badge-danger"> @(VoteType.Veto.GetDescription()) </span>';
+            }
+        else if (row.RequestStatusId === @((int) RequestStatus.AgreetoVote))
+        result += '<span class="badge badge-success"> @(RequestStatus.AgreetoVote.GetDescription()) </span>';
+        else if (row.RequestStatusId === @((int) RequestStatus.OppositiontoVote))
+        result += '<span class="badge badge-danger"> @(RequestStatus.OppositiontoVote.GetDescription()) </span>';
+
+        result += '</div><div class="desc">' + row.Description + '</div>' + '</div></div>' + '<div class="col2">';
+
+        if (row.RequestStatusId === @((int) RequestStatus.Returned) ||
+            row.RequestStatusId === @((int) RequestStatus.Waiting))
+        {
+            if (row.RequestTypeId === @((int) RequestType.Comision)) {
+            if('@HtmlExtensions.CanAccess(null, AccessLevel.SendCommissionToCartable)' === 'True')
+                result += '<a href="#" onclick="showModalConfirm(' + row.Id + ');" class="btn green-dark btn-outline btn-circle btn-sm" data-toggle="modal">' +
+                    'ارسال به کارتابل' +
+                    '<i class="fa fa-share-square"></i></a>';
+        } else if('@HtmlExtensions.CanAccess(null, AccessLevel.SendCouncilToCartable)' === 'True')
+            result += '<a href="#" onclick="showModalConfirm(' + row.Id + ');" class="btn green-dark btn-outline btn-circle btn-sm" data-toggle="modal">' +
+                'ارسال به کارتابل' +
+                '<i class="fa fa-share-square"></i></a>';
+        } else if('@HtmlExtensions.CanAccess(null, AccessLevel.ArchiveRequest)' === 'True')
+        {
+            @*result += '@Html.SecureActionLink(null, null, null, "ArchiveRequest", "بایگانی <i class='fa fa-archive'></i>", null, new Dictionary<string, object> {{"class", "btn blue-dark btn-outline btn-circle btn-sm"}, {"data_toggle", "modal"}, {"href", "javascript:void(0)"}, {"onclick", "ArchiveRequest()"}})';*@
+
+            result += '<a href="#" onclick="ArchiveRequest(' + index + ');" class="btn blue-dark btn-outline btn-circle btn-sm" data-toggle="modal">' +
+                'بایگانی' +
+                '<i class="fa fa-archive"></i></a>';
+        }
+
+        result += '</div></div><div class="col2"><div class="date">' + row.CreateDateReleative + '</div><span>';
+
+        if (row.RequestStatusId === @((int) RequestStatus.Returned) ||
+            row.RequestStatusId === @((int) RequestStatus.Waiting))
+        {
+            if (row.RequestTypeId === @((int) RequestType.Comision)) {
+            if ('@HtmlExtensions.CanAccess(null, AccessLevel.UpdateCommission)' === 'True')
+                result += '<a href="@Url.Action(MVC.Personel.Commission.Update())?requestId=' + row.Id + '" class="btn green btn-outline btn-circle btn-sm tooltips" title="ویرایش درخواست"><i class="fa fa fa-edit"></i></a>';
+        } else if ('@HtmlExtensions.CanAccess(null, AccessLevel.UpdateCouncil)' === 'True')
+                result += '<a href="@Url.Action(MVC.Personel.Council.Update())?requestId=' + row.Id + '" class="btn green btn-outline btn-circle btn-sm tooltips" title="ویرایش درخواست"><i class="fa fa fa-edit"></i></a>';
+        }
+        if ('@HtmlExtensions.CanAccess(null, AccessLevel.DeleteRequest)' === 'True')
+            result += '<a href="javascript:void(0)" onclick="DeleteRequest(' + index + ');" class="btn red btn-outline btn-circle btn-sm tooltips" title="حذف درخواست"><i class="fa fa fa-times"></i></a>';
+        result += '</span></div></li></ul>';
+
+        return result;
+        },
+        onError: function(index, row) {
+            mynotification(result.Message, 'ruby');
+        },
+        onSuccess: function(index, row) {
+            mynotification(result.Message, 'ruby');
+        }
+        });
+
+        function showModalConfirm(requestId) {
+            //if (requestId <= 0) {
+            //    mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+            //    return $(this).form('validate');
+            //}
+            $("#ConfirmDescription").val("");
+            $('#modalConfirm').modal('show');
+        }
+
+        @*function SendToCartable() {
+            var selectedRow = $('#dgRequest').datagrid('getSelected');
+            if (selectedRow === null || selectedRow == undefined) {
+                mynotification('لطفا رکورد مورد نظر را انتخاب کنید!', 'ruby');
+                return $(this).form('validate');
+            }
+            var requestId = selectedRow.Id;
+            var requestTypeId = selectedRow.RequestTypeId;
+            if ((requestId <= 0) || (requestTypeId <= 0)) {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            var urlSend = "";
+            if (requestTypeId === 1)
+                urlSend = '@Url.Action(MVC.Personel.Commission.SendCommissionToCartable(), "http")';
+            else {
+                urlSend = '@Url.Action(MVC.Personel.Council.SendCouncilToCartable(), "http")';
+            }
+            var desc = $("#ConfirmDescription").val();
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: urlSend,
+                type: 'Post',
+                dataType: 'json',
+                data: { requestId: requestId, rowNumber: @ViewBag.rowNumber, description: desc,fieldofStudyId:selectedRow.FieldofStudyId },
+                success: function(result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                        $('#dgRequest').datagrid('reload');
+                    }
+                },
+                error: function(xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+            return $(this).form('validate');
+        }*@
+
+        function ArchiveRequest(rowIndex) {
+            $('#dgRequest').datagrid('selectRow', rowIndex);
+            var selectedRow = $('#dgRequest').datagrid('getSelected');
+            if (selectedRow === null || selectedRow == undefined) {
+                mynotification('لطفا رکورد مورد نظر را انتخاب کنید!', 'ruby');
+                return $(this).form('validate');
+            }
+            var requestId = selectedRow.Id;
+            var requestTypeId = selectedRow.RequestTypeId;
+            if ((requestId <= 0) || (requestTypeId <= 0)) {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            @*if (selectedRow.RequestStatusId !== @((int) RequestStatus.AgreetoVote)) {
+                mynotification('درخواست مورد نظر در مرحله اتمام قرار ندارد!', 'ruby');
+            return $(this).form('validate');
+        }*@
+            $.messager.confirm('confirm', 'بایگانی شود؟', function(r) {
+                if (r) {
+                    $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                    $.ajax({
+                        cashe: false,
+                        url: '@Url.Action(MVC.Personel.Request.Archive(), "http")',
+                        type: 'Post',
+                        dataType: 'json',
+                        data: { requestId: requestId },
+                        success: function(result) {
+                            $.unblockUI();
+                            if (result.isError) {
+                                mynotification(result.Message, 'ruby');
+                            } else {
+                                mynotification(result.Message, 'lime');
+                                $('#dgRequest').datagrid('reload');
+                            }
+                        },
+                        error: function(xhr, status) {
+                            $.unblockUI();
+                            alert(xhr.responseText());
+                        }
+                    });
+                }
+            });
+        }
+        function DeleteRequest(rowIndex) {
+            $('#dgRequest').datagrid('selectRow', rowIndex);
+            var selectedRow = $('#dgRequest').datagrid('getSelected');
+            if (selectedRow === null || selectedRow == undefined) {
+                mynotification('لطفا رکورد مورد نظر را انتخاب کنید!', 'ruby');
+                return $(this).form('validate');
+            }
+            var requestId = selectedRow.Id;
+            var requestTypeId = selectedRow.RequestTypeId;
+            if ((requestId <= 0) || (requestTypeId <= 0)) {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            $.messager.confirm('confirm', 'آیا از حذف درخواست مورد نظر اطمینان دارید؟', function(r) {
+                if (r) {
+                    $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                    $.ajax({
+                        cashe: false,
+                        url: '@Url.Action(MVC.Personel.Request.DeleteRequest(), "http")',
+                        type: 'Post',
+                        dataType: 'json',
+                        data: { requestId: requestId },
+                        success: function(result) {
+                            $.unblockUI();
+                            if (result.isError) {
+                                mynotification(result.Message, 'ruby');
+                            } else {
+                                mynotification(result.Message, 'lime');
+                                $('#dgRequest').datagrid('reload');
+                            }
+                        },
+                        error: function(xhr, status) {
+                            $.unblockUI();
+                            alert(xhr.responseText());
+                        }
+                    });
+                }
+            });
+        }
+        function DetailRequest() {
+            var selected = $('#dgRequest').datalist('getSelected');
+            if (selected == null) {
+                mynotification('رکوردی انتخاب نشده است!', 'ruby');
+                return;
+            }
+            var rootUrl = '@Url.Action(MVC.Personel.Request.Index())';
+            var url = '@Url.Action(MVC.Personel.Request.DetailRequest())?requestId= ' + selected.Id + '&postId= -1' + '&rowNumber= ' + @ViewBag.rowNumber + '&lastCommissionSigner= -1' + '&lastCouncilSigner= -1' + '&rootUrl= ' + rootUrl;
+            window.location.href = url;
+        }
+    </script>
+}

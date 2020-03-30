@@ -1,0 +1,183 @@
+﻿@using Comision.Model.Enum
+@*<li class="nav-item start active open">
+    <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="icon-home"></i>
+        <span class="title">صفحه اصلی</span>
+        <span class="selected"></span>
+        <span class="arrow open"></span>
+    </a>
+</li>*@
+<li class="nav-item">
+    <a href="@Url.Action(MVC.Admin.Profile.Index())" class="nav-link nav-toggle">
+        <i class="icon-home"></i>
+        <span class="title">پروفایل</span>
+        <span class="selected"></span>
+        <span class="arrow open"></span>
+    </a>
+</li>
+<li class="nav-item  ">
+    <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="title">کاربران</span>
+        <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.Authentication.Index())" class="nav-link nav-toggle">
+                <span class="title">تعریف احراز هویت کاربران</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.Person.Index())" class=" nav-link nav-toggle">
+                <span class="title">کاربران سیستم</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item  ">
+    <a href="@Url.Action(MVC.Admin.Structure.Index())" class="nav-link nav-toggle">
+        <i class="icon-diamond"></i>
+        <span class="title">تعریف دپارتمان دانشگاه</span>
+        <span class="arrow"></span>
+    </a>
+</li>
+<li class="nav-item  ">
+    <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="title">سمت های سیستم</span>
+        <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.Post.Index())" class="nav-link nav-toggle">
+                <i class="icon-puzzle"></i>
+                <span class="title">تعریف سمت های سیستم</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.AssignmentPost.Index())" class="nav-link nav-toggle">
+                <i class="icon-wallet"></i>
+                <span class="title">انتساب سمت به کاربر</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item  ">
+    <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="title">نقش های سیستم</span>
+        <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.Role.Index())" class="nav-link nav-toggle">
+                <i class="icon-settings"></i>
+                <span class="title">تعریف نقش های سیستم</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.AssignmentRole.Index())" class="nav-link nav-toggle">
+                <i class="icon-wallet"></i>
+                <span class="title">انتساب نقش به کاربر</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.AssignmentPostUser.Index())" class="nav-link nav-toggle">
+                <i class="icon-wallet"></i>
+                <span class="title">انتساب اختیارات به کاربر</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item  ">
+    <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="title">اطلاعات پایه کمیسیون و شورا</span>
+        <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.SpecialEducation.Index())" class="nav-link nav-toggle">
+                <span class="title">موارد خاص آموزشی</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.Signers.Index(RequestType.Comision))" class="nav-link nav-toggle">
+                <span class="title">امضا کنندگان کمیسیون</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.Signers.Index(RequestType.Council))" class="nav-link nav-toggle">
+                <span class="title">امضا کنندگان شورا</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.Member.Index(RequestType.Comision))" class="nav-link nav-toggle">
+                <span class="title">اعضای کمیسیون</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.Member.Index(RequestType.Council))" class="nav-link nav-toggle">
+                <span class="title">اعضای شورا</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item  ">
+    <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="title">مدیریت متون پیش فرض</span>
+        <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.TextDefault.Index(TextDefaultType.VoteCommissionText))" class="nav-link nav-toggle">
+                <span class="title">متن صدور رای کمیسیون</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.TextDefault.Index(TextDefaultType.VoteCouncilText))" class="nav-link nav-toggle">
+                <span class="title">متن صدور رای شورا</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.TextDefault.Index(TextDefaultType.ProblemText))" class="nav-link nav-toggle">
+                <span class="title">متن مشکل آموزشی</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="@Url.Action(MVC.Admin.TextDefault.Index(TextDefaultType.SpecialEducationVerdictText))" class="nav-link nav-toggle">
+                <span class="title">متن ارجاعات</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item  ">
+    <a href="@Url.Action(MVC.Admin.Settings.Index())" class="nav-link nav-toggle">
+        <span class="title">تنظیمات</span>
+        <span class="arrow"></span>
+    </a>
+</li>
+<li class="nav-item  ">
+    <a href="@Url.Action(MVC.Admin.Slider.Index())" class="nav-link nav-toggle">
+        <span class="title">اسلایدر</span>
+        <span class="arrow"></span>
+    </a>
+</li>

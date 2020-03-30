@@ -1,0 +1,117 @@
+﻿@model Comision.Service.Model.RegisterProgramCentralOrganizationModel
+@{
+    //ViewBag.Title = "RegisterLicense";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="user-login-5">
+    <div class="row bs-reset">
+        <div class="col-md-6 login-container bs-reset">
+            <div class="row">
+                <div class="col-xs-6" style="text-align: center">
+                    <h1>فرم ثبت برنامه</h1>
+                </div>
+                <div class="col-xs-6">
+                    <img class="login-logo login-6" src="~/Content/Images/App/uni-logo.gif" style="width: 72px; height: 100px" />
+                </div>
+            </div>
+            <div class="login-content" style="margin-top:5%">
+                <p>جهت استفاده از سیستم وارد نمودن کد شناسایی نرم افزار الزامیست</p>
+                @using (Html.BeginForm(MVC.Account.RegisterProgramCentralOrganization(), FormMethod.Post, new { id = "registerCentralOrganization", @class = "login-form form-horizontal", style = "margin-top: 10px", role = "form" }))
+                {
+                    @Html.ValidationMessage("InvalidRegister", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.OrganName, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.NationalCode, "", new { @class = "text-danger" })
+                    @Html.AntiForgeryToken()
+                    <h4>اطلاعات اولیه سازمان</h4>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.LicenceCode, new { @class = "form-control", placeholder = "کد شناسایی" })
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.OrganName, new { @class = "form-control", placeholder = "نام سازمان" })
+                        </div>
+                    </div>
+                    <h4>اطلاعات کاربری</h4>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "آدرس ایمیل" })
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "تکرار رمز عبور" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "رمز عبور" })
+                        </div>
+                        <div class="col-xs-6">
+                        </div>
+                    </div>
+                    <h4>اطلاعات پروفایل</h4>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "نام" })
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.Family, new { @class = "form-control", placeholder = "نام خانوادگی" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.NationalCode, new { @class = "form-control", placeholder = "کد ملی" })
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "تلفن همراه" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <button class="btn blue" type="submit">ثبت نام</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="login-footer">
+                <div class="row bs-reset">
+                    <div class="col-xs-4 bs-reset">
+                        <ul class="login-social">
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-social-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-social-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-social-dribbble"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-8 bs-reset">
+                        <div class="login-copyright text-right">
+                            <p>Copyright &copy; Fekreman 2016</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 bs-reset">
+            <div class="login-bg"> </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $.validator.unobtrusive.parse('#registerCentralOrganization');
+    </script>
+
+}

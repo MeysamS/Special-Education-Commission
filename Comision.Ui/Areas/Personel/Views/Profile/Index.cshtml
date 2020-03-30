@@ -1,0 +1,84 @@
+﻿@model Comision.Service.Model.ProfileFullInfoModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/persianDate/css")
+<link href="~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+<link href="~/content/assets/global/plugins/bootstrap-select/css/bootstrap-select-rtl.min.css" rel="stylesheet" type="text/css" />
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">پروفایل</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> پروفایل</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                        <div class="tabbable-line">
+                            <ul class="nav nav-tabs ">
+                                <li class="active">
+                                    <a href="#tab_1" data-toggle="tab" aria-expanded="true"> اطلاعات شخصی </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_2" data-toggle="tab"> اطلاعات پرسنلی </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_3" data-toggle="tab"> اطلاعات کاربری </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_5" data-toggle="tab"> تغییر کلمه عبور </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1">
+                                    @Html.Partial(MVC.Personel.Profile.Views._Profile, Model.ProfileModel)
+                                </div>
+                                <div class="tab-pane" id="tab_2">
+                                    @Html.Partial(MVC.Personel.Profile.Views._Personel, Model.PersonelModel)
+                                </div>
+                                <div class="tab-pane" id="tab_3">
+                                    @Html.Partial(MVC.Personel.Profile.Views._User, Model.UserModel)
+                                </div>
+                                <div class="tab-pane" id="tab_5">
+                                    @Html.Partial(MVC.Admin.Profile.Views._Password, Model.PasswordModel)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-11">
+                        @Html.ValidationMessage("", new { @class = "pull-left text-danger" })
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/PersianDate")
+    <script src="~/content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/content/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
+
+    <script>
+        $('input[type=file]').change(function (e) {
+            ValidateFileUpload(this, 50000, ['gif', 'jpeg', 'jpg', 'png', 'tif', 'bmp']);
+        });
+    </script>
+}

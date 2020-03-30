@@ -1,0 +1,125 @@
+﻿@model Comision.Service.Model.StudentModel
+
+@using (Html.BeginForm(MVC.Admin.Profile.SaveStudent(), FormMethod.Post, new { id = "saveStudent", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+{
+        @Html.HiddenFor(m => m.PersonId, new { id = "PersonId3" })
+        <div class="form-group">
+            @Html.LabelFor(x => x.StudentNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                <div class="input-icon">
+                    @Html.TextBoxFor(m => m.StudentNumber, new { @class = "form-control", style = "max-width: none" })
+                </div>
+            </div>
+            @Html.LabelFor(x => x.FieldofStudyId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                <div class="input-icon">
+                    @Html.DropDownListFor(m => m.FieldofStudyId, TempData["FieldofStudy"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "cmbStudentFieldofStudy", @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Grade, new {@class = "col-md-2 control-label"})
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.DropDownListFor(m => m.Grade, TempData["Grade"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new {id = "cmbStudentGrade", @class = "form-control"})
+            </div>
+        </div>
+        @Html.LabelFor(x => x.MilitaryServiceStatus, new {@class = "col-md-2 control-label"})
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.DropDownListFor(m => m.MilitaryServiceStatus, TempData["MilitaryServiceStatus"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new {id = "cmbStudentMilitaryServiceStatus", @class = "form-control"})
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Active, new {@class = "col-md-2 control-label"})
+        <div class="col-md-2">
+            <div class="input-icon">
+                @Html.EditorFor(f => f.Active, new {@class = "form-control", style = "max-width: none;height:100px"})
+            </div>
+        </div>
+    </div>
+    <hr/>
+        <div class="form-group">
+            <div class="col-md-2"> </div>
+                <button type="button" class="btn blue" onclick="SaveStudent();">ذخیره</button> 
+                <a href='@Url.Action(MVC.Admin.Person.Index())' class="btn default">انصراف</a>
+                <a href="javascript:;" class="btn red" onclick="DeleteStudent(@Model.PersonId);">حذف اطلاعات دانشجویی</a>
+           </div>
+}
+
+<script>
+    function ClearStudentFields() {
+        $('#PersonId').val(0);
+        $('#StudentNumber').val("");
+        $('#cmbStudentGrade').val("");
+        $('#cmbStudentMilitaryServiceStatus').val("");
+        $('#cmbStudentFieldofStudy').val("");
+        $('#Active').attr('checked', false);;
+    }
+
+    function SaveStudent() {
+        $('#StudentModel_PersonId').val($('#ProfileModel_PersonId').val());
+        if (Number($('#StudentModel_PersonId').val()) <= 0) {
+            mynotification('اطلاعات مورد نظر قابل ذخیره سازی نمی باشد!', 'ruby');
+            return $(this).form('validate');
+        }
+        if ($('#StudentNumber').val() == null) {
+            mynotification('لطفا شماره دانشجویی را وارد کنید!', 'ruby');
+            return $(this).form('validate');
+        }
+        if ($('#FieldofStudyId').val() < 0) {
+            mynotification('لطفا رشته تحصیلی را وارد کنید!', 'ruby');
+            return $(this).form('validate');
+        }
+        $('#PersonId3').val($('#PersonId').val());
+        if ($('#saveStudent').valid()) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $('#saveStudent').ajaxSubmit({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.Profile.SaveStudent(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                //data: { special: strSpecialEducation },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+        } else {
+            mynotification('خطا در ورود اطلاعات.', 'ruby');
+            return $(this).form('validate');
+        }
+        return $(this).form('validate');
+    }
+
+    function DeleteStudent(personId2) {
+        var personId = $('#PersonId').val();
+        if (personId === null || personId <= 0) {
+            mynotification("خطا در حذف رکورد مورد نظر", 'ruby');
+            return;
+        }
+        $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+            if (r) {
+                $.blockUI({ boxed: true, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.post('@Url.Action(MVC.Admin.Profile.DeleteStudent(), "http")', { personId: personId }, function (result) {
+                    $.unblockUI();
+                    if (!result.isError) {
+                        ClearStudentFields();
+                        mynotification(result.Message, 'lime');
+                    } else {
+                        mynotification(result.Message, 'ruby');
+                    }
+                }, 'json');
+            }
+        });
+    }
+</script>

@@ -1,0 +1,187 @@
+﻿@using Comision.Model.Enum
+@model Comision.Service.Model.SignerModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    // Model.RequestType= (RequestType)ViewData["RequestType"];
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <span>@ViewData["RequestTypeText"]</span>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> لیست امضاء کنندگان @ViewData["RequestTypeText"]</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Ajax.BeginForm(MVC.Admin.Signers.ActionNames.AddOrUpdateSigner, MVC.Admin.Signers.Name,
+               ajaxOptions: new AjaxOptions { HttpMethod = "Post", OnSuccess = "successSave", OnFailure = "failureSave",OnBegin = "loading" },
+               routeValues: null,
+                   htmlAttributes: new { id = "signersform", @class = "form-horizontal" }))
+                {
+                    @Html.HiddenFor(x => x.Id);
+
+                    @Html.HiddenFor(x => x.RequestType, (RequestType)ViewData["RequestType"]);
+
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">عنوان </label>
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    @Html.DropDownListFor(m => m.PostId, ViewData["PostList"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "ddlPostList", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">اولیت مرحله</label>
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    @Html.DropDownListFor(m => m.RowNumber, ViewData["RowNumber"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "ddlRowNumber", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" value="ذخیره" class="btn blue" />
+                            <button type="button" class="btn default" onclick="ClearEdit();">انصراف</button>
+                        </div>
+
+                    </div>
+                }
+                <h3 class="form-section">امضاء کنندگان @ViewData["RequestTypeText"]</h3>
+
+                <table id="dgSigners"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        function loading() {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+        }
+
+        function failureSave(result) {
+            $.unblockUI();
+            mynotification(result.Message, 'ruby');
+        }
+
+        function successSave(result) {
+            $.unblockUI();
+            ClearEdit();
+            if (result.IsError) {
+                mynotification(result.Message, 'ruby');
+                return;
+            }
+            mynotification(result.Message, 'lime');
+            $('#dgSigners').datagrid('reload');
+        }
+
+        $('#dgSigners').datagrid(
+        {
+            fit: true,
+            idField: 'Id',
+            loadMsg: 'شکیبا باشید...',
+            rownumbers: true,
+            height: '480',
+            singleSelect: true,
+            fitColumns: true,
+            pagination: true,
+            pagePosition: 'bottom',
+            striped: 'true',
+            pageSize: 10,
+            url: '@Url.Action(MVC.Admin.Signers.GetSigner((RequestType) @ViewData["RequestType"]))',
+            onSuccess: function (index, row) {
+
+            },
+            onError: function (index, row) {
+                $(this).datagrid('cancelEdit', index);
+                $(this).datagrid('reload');
+            },
+            columns: [
+                [
+                    { field: 'Id', hidden: 'hidden', editor: { type: 'validatebox', width: 300 } },
+                    { field: 'PostId', hidden: 'hidden', title: 'عنوان سمت', width: 300 },
+                    { field: 'Name', title: 'عنوان سمت', width: 300 },
+                    { field: 'RowNumber', title: 'اولویت مرحله', width: 100 },
+                    {
+                        field: 'Action',
+                        title: 'عملیات',
+                        width: 100,
+                        align: 'center',
+                        formatter: function (value, rows, index) {
+                            return '<a href="javascript:void(0)"  onclick="deleteSigner(' + rows.Id + ')">' +
+                                '<img class="delete"  src="/content/jquery-easyui-1.4.2/themes/icons/cancel.png"/></a>' +
+                                '<a  href="javascript:void(0)" onclick="editSigner(' + index + ')">' +
+                                '<img src="/content/jquery-easyui-1.4.2/themes/icons/pencil.png" title="ویرایش"/></a>&nbsp&nbsp&nbsp';
+                        }
+                    }
+                ]
+            ]
+        });
+        var pager = $('#dgSigners').datagrid('getPager');
+        $(pager).pagination({
+            pageSize: 10,
+            showPageList: true,
+            pageList: [10, 20, 50],
+            beforePageText: 'صفحه',
+            afterPageText: 'از {pages}',
+            displayMsg: 'نمایش اطلاعات  {from} تا {to} از {total}'
+        });
+
+        function ClearEdit() {
+            $('#ddlPostList').val(0);
+            $('#Id').val(0);
+            $('#ddlRowNumber').val(0);
+        }
+
+        function editSigner(rowIndex) {
+            $("#dgSigners").datagrid("selectRow", rowIndex);
+            var data = $("#dgSigners").datagrid("getSelected");
+            $('#ddlPostList').val(data.PostId);
+            $('#Id').val(data.Id);
+            $('#ddlRowNumber').val(data.RowNumber);
+        }
+
+        function deleteSigner(id) {
+            if (id === null) {
+                mynotification("خطا در حذف رکورد مورد نظر!", 'ruby');
+                return;
+            }
+            $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+                if (r) {
+                    $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                    $.post('@Url.Action(MVC.Admin.Signers.DeleteSigner(), "http")', { id: id }, function (result) {
+                        $.unblockUI();
+                        if (!result.IsError) {
+                            $('#dgSigners').datagrid('reload');
+                        }
+                        mynotification(result.Message, result.IsError ? 'ruby' : 'lime');
+                    }, 'json');
+                }
+            });
+        }
+    </script>
+}
+
+
+
+
+

@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C6FB0C8A-8DFF-4D3E-AF82-9B43C6B5002F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Comision.Repository</RootNamespace>
+    <AssemblyName>Comision.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.2.0\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.web.4.0.0.315\lib\net40\StructureMap.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ImplementationRepository\ApplicationRoleManager.cs" />
+    <Compile Include="ImplementationRepository\ApplicationSignInManager.cs" />
+    <Compile Include="ImplementationRepository\ApplicationUserManager.cs" />
+    <Compile Include="ImplementationRepository\AttachmentRepository.cs" />
+    <Compile Include="ImplementationRepository\EmailService.cs" />
+    <Compile Include="ImplementationRepository\MemberMasterRepository.cs" />
+    <Compile Include="ImplementationRepository\OrganizationStructureNameRepository.cs" />
+    <Compile Include="ImplementationRepository\PermissionRepository.cs" />
+    <Compile Include="ImplementationRepository\PersonelRepository.cs" />
+    <Compile Include="ImplementationRepository\PersonRepository.cs" />
+    <Compile Include="ImplementationRepository\PostPersonRepository.cs" />
+    <Compile Include="ImplementationRepository\PostRepository.cs" />
+    <Compile Include="ImplementationRepository\ProfileRepository.cs" />
+    <Compile Include="ImplementationRepository\CartableRepository.cs" />
+    <Compile Include="ImplementationRepository\RequestRepository.cs" />
+    <Compile Include="ImplementationRepository\RolePermissionRepository.cs" />
+    <Compile Include="ImplementationRepository\RoleRepository.cs" />
+    <Compile Include="ImplementationRepository\SettingsRepository.cs" />
+    <Compile Include="ImplementationRepository\SignerRepository.cs" />
+    <Compile Include="ImplementationRepository\SliderRepository.cs" />
+    <Compile Include="ImplementationRepository\SmsService.cs" />
+    <Compile Include="ImplementationRepository\SpecialEducationRepository.cs" />
+    <Compile Include="ImplementationRepository\StudentRepository.cs" />
+    <Compile Include="ImplementationRepository\TextDefaultRepository.cs" />
+    <Compile Include="ImplementationRepository\UniversityRepository.cs" />
+    <Compile Include="ImplementationRepository\UserClaimRepository.cs" />
+    <Compile Include="ImplementationRepository\UserLoginRepository.cs" />
+    <Compile Include="ImplementationRepository\UserPostRepository.cs" />
+    <Compile Include="ImplementationRepository\UserRepository.cs" />
+    <Compile Include="ImplementationRepository\ArchiveRepository.cs" />
+    <Compile Include="ImplementationRepository\AuthenticationRepository.cs" />
+    <Compile Include="ImplementationRepository\BranchProvinceRepository.cs" />
+    <Compile Include="ImplementationRepository\CentralOrganizationRepository.cs" />
+    <Compile Include="ImplementationRepository\CollegeRepository.cs" />
+    <Compile Include="ImplementationRepository\CommissionRepository.cs" />
+    <Compile Include="ImplementationRepository\CommissionSpecialEducationRepository.cs" />
+    <Compile Include="ImplementationRepository\CouncilRepository.cs" />
+    <Compile Include="ImplementationRepository\EducationalGroupRepository.cs" />
+    <Compile Include="ImplementationRepository\FieldofStudyRepository.cs" />
+    <Compile Include="ImplementationRepository\MemberDetailsRepository.cs" />
+    <Compile Include="ImplementationRepository\UserRoleRepository.cs" />
+    <Compile Include="ImplementationRepository\VoteRepository.cs" />
+    <Compile Include="IRepository\IApplicationRoleManager.cs" />
+    <Compile Include="IRepository\IApplicationSignInManager.cs" />
+    <Compile Include="IRepository\IApplicationUserManager.cs" />
+    <Compile Include="IRepository\IAttachmentRepository.cs" />
+    <Compile Include="IRepository\IMemberMasterRepository.cs" />
+    <Compile Include="IRepository\IOrganizationStructureNameRepository.cs" />
+    <Compile Include="IRepository\IPermissionRepository.cs" />
+    <Compile Include="IRepository\IPersonelRepository.cs" />
+    <Compile Include="IRepository\IPersonRepository.cs" />
+    <Compile Include="IRepository\IPostPersonRepository.cs" />
+    <Compile Include="IRepository\IPostRepository.cs" />
+    <Compile Include="IRepository\IProfileRepository.cs" />
+    <Compile Include="IRepository\ICartableRepository.cs" />
+    <Compile Include="IRepository\IRequestRepository.cs" />
+    <Compile Include="IRepository\IRolePermissionRepository.cs" />
+    <Compile Include="IRepository\IRoleRepository.cs" />
+    <Compile Include="IRepository\ISignerRepository.cs" />
+    <Compile Include="IRepository\ISliderRepository.cs" />
+    <Compile Include="IRepository\ISpecialEducationRepository.cs" />
+    <Compile Include="IRepository\IStudentRepository.cs" />
+    <Compile Include="IRepository\ITextDefaultRepository.cs" />
+    <Compile Include="IRepository\IUniversityRepository.cs" />
+    <Compile Include="IRepository\IUserClaimRepository.cs" />
+    <Compile Include="IRepository\IUserLoginRepository.cs" />
+    <Compile Include="IRepository\IUserPostRepository.cs" />
+    <Compile Include="IRepository\IUserRepository.cs" />
+    <Compile Include="IRepository\IArchiveRepository.cs" />
+    <Compile Include="IRepository\IAuthenticationRepository.cs" />
+    <Compile Include="IRepository\IBranchProvinceRepository.cs" />
+    <Compile Include="IRepository\ICentralOrganizationRepository.cs" />
+    <Compile Include="IRepository\ICollegeRepository.cs" />
+    <Compile Include="IRepository\ICommissionRepository.cs" />
+    <Compile Include="IRepository\ICommissionSpecialEducationRepository.cs" />
+    <Compile Include="IRepository\ICouncilRepository.cs" />
+    <Compile Include="IRepository\IEducationalGroupRepository.cs" />
+    <Compile Include="IRepository\IFieldofStudyRepository.cs" />
+    <Compile Include="IRepository\IMainRepository.cs" />
+    <Compile Include="ImplementationRepository\MainRepository.cs" />
+    <Compile Include="IRepository\IUserRoleRepository.cs" />
+    <Compile Include="IRepository\IMemberDetailsRepository.cs" />
+    <Compile Include="IRepository\IVoteRepository.cs" />
+    <Compile Include="IRepository\ISettingsRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositorySetupDependency.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Comision.Data\Comision.Data.csproj">
+      <Project>{ac363a2e-67b5-416a-981d-5e4f472194a1}</Project>
+      <Name>Comision.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Comision.Model\Comision.Model.csproj">
+      <Project>{6f6b9b36-30bc-409f-aebe-2ba502c18e5c}</Project>
+      <Name>Comision.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

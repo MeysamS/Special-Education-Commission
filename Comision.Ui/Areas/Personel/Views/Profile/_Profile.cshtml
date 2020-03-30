@@ -1,0 +1,168 @@
+﻿@model Comision.Service.Model.ProfileModel
+
+@using (Html.BeginForm(MVC.Personel.Profile.SaveProfile(), FormMethod.Post, new { id = "saveProfile", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+{
+    @Html.HiddenFor(m => m.PersonId)
+    @Html.HiddenFor(m => m.Avatar)
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+        @Html.LabelFor(x => x.Family, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.Family, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.NationalCode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.NationalCode, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+        @Html.LabelFor(x => x.BirthcertificateNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.BirthcertificateNumber, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.PhoneWork, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.PhoneWork, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+        @Html.LabelFor(x => x.Mobile, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <div class="input-icon">
+                @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", style = "max-width: none" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Gender, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        <div class="icheck-inline">
+                            @Html.DropDownListFor(m => m.Gender, TempData["Gender"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "cmbProfileGender", @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.BrithDate, new { id = "BrithDate", @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        @Html.EditorFor(f => f.BrithDate, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Description, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", style = "max-width: none", rows = "3" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-4 control-label">تصویر کاربر(حداکثر 60kb)</label>
+                <div class="col-md-8">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                            <img id="imgAvatar" src="~/Content/Images/Avatars/@Model.Avatar" class="header-avatar" />
+                        </div>
+                        <div id="divImageAvatar" class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
+                        <div>
+                            <span class="btn default btn-file">
+                                <span class="fileinput-new"> انتخاب تصویر </span>
+                                <span class="fileinput-exists"> تغییر </span>
+                                <input type="hidden" value="" name="...">
+                                <input id="avatarFile" type="file" name="avatarFile">                                
+                            </span>
+                            <a href="javascript:;" class="btn red" onclick="DeleteAvatarPicture(@Model.PersonId);"> حذف </a>
+                            @*<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> حذف </a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <div class="col-md-2"></div>
+        <button type="button" class="btn blue" onclick="SaveProfile();">ذخیره</button>
+        <a href='@(MVC.Admin.Person.Index())' class="btn default">انصراف</a>
+    </div>
+}
+
+<script>
+ 
+    function DeleteAvatarPicture(PersonId) {
+
+        $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+            if (r) {
+                $.blockUI({ boxed: true, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.post('@Url.Action(MVC.Personel.Profile.DeleteAvatar(), "http")', { profileId:PersonId  }, function (result) {
+                    $.unblockUI();
+                    if (!result.isError) {
+                        $('#Avatar').val("");
+                        $('#avatarFile').val("");
+                        $('#imgAvatar').attr("src", "");
+                        $('#divImageAvatar').children().attr("src", "");
+                        mynotification(result.Message, 'lime');
+                    } else {
+                        mynotification(result.Message, 'ruby');
+                    }
+                }, 'json');
+            }
+        });
+    }
+    function SaveProfile() {
+        if (Number($('#ProfileModel_PersonId').val()) <= 0) {
+            mynotification('اطلاعات مورد نظر قابل ذخیره سازی نمی باشد!', 'ruby');
+            return $(this).form('validate');
+        }
+        if ($('#NationalCode').val() == null) {
+            mynotification('لطفا شماره ملی را وارد کنید!', 'ruby');
+            return $(this).form('validate');
+        }
+        if ($('#saveProfile').valid()) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $('#saveProfile').ajaxSubmit({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Profile.SaveProfile(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                //data: { special: strSpecialEducation },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    alert(xhr.responseText());
+                }
+            });
+        } else {
+            mynotification('خطا در ورود اطلاعات.', 'ruby');
+            return $(this).form('validate');
+        }
+        return $(this).form('validate');
+    }
+</script>

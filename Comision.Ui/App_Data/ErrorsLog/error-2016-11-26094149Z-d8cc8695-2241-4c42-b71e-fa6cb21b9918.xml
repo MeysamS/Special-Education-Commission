@@ -1,0 +1,188 @@
+﻿<error errorId="d8cc8695-2241-4c42-b71e-fa6cb21b9918" application="/LM/W3SVC/2/ROOT" host="ALI-LAPTOP" type="System.Reflection.AmbiguousMatchException" message="The current request for action 'AddOrUpdate' on controller type 'TextDefaultController' is ambiguous between the following action methods:&#xD;&#xA;System.Web.Mvc.ActionResult AddOrUpdate(Comision.Ui.Areas.Admin.Models.TextDefaultViewModel) on type Comision.Ui.Areas.Admin.Controllers.TextDefaultController&#xD;&#xA;System.Web.Mvc.ActionResult AddOrUpdate(System.String, Int32) on type Comision.Ui.Areas.Admin.Controllers.TextDefaultController" source="System.Web.Mvc" detail="System.Reflection.AmbiguousMatchException: The current request for action 'AddOrUpdate' on controller type 'TextDefaultController' is ambiguous between the following action methods:&#xD;&#xA;System.Web.Mvc.ActionResult AddOrUpdate(Comision.Ui.Areas.Admin.Models.TextDefaultViewModel) on type Comision.Ui.Areas.Admin.Controllers.TextDefaultController&#xD;&#xA;System.Web.Mvc.ActionResult AddOrUpdate(System.String, Int32) on type Comision.Ui.Areas.Admin.Controllers.TextDefaultController&#xD;&#xA;   at System.Web.Mvc.ActionMethodSelectorBase.FindActionMethod(ControllerContext controllerContext, String actionName)&#xD;&#xA;   at System.Web.Mvc.Async.ReflectedAsyncControllerDescriptor.FindAction(ControllerContext controllerContext, String actionName)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.FindAction(ControllerContext controllerContext, ControllerDescriptor controllerDescriptor, String actionName)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.BeginInvokeAction(ControllerContext controllerContext, String actionName, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1c(AsyncCallback asyncCallback, Object asyncState, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallBeginDelegate(AsyncCallback callback, Object callbackState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.Begin(AsyncCallback callback, Object state, Int32 timeout)&#xD;&#xA;   at System.Web.Mvc.Controller.BeginExecuteCore(AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__14(AsyncCallback asyncCallback, Object callbackState, Controller controller)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallBeginDelegate(AsyncCallback callback, Object callbackState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.Begin(AsyncCallback callback, Object state, Int32 timeout)&#xD;&#xA;   at System.Web.Mvc.Controller.BeginExecute(RequestContext requestContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.BeginExecute(RequestContext requestContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__4(AsyncCallback asyncCallback, Object asyncState, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallBeginDelegate(AsyncCallback callback, Object callbackState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.Begin(AsyncCallback callback, Object state, Int32 timeout)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="ali.kalij@gmail.com" time="2016-11-26T09:41:49.8174498Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CACHE_CONTROL:no-cache&#xD;&#xA;HTTP_CONNECTION:Keep-Alive&#xD;&#xA;HTTP_CONTENT_LENGTH:25&#xD;&#xA;HTTP_CONTENT_TYPE:application/x-www-form-urlencoded; charset=UTF-8&#xD;&#xA;HTTP_ACCEPT:application/json, text/javascript, */*; q=0.01&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.7,fa;q=0.3&#xD;&#xA;HTTP_COOKIE:__RequestVerificationToken=LE0V4ik8UwilZE0mGpi1Qkiny5V1CT--HlWZUSfg19u3Zk4lfQMJhs5tR1vYMpVSqknEE6Fi8gC-XHK1GMK-eaqGyxHVlMv6Noz6IqX47uA1; ASP.NET_SessionId=2ovlkqkvkv5vyjtt3jhadco2; comisionLogin=isNh4DKeZjMA27FD2A-RO1wXg9FqCLI4Ikhppz_Vxoiyj0yNp-b0JhsSIj6PlAk24D72qyAm6EQCK7zv6pLgSwR6quAVaqsj6UfPKmu_qVEcDTmoA-Vy8-79EllxeDZzY-9Fnx-SuBgj887qr4TgFSDvyfRLdjX8o6wJYeNPt_6FSCkDts1rt7sy0WzIFPSYdYjJI3ggUtZRtJIPYeQLKKRD2KWQj4_eD4ZTrkb_tDLmSYxR8dfFNmsybzXNxiapuECarP8o4rsV_e45Iywm_yUQH6USveTtKHC5hANKmwbMimqxkpAC9rlSMcSlNyN492c24AMIumIhomxYCmy0XvuBgUcfLfpp9QihjOHs7xhoj-0yiNzoGeClAQJVi49KoC8QAZDI-s3nWR1c9q19Bk1pCME3Ejk6aJUhPkFLaPZTwendL4UUTrcBdabuLc8e0uwmRrlS_CBQhGTPXyPGjOQ8DRluQLrzbSPmkPQiU7pu0D0Wnk4tH8eR3eqlybuCyq4wdXllXep8GjVcHjRVXepCJ5JBR3gBOeldj2928plm40dmZj94aj3IbflbginGZjCMSnm7RB0noXWuoIlZBI3VIPk9ahtz0IzE7r5GG44WYBPiEUCFd0CVu_YYrhsubdpNmBdi_fvFgSXJ25dw6vE3ZYHA9P9xGHb5a0QxuCXveSz_CzSQsQ_KYEifyw1RTnV2Zs-BcFPGy_1cuHPnwu-o6NDs0-TzvkLrWmFi4Abiz9t2xUydui1SkoO8-OJmxC4Gc8aVXQUrF2KMumapm-hRL9tFrJl9uu-x859mj4x8jNDMAsG_dx-cOnGI0aZA69GsqkuIHdmKliYw-jMGWg&#xD;&#xA;HTTP_HOST:localhost:3298&#xD;&#xA;HTTP_REFERER:http://localhost:3298/Personel/Cartable/Vote?requestId=%2016&amp;postId=6&amp;rowNumber=5&amp;requestType=1&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393&#xD;&#xA;HTTP_X_REQUESTED_WITH:XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Cache-Control: no-cache&#xD;&#xA;Connection: Keep-Alive&#xD;&#xA;Content-Length: 25&#xD;&#xA;Content-Type: application/x-www-form-urlencoded; charset=UTF-8&#xD;&#xA;Accept: application/json, text/javascript, */*; q=0.01&#xD;&#xA;Accept-Encoding: gzip, deflate&#xD;&#xA;Accept-Language: en-US,en;q=0.7,fa;q=0.3&#xD;&#xA;Cookie: __RequestVerificationToken=LE0V4ik8UwilZE0mGpi1Qkiny5V1CT--HlWZUSfg19u3Zk4lfQMJhs5tR1vYMpVSqknEE6Fi8gC-XHK1GMK-eaqGyxHVlMv6Noz6IqX47uA1; ASP.NET_SessionId=2ovlkqkvkv5vyjtt3jhadco2; comisionLogin=isNh4DKeZjMA27FD2A-RO1wXg9FqCLI4Ikhppz_Vxoiyj0yNp-b0JhsSIj6PlAk24D72qyAm6EQCK7zv6pLgSwR6quAVaqsj6UfPKmu_qVEcDTmoA-Vy8-79EllxeDZzY-9Fnx-SuBgj887qr4TgFSDvyfRLdjX8o6wJYeNPt_6FSCkDts1rt7sy0WzIFPSYdYjJI3ggUtZRtJIPYeQLKKRD2KWQj4_eD4ZTrkb_tDLmSYxR8dfFNmsybzXNxiapuECarP8o4rsV_e45Iywm_yUQH6USveTtKHC5hANKmwbMimqxkpAC9rlSMcSlNyN492c24AMIumIhomxYCmy0XvuBgUcfLfpp9QihjOHs7xhoj-0yiNzoGeClAQJVi49KoC8QAZDI-s3nWR1c9q19Bk1pCME3Ejk6aJUhPkFLaPZTwendL4UUTrcBdabuLc8e0uwmRrlS_CBQhGTPXyPGjOQ8DRluQLrzbSPmkPQiU7pu0D0Wnk4tH8eR3eqlybuCyq4wdXllXep8GjVcHjRVXepCJ5JBR3gBOeldj2928plm40dmZj94aj3IbflbginGZjCMSnm7RB0noXWuoIlZBI3VIPk9ahtz0IzE7r5GG44WYBPiEUCFd0CVu_YYrhsubdpNmBdi_fvFgSXJ25dw6vE3ZYHA9P9xGHb5a0QxuCXveSz_CzSQsQ_KYEifyw1RTnV2Zs-BcFPGy_1cuHPnwu-o6NDs0-TzvkLrWmFi4Abiz9t2xUydui1SkoO8-OJmxC4Gc8aVXQUrF2KMumapm-hRL9tFrJl9uu-x859mj4x8jNDMAsG_dx-cOnGI0aZA69GsqkuIHdmKliYw-jMGWg&#xD;&#xA;Host: localhost:3298&#xD;&#xA;Referer: http://localhost:3298/Personel/Cartable/Vote?requestId=%2016&amp;postId=6&amp;rowNumber=5&amp;requestType=1&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393&#xD;&#xA;X-Requested-With: XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="G:\ALI\Lesson\ComponyProject\Commission\Comision.Ui\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="ApplicationCookie" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="ali.kalij@gmail.com" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="ali.kalij@gmail.com" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="ali.kalij@gmail.com" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="25" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="application/x-www-form-urlencoded; charset=UTF-8" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Admin/TextDefault/AddOrUpdate" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="G:\ALI\Lesson\ComponyProject\Commission\Comision.Ui\Admin\TextDefault\AddOrUpdate" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="8941" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="POST" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Admin/TextDefault/AddOrUpdate" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="3298" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/Admin/TextDefault/AddOrUpdate" />
+    </item>
+    <item name="HTTP_CACHE_CONTROL">
+      <value string="no-cache" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="Keep-Alive" />
+    </item>
+    <item name="HTTP_CONTENT_LENGTH">
+      <value string="25" />
+    </item>
+    <item name="HTTP_CONTENT_TYPE">
+      <value string="application/x-www-form-urlencoded; charset=UTF-8" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="application/json, text/javascript, */*; q=0.01" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.7,fa;q=0.3" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__RequestVerificationToken=LE0V4ik8UwilZE0mGpi1Qkiny5V1CT--HlWZUSfg19u3Zk4lfQMJhs5tR1vYMpVSqknEE6Fi8gC-XHK1GMK-eaqGyxHVlMv6Noz6IqX47uA1; ASP.NET_SessionId=2ovlkqkvkv5vyjtt3jhadco2; comisionLogin=isNh4DKeZjMA27FD2A-RO1wXg9FqCLI4Ikhppz_Vxoiyj0yNp-b0JhsSIj6PlAk24D72qyAm6EQCK7zv6pLgSwR6quAVaqsj6UfPKmu_qVEcDTmoA-Vy8-79EllxeDZzY-9Fnx-SuBgj887qr4TgFSDvyfRLdjX8o6wJYeNPt_6FSCkDts1rt7sy0WzIFPSYdYjJI3ggUtZRtJIPYeQLKKRD2KWQj4_eD4ZTrkb_tDLmSYxR8dfFNmsybzXNxiapuECarP8o4rsV_e45Iywm_yUQH6USveTtKHC5hANKmwbMimqxkpAC9rlSMcSlNyN492c24AMIumIhomxYCmy0XvuBgUcfLfpp9QihjOHs7xhoj-0yiNzoGeClAQJVi49KoC8QAZDI-s3nWR1c9q19Bk1pCME3Ejk6aJUhPkFLaPZTwendL4UUTrcBdabuLc8e0uwmRrlS_CBQhGTPXyPGjOQ8DRluQLrzbSPmkPQiU7pu0D0Wnk4tH8eR3eqlybuCyq4wdXllXep8GjVcHjRVXepCJ5JBR3gBOeldj2928plm40dmZj94aj3IbflbginGZjCMSnm7RB0noXWuoIlZBI3VIPk9ahtz0IzE7r5GG44WYBPiEUCFd0CVu_YYrhsubdpNmBdi_fvFgSXJ25dw6vE3ZYHA9P9xGHb5a0QxuCXveSz_CzSQsQ_KYEifyw1RTnV2Zs-BcFPGy_1cuHPnwu-o6NDs0-TzvkLrWmFi4Abiz9t2xUydui1SkoO8-OJmxC4Gc8aVXQUrF2KMumapm-hRL9tFrJl9uu-x859mj4x8jNDMAsG_dx-cOnGI0aZA69GsqkuIHdmKliYw-jMGWg" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:3298" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:3298/Personel/Cartable/Vote?requestId=%2016&amp;postId=6&amp;rowNumber=5&amp;requestType=1" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393" />
+    </item>
+    <item name="HTTP_X_REQUESTED_WITH">
+      <value string="XMLHttpRequest" />
+    </item>
+  </serverVariables>
+  <form>
+    <item name="text">
+      <value string="aa" />
+    </item>
+    <item name="textDefaultType">
+      <value string="1" />
+    </item>
+  </form>
+  <cookies>
+    <item name="__RequestVerificationToken">
+      <value string="LE0V4ik8UwilZE0mGpi1Qkiny5V1CT--HlWZUSfg19u3Zk4lfQMJhs5tR1vYMpVSqknEE6Fi8gC-XHK1GMK-eaqGyxHVlMv6Noz6IqX47uA1" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="2ovlkqkvkv5vyjtt3jhadco2" />
+    </item>
+    <item name="comisionLogin">
+      <value string="isNh4DKeZjMA27FD2A-RO1wXg9FqCLI4Ikhppz_Vxoiyj0yNp-b0JhsSIj6PlAk24D72qyAm6EQCK7zv6pLgSwR6quAVaqsj6UfPKmu_qVEcDTmoA-Vy8-79EllxeDZzY-9Fnx-SuBgj887qr4TgFSDvyfRLdjX8o6wJYeNPt_6FSCkDts1rt7sy0WzIFPSYdYjJI3ggUtZRtJIPYeQLKKRD2KWQj4_eD4ZTrkb_tDLmSYxR8dfFNmsybzXNxiapuECarP8o4rsV_e45Iywm_yUQH6USveTtKHC5hANKmwbMimqxkpAC9rlSMcSlNyN492c24AMIumIhomxYCmy0XvuBgUcfLfpp9QihjOHs7xhoj-0yiNzoGeClAQJVi49KoC8QAZDI-s3nWR1c9q19Bk1pCME3Ejk6aJUhPkFLaPZTwendL4UUTrcBdabuLc8e0uwmRrlS_CBQhGTPXyPGjOQ8DRluQLrzbSPmkPQiU7pu0D0Wnk4tH8eR3eqlybuCyq4wdXllXep8GjVcHjRVXepCJ5JBR3gBOeldj2928plm40dmZj94aj3IbflbginGZjCMSnm7RB0noXWuoIlZBI3VIPk9ahtz0IzE7r5GG44WYBPiEUCFd0CVu_YYrhsubdpNmBdi_fvFgSXJ25dw6vE3ZYHA9P9xGHb5a0QxuCXveSz_CzSQsQ_KYEifyw1RTnV2Zs-BcFPGy_1cuHPnwu-o6NDs0-TzvkLrWmFi4Abiz9t2xUydui1SkoO8-OJmxC4Gc8aVXQUrF2KMumapm-hRL9tFrJl9uu-x859mj4x8jNDMAsG_dx-cOnGI0aZA69GsqkuIHdmKliYw-jMGWg" />
+    </item>
+  </cookies>
+</error>

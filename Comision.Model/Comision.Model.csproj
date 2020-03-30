@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6F6B9B36-30BC-409F-AEBE-2BA502C18E5C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Comision.Model</RootNamespace>
+    <AssemblyName>Comision.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.web.4.0.0.315\lib\net40\StructureMap.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Auditable.cs" />
+    <Compile Include="Common\AuditableEntity.cs" />
+    <Compile Include="Common\Entity.cs" />
+    <Compile Include="Common\IAuditableEntity.cs" />
+    <Compile Include="Common\IEntity.cs" />
+    <Compile Include="Common\MimeTypeDetector.cs" />
+    <Compile Include="Configuration\ArchiveConfiguration.cs" />
+    <Compile Include="Configuration\AttachmentConfiguration.cs" />
+    <Compile Include="Configuration\AuthenticationConfiguration.cs" />
+    <Compile Include="Configuration\BranchProvinceConfiguration.cs" />
+    <Compile Include="Configuration\CentralOrganizationConfiguration.cs" />
+    <Compile Include="Configuration\CollegeConfiguration.cs" />
+    <Compile Include="Configuration\CommissionConfiguration.cs" />
+    <Compile Include="Configuration\CommissionSpecialEducationConfiguration.cs" />
+    <Compile Include="Configuration\CouncilConfiguration.cs" />
+    <Compile Include="Configuration\EducationalGroupConfiguration.cs" />
+    <Compile Include="Configuration\FieldofStudyConfiguration.cs" />
+    <Compile Include="Configuration\MemberDetailsConfiguration.cs" />
+    <Compile Include="Configuration\MemberMasterConfiguration.cs" />
+    <Compile Include="Configuration\OrganizationStructureNameConfiguration.cs" />
+    <Compile Include="Configuration\PersonConfiguration.cs" />
+    <Compile Include="Configuration\PersonelConfiguration.cs" />
+    <Compile Include="Configuration\PostConfiguration.cs" />
+    <Compile Include="Configuration\PostPersonConfiguration.cs" />
+    <Compile Include="Configuration\CartableConfiguration.cs" />
+    <Compile Include="Configuration\RequestConfiguration.cs" />
+    <Compile Include="Configuration\RoleConfiguration.cs" />
+    <Compile Include="Configuration\RolePermissionConfiguration.cs" />
+    <Compile Include="Configuration\SettingsConfiguration.cs" />
+    <Compile Include="Configuration\SignerConfiguration.cs" />
+    <Compile Include="Configuration\SpecialEducationConfiguration.cs" />
+    <Compile Include="Configuration\StudentConfiguration.cs" />
+    <Compile Include="Configuration\TextDefaultConfiguration.cs" />
+    <Compile Include="Configuration\UniversityConfiguration.cs" />
+    <Compile Include="Configuration\UserConfiguration.cs" />
+    <Compile Include="Configuration\UserPostConfiguration.cs" />
+    <Compile Include="Configuration\UserRoleConfiguration.cs" />
+    <Compile Include="Configuration\ProfileConfiguration.cs" />
+    <Compile Include="Configuration\VoteConfiguration.cs" />
+    <Compile Include="Domain\Archive.cs" />
+    <Compile Include="Domain\Attachment.cs" />
+    <Compile Include="Domain\Authentication.cs" />
+    <Compile Include="Domain\BranchProvince.cs" />
+    <Compile Include="Domain\CentralOrganization.cs" />
+    <Compile Include="Domain\College.cs" />
+    <Compile Include="Domain\Commission.cs" />
+    <Compile Include="Domain\CommissionSpecialEducation.cs" />
+    <Compile Include="Domain\Council.cs" />
+    <Compile Include="Domain\EducationalGroup.cs" />
+    <Compile Include="Domain\FieldofStudy.cs" />
+    <Compile Include="Domain\MemberDetails.cs" />
+    <Compile Include="Domain\MemberMaster.cs" />
+    <Compile Include="Domain\OrganizationStructureName.cs" />
+    <Compile Include="Domain\Permission.cs" />
+    <Compile Include="Domain\Person.cs" />
+    <Compile Include="Domain\Personel.cs" />
+    <Compile Include="Domain\Post.cs" />
+    <Compile Include="Domain\PostPerson.cs" />
+    <Compile Include="Domain\Settings.cs" />
+    <Compile Include="Domain\Slider.cs" />
+    <Compile Include="Domain\TextDefault.cs" />
+    <Compile Include="Domain\UserDomain\UserPost.cs" />
+    <Compile Include="Domain\UserDomain\Profile.cs" />
+    <Compile Include="Domain\Request.cs" />
+    <Compile Include="Domain\Cartable.cs" />
+    <Compile Include="Domain\UserDomain\Role.cs" />
+    <Compile Include="Domain\UserDomain\RolePermission.cs" />
+    <Compile Include="Domain\Signer.cs" />
+    <Compile Include="Domain\SpecialEducation.cs" />
+    <Compile Include="Domain\Student.cs" />
+    <Compile Include="Domain\University.cs" />
+    <Compile Include="Domain\UserDomain\User.cs" />
+    <Compile Include="Domain\UserDomain\UserRole.cs" />
+    <Compile Include="Domain\UserDomain\UserClaim.cs" />
+    <Compile Include="Domain\UserDomain\UserLogin.cs" />
+    <Compile Include="Domain\Vote.cs" />
+    <Compile Include="Enum\VoteStatus.cs" />
+    <Compile Include="Enum\VoteType.cs" />
+    <Compile Include="Enum\AuthenticationType.cs" />
+    <Compile Include="Enum\CartableValidation.cs" />
+    <Compile Include="Enum\CartableStatus.cs" />
+    <Compile Include="Enum\Gender.cs" />
+    <Compile Include="Enum\Grade.cs" />
+    <Compile Include="Enum\LevelProgram.cs" />
+    <Compile Include="Enum\MilitaryServiceStatus.cs" />
+    <Compile Include="Enum\Ordinal.cs" />
+    <Compile Include="Enum\PostType.cs" />
+    <Compile Include="Enum\RequestStatus.cs" />
+    <Compile Include="Enum\RequestType.cs" />
+    <Compile Include="Enum\RoleType.cs" />
+    <Compile Include="Enum\StructureType.cs" />
+    <Compile Include="Enum\TextDefaultType.cs" />
+    <Compile Include="Enum\UserState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "FollowUp";
+    Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+}
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">مدیریت درخواست</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>پیگیری درخواست</span>
+        </li>
+    </ul>
+</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light portlet-fit ">
+                <div class="portlet-title">
+                    <div class="caption col-md-10">                       
+                        <div class="search-bar ">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <input id="txtStudentNumber" type="text" class="form-control" placeholder="شماره دانشجویی را وارد نماوید ...">
+                                        <span class="input-group-btn">
+                                            <button id="btnSearchByStudentNumber" class="btn blue uppercase bold" type="button"><i class="fa fa-search font-green"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="dvRequestsButtom" class="portlet-body">
+            
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts{
+    <script>
+    $('#btnSearchByStudentNumber').click(function () {
+        $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+        $.ajax({
+            cashe: false,
+            url: '@Url.Action(MVC.Personel.Request.GetRequestByStudentCode())',
+            type: 'get',
+            dataType: 'html',
+            data: { stNumber: $('#txtStudentNumber').val() },
+            success: function (result) {
+                $.unblockUI();
+                $('#dvRequestsButtom').html(result);
+            },
+            error: function (xhr, status) {
+                $.unblockUI();
+            }
+        });
+    });
+
+</script>
+}

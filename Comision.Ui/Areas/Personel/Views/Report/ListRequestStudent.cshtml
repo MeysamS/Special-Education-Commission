@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "FollowUp";
+    Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+}
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">مدیریت درخواست</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>پیگیری درخواست دانشجو</span>
+        </li>
+    </ul>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light portlet-fit ">
+            <div class="portlet-title">
+                <div class="caption col-md-10">
+                    <div class="search-bar ">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input id="txtStudentNumber" type="text" class="form-control" placeholder="شماره دانشجو را وارد نماوید ...">
+                                    <span class="input-group-btn">
+                                        <button id="btnSearchByStudentNumber" class="btn blue uppercase bold" type="button"><i class="fa fa-search font-green"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="gridRequestStudent" class="portlet-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divDetailRequest" class="easyui-dialog" modal="true" style="width: 1200px; height: 500px;" closed="true">
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            loadGridRequest(-1);
+        });
+        $('#btnSearchByStudentNumber').click(function () {
+            var studentNumberId = Number($('#txtStudentNumber').val());
+
+            if (studentNumberId == 0) {
+                mynotification('شماره دانشجو مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            loadGridRequest(studentNumberId);
+        });
+
+
+        function loadGridRequest(studentNumber) {
+            $('#gridRequestStudent').datagrid(
+            {
+
+                idField: 'Id',
+                loadMsg: 'شکیبا باشید...',
+                rownumbers: true,
+                height: '400',
+                singleSelect: true,
+                fitColumns: true,
+                queryParams: { studentNumber: studentNumber },// پارامتر داخل اکشن کنترل مقدار دهی می شود
+                url: '@Url.Action(MVC.Personel.Report.ListRequestStudent())',
+                columns: [
+                    [
+                        { field: 'Id', title: 'Id', hidden: 'hidden' },
+                        { field: 'DateVote', title: 'تاریخ صدور رای', width: 90 },
+                        { field: 'RequestType', title: 'نوع درخواست', width: 120 },
+                        { field: 'TextVote', title: 'متن رای', width: 250 },
+                        { field: 'VoteType', title: 'نوع رای', width: 70 },
+                        { field: 'VoteStatus', title: 'وضغیت رای', width: 70 },
+                        {
+                            field: 'Action', title: 'پرونده', width: 50, align: 'center',
+                            formatter: function (value, rows, index) {
+                                return '<a href="javascript:void(0)"  onclick="detailRequest(' + index + ')" class="fa fa-bars" data-toggle="modal"></a>';
+                            }
+                        }
+                    ]
+                ]
+            });
+        }
+
+        function showDialogTextDefault(idboxName, textboxName, textDefaultType) {
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Home.GetPartialTextDefault())',
+                dataType: 'html',
+                data: { divName: "modaltextDefault", textDefaultType: textDefaultType, idboxName: idboxName, textboxName: textboxName },
+                type: 'get',
+                success: function (result) {
+                    $('#modaltextDefault').html(result);
+                    $('#modaltextDefault').dialog('open').dialog('setTitle', 'اطلاعات پایه');
+                    $('#modaltextDefault').dialog('center');
+                },
+                error: function () {
+                    mynotification("خطا در بازیابی اطلاعات پایه!", 'ruby');
+                }
+            });
+        }
+        function detailRequest(rowIndex) {
+            $('#gridRequestStudent').datagrid('selectRow', rowIndex);
+            var selected = $('#gridRequestStudent').datalist('getSelected');
+            if (selected == null || selected.Id <= 0) {
+                mynotification('پرونده مورد نظر معتبر نمی باشد!', 'ruby');
+                return;
+            }
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Request.DetailRequestPartial())',
+                type: 'get',
+                dataType: 'html',
+                data: { requestId: selected.Id },
+                success: function (result) {
+                    $.unblockUI();
+                    $('#divDetailRequest').html(result);
+                    $('#divDetailRequest').dialog('open').dialog('setTitle', 'جزئیات پرونده');
+                    $('#divDetailRequest').dialog('center');
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    mynotification('خطا در لود فرم!', 'ruby');
+                }
+            });
+            @*var rootUrl = '@Url.Action(MVC.Personel.Request.ListRequestStudent())';
+            var url = '@Url.Action(MVC.Personel.Request.DetailRequest())?requestId= ' + selected.Id + '&postId= ' + selected.PostId + '&rowNumber= ' + selected.RowNumber + '&rootUrl= ' + rootUrl;
+            window.location.href = url;*@
+        }
+
+    </script>
+}
+
+
+
+

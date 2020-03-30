@@ -1,0 +1,349 @@
+﻿@model Comision.Service.Model.RoleModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <span>مدیریت نقش</span>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> مدیریت نقش</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm(MVC.Admin.Role.CreateOrUpdate(), FormMethod.Post, new { id = "addRoleForm", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                {
+                    @Html.HiddenFor(x => x.Id)
+                    ;
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">عنوان لاتین</label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon">
+                                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">عنوان فارسی</label>
+                                    <div class="col-md-8">
+                                        <div class="input-icon">
+                                            @Html.TextBoxFor(x => x.NameFa, new {@class = "form-control"})
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <input type="button" value="ذخیره" class="btn blue" onclick="saveRole();" />
+                                    <button type="button" class="btn default" onclick="ClearEdit();">انصراف</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="ActionsTree">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+                <h3 class="form-section">نقش های ثبت شده</h3>
+                <table id="dgRole"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(function() {
+            GetTreeActions(-1);
+        });
+
+        //$(document).ready(function () {
+        //    GetTreeActions(-1);
+        //});
+        function GetTreeActions(roleId) {
+            $('#ActionsTree').tree({
+                title: 'لیست سطوح دسترسی',
+                queryParams: { roleId: roleId },
+                url: '@Url.Action(MVC.Admin.Role.GetActions())',
+                required: true,
+                loadMsg: 'شکیبا باشید...',
+                lines: true,
+                height: '300',
+                fit: true,
+                checkbox: true,
+                onLoadSuccess: function(node, data) {
+                    var controllers;
+                    var actions;
+                    var root = $('#ActionsTree').tree('getRoot');
+                    if (root != null && root.hasChild) {
+                        $('#ActionsTree').tree('collapseAll', root.target);
+                        controllers = $('#ActionsTree').tree('getFolders', root.target);
+                        for (var i = 0; i < controllers.length; i++) {
+                            if (controllers[i].hasChild) {
+                                actions = $('#ActionsTree').tree('getChildren', controllers[i].target);
+                                for (var j = 0; j < actions.length; j++) {
+                                    if (actions[j]['checked'] === true) {
+                                        $('#ActionsTree').tree('check', actions.target);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    //var controllers;
+                    //if (data.hasChild) {
+                    //    controllers = $('#ActionsTree').tree('getFolders', data.target);
+                    //    for (var i = 0; i < controllers.length; i++) {
+                    //        if (controllers[i].hasChild) {
+                    //            for (var j = 0; j < actions.length; j++) {
+                    //                if (actions[i].checked)
+                    //                    $('#ActionsTree').tree('check', actions.target);
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                }
+            });
+        }
+
+        $('#dgRole').datagrid(
+        {
+            fit: true,
+            idField: 'Id',
+            loadMsg: 'شکیبا باشید...',
+            rownumbers: true,
+            height: '250',
+            singleSelect: true,
+            fitColumns: true,
+            pagination: true,
+            pagePosition: 'bottom',
+            striped: 'true',
+            pageSize: 10,
+            url: '@Url.Action(MVC.Admin.Role.GetRoles())',
+            onSuccess: function(index, row) {
+
+            },
+            onError: function(index, row) {
+
+                $(this).datagrid('cancelEdit', index);
+                $(this).datagrid('reload');
+            },
+            onSelect: function (index, row) {
+                GetTreeActions(row.Id);
+            },
+            columns: [
+                [
+                    { field: 'Id', hidden: 'hidden', editor: { type: 'validatebox', width: 300 } },
+                    { field: 'Name', title: 'نام لاتین', width: 300 },
+                    { field: 'NameFa', title: 'نام فارسی', width: 300 },
+                    {
+                        field: 'Action',
+                        title: 'عملیات',
+                        width: 100,
+                        align: 'center',
+                        formatter: function(value, rows, index) {
+                            return '<a href="javascript:void(0)"  onclick="deleteRole(' + rows.Id + ')">' +
+                                '<img class="delete"  src="/content/jquery-easyui-1.4.2/themes/icons/cancel.png"/></a>' +
+                                '<a  href="javascript:void(0)" onclick="editRole(' + index + ')">' +
+                                '<img src="/content/jquery-easyui-1.4.2/themes/icons/pencil.png" title="ویرایش"/></a>&nbsp&nbsp&nbsp';
+                        }
+                    }
+                ]
+            ]
+        });
+        var pager = $('#dgRole').datagrid('getPager');
+        $(pager).pagination({
+            pageSize: 10,
+            showPageList: true,
+            pageList: [10, 20, 50],
+            beforePageText: 'صفحه',
+            afterPageText: 'از {pages}',
+            displayMsg: 'نمایش اطلاعات  {from} تا {to} از {total}'
+        });
+
+        function ClearEdit() {
+            $('#Name').val("");
+            $('#Id').val(0);
+            $('#NameFa').val("");
+            GetTreeActions(-1);
+        }
+
+        function editRole(rowIndex) {
+            $("#dgRole").datagrid("selectRow", rowIndex);
+            var data = $("#dgRole").datagrid("getSelected");
+            $('#Name').val(data.Name);
+            $('#Id').val(data.Id);
+            $('#NameFa').val(data.NameFa);
+            GetTreeActions(data.Id);
+        }
+
+        $.extend($.fn.tree.methods, {
+            getFolders: function(jq, target) {
+                var nodes = [];
+                var ul = $(target).length ? $(target).next() : jq;
+                ul.find("div.tree-node:has(span.tree-folder)").each(function() {
+                    nodes.push(jq.tree('getNode', this));
+                });
+                return nodes;
+            }
+        });
+
+        function saveRole() {
+            var roleId = $('#Id').val();
+            var name = $('#Name').val();
+            var nameFa = $('#NameFa').val();
+            if (name === "" || nameFa === "") {
+                mynotification("لطفا عنوان نقش را انتخاب کنید!", 'ruby');
+                return;
+            }
+
+            var dataXml = '<?xml version="1.0" encoding="UTF-16"?><AccessRoles>";';
+                //'<ArrayOfPermissionModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+            var tempXmlController;
+            var tempXmlAction = "";
+            var boolChecked = false;
+            var controllers;
+            var actions;
+            //var checked = $('#ActionsTree').tree('getChecked', ['checked', 'indeterminate']);
+            var root = $('#ActionsTree').tree('getRoot');
+            if (root != null && root.hasChild) {
+                controllers = $('#ActionsTree').tree('getFolders', root.target);
+                for (var i = 0; i < controllers.length; i++) {
+                    //if (controllers[i].checked) {
+                    tempXmlController = "<Controller><Name>" + controllers[i].id + "</Name><Description>" + controllers[i].text + "</Description>";
+                    if (controllers[i].hasChild) {
+                        actions = $('#ActionsTree').tree('getChildren', controllers[i].target);
+                        tempXmlAction = "<Actions>";
+                        for (var j = 0; j < actions.length; j++) {
+                            if (actions[j].checked) {
+                                boolChecked = true;
+                                tempXmlAction += "<Action><Name>" + actions[j].id + "</Name><Description>" + actions[j].text + "</Description></Action>";
+                            }
+                        }
+                        tempXmlAction += "</Actions>";
+                    }
+                    if (boolChecked) {
+                        boolChecked = false;
+                        dataXml += tempXmlController + tempXmlAction + "</Controller>";
+                    }
+                    //}
+                }
+            }
+            dataXml += "</AccessRoles>";
+
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.Role.CreateOrUpdate(), "http")',
+                type: 'Post',
+                //dataType: 'json',
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ XmlRoleAccess: dataXml, Id: roleId, Name: name, NameFa: nameFa }), //$('#addRoleForm').serialize(),//
+                success: function(result) {
+                    $.unblockUI();
+                    if (!result.IsError) {
+                        $('#dgRole').datagrid('reload');
+                        mynotification(result.Message, 'lime');
+                        ClearEdit();
+                    } else
+                        mynotification(result.Message, 'ruby');
+                },
+                error: function(xhr, status) {
+                    $.unblockUI();
+                    mynotification("خطا در ثبت نقش", 'ruby');
+                }
+            });
+        }
+
+        function saveRole2() {
+            //if ($('#Name').val() === "" || $('#NameFa').val() === "") {
+            //    mynotification("لطفا عنوان نقش را انتخاب کنید!", 'ruby');
+            //    return;jbhuybbnhuibhub
+            //}
+
+            //var controllers = [
+            //    { Name: '1', Description: 'yellow' },
+            //    { Name: '2', Description: 'blue' },
+            //    { Name: '3', Description: 'red' }
+            //];
+            //controllers = JSON.stringify({ 'controllers': controllers });
+            var data2 = '<di>ghgg';
+            //$('#xml').val(data2);
+            if ($('#addRoleForm').valid()) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $('#addRoleForm').ajaxSubmit({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Admin.Role.CreateOrUpdate(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    processData: true,
+                    //contentType: "application/json; charset=utf-8",
+                    data: { data2: data2 }, //$('#addRoleForm').serialize(),//
+                    success: function(result) {
+                        $.unblockUI();
+                        if (!result.IsError) {
+                            $('#dgRole').datagrid('reload');
+                            mynotification(result.Message, 'lime');
+                        } else
+                            mynotification(result.Message, 'ruby');
+                    },
+                    error: function(xhr, status) {
+                        $.unblockUI();
+                        mynotification("خطا در ثبت نقش", 'ruby');
+                    }
+                });
+            } else {
+                $.unblockUI();
+                return $(this).form('validate');
+            }
+        }
+
+        function deleteRole(id) {
+            if (id === null) {
+                $.messager.show({ title: 'پیام سیستم', msg: "خطا در حذف رکورد مورد نظر!", showType: 'show' });
+                return;
+            }
+            $.messager.confirm('confirm', 'حذف شود؟', function(r) {
+                if (r) {
+                    $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                    $.post('@Url.Action(MVC.Admin.Role.Delete(), "http")', { id: id }, function(result) {
+                        $.unblockUI();
+                        if (!result.isError) {
+                            $('#dgRole').datagrid('reload');
+                            mynotification(result.Message, 'lime');
+                            ClearEdit();
+                        } else {
+                            mynotification(result.Message, 'ruby');
+                        }
+                    }, 'json');
+                }
+            });
+        }
+    </script>
+}
+
+

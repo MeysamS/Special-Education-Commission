@@ -1,0 +1,202 @@
+﻿@using Comision.Helper.Utility
+@using Comision.Service.Model
+@using Comision.Ui.Enums
+@model AttachmentModel
+@{
+//Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm(MVC.Personel.Cartable.Attachment(), FormMethod.Post, new { id = "AttachmentForm", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+{
+    <div class="portlet light ">
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                @if ((ViewBag.ControllerName == ControllerName.Cartable && HtmlExtensions.CanAccess(null, AccessLevel.AttachmentCartableUpload)) ||
+                     (ViewBag.ControllerName == ControllerName.Commission && HtmlExtensions.CanAccess(null, AccessLevel.AttachmentCommissionUpload)) ||
+                     (ViewBag.ControllerName == ControllerName.Council && HtmlExtensions.CanAccess(null, AccessLevel.AttachmentCouncilUpload)))
+                {
+                    <div class="form-body">
+                        @Html.HiddenFor(m => m.RequestId, new { id = "AttachRequestId" })
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">پیوست</label>
+                            <div class="col-md-4">
+                                <input type="file" id="FileAttach" name="FileAttach" class="form-control" accept="gif,jpeg,jpg,png,tif,pdf,doc,xls,xlss,docx" style="width: 100%" placeholder="انتخاب فایل" />
+                            </div>
+
+                            <label class="col-md-1 control-label">عنوان</label>
+                            <div class="col-md-4">
+                                <div class="input-inline input-medium">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-header"></i>
+                                        </span>
+                                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", style = "max-width: none" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-inline input-medium">
+                                    <button type="button" class="btn green" onclick="UploadAttach();">آپلود <i class="fa fa-upload"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                }
+                <div class="form-body">
+                    <div class="easyui-panel" title="لیست پیوست ها">
+                        <div id="listAttachment">
+
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<script>
+    getAttachment();
+    function getAttachment() {
+        var url = "";
+        switch ('@ViewBag.ControllerName') {
+            case '@ControllerName.Cartable':
+                url = '@Url.Action(MVC.Personel.Cartable.GetAttachment())';
+                break;
+            case '@ControllerName.Commission':
+                url = '@Url.Action(MVC.Personel.Commission.GetAttachment())';
+                break;
+            case '@ControllerName.Council':
+                url = '@Url.Action(MVC.Personel.Council.GetAttachment())';
+                break;
+            default:
+                url = '';
+        }
+        $('#listAttachment').datalist({
+            title: "لیست پیوست ها",
+            loadMsg: 'شکیبا باشید...',
+            height: '300',
+            url: url,
+            idField: 'id',
+            lines: true,
+            queryParams: { requestId: Number(@ViewBag.RequestId) },
+            textFormatter: function (value, row, index) {
+
+                var result = "<div class='pull-left' style='padding:9px;1px;0;0'>" +
+                    "<img class='item-pic rounded' style='width:30px;height:30px; border-radius: 50%;margin-left:5px;' src='/Content/UploadFiles/attachment(1).png'/>" +
+                    "</div>" +
+                    "<div class='pull-left' style='padding:15px;0;0;0'><span class='caption-subject font-green-haze bold'>" + (row.title == null ? " " : row.title) + "</span></div>" +
+                    "<div class='pull-left' style='padding:15px;4px;0;0'> حجم فایل : <span class='caption-subject font-green-haze bold'>" + row.size + "byte </span></div>" +
+                    "<div class='pull-left' style='padding:15px;4px;0;0'> پسوند فایل : <span class='caption-subject font-green-haze bold'>" + row.extention + "</span></div>";
+                if (('@ViewBag.ControllerName' === '@ControllerName.Cartable' && '@HtmlExtensions.CanAccess(null, AccessLevel.AttachmentCartableDelete)' === 'True') ||
+                    ('@ViewBag.ControllerName' === '@ControllerName.Commission' && '@HtmlExtensions.CanAccess(null, AccessLevel.AttachmentCommissionDelete)' === 'True') ||
+                    ('@ViewBag.ControllerName' === '@ControllerName.Council' && '@HtmlExtensions.CanAccess(null, AccessLevel.AttachmentCouncilDelete)' === 'True'))
+                    result += '<div class="pull-right" style="padding:9px;2px;0;0"><a class="btn red btn-sm" onclick="deleteAttach(' + index + ')" href="javascript:void(0)">حذف <i class="fa fa-remove"></i></a></div>';
+                result += ' <div class="pull-right" style="padding:9px;2px;0;0"><a target="_target" class="btn blue-madison btn-sm" href="/Content/UploadFiles/RequestAttachment/' + row.file + '")">نمایش <i class="fa fa-paperclip"></i></a></div>';
+                return result;
+            }
+        });
+    }
+
+    function UploadAttach() {
+        //if ($('#Title').val() == null) {
+        //    mynotification('لطفا فایل پیوست را انتخاب کنید!', 'ruby');
+        //    return $(this).form('validate');
+        //}
+        if ($('#AttachmentForm').valid()) {
+            $('#AttachRequestId').val(@ViewBag.RequestId);
+            var url = "";
+            switch ('@ViewBag.ControllerName') {
+                case '@ControllerName.Cartable':
+                    url = '@Url.Action(MVC.Personel.Cartable.UploadAttachment(), "http")';
+                    break;
+                case '@ControllerName.Commission':
+                    url = '@Url.Action(MVC.Personel.Commission.UploadAttachment(), "http")';
+                    break;
+                case '@ControllerName.Council':
+                    url = '@Url.Action(MVC.Personel.Council.UploadAttachment(), "http")';
+                    break;
+                default:
+                    url = '';
+            }
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $('#AttachmentForm').ajaxSubmit({
+                cashe: false,
+                url: url,
+                type: 'Post',
+                dataType: 'json',
+                data: $('#AttachmentForm').serialize(),
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.isError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        mynotification(result.Message, 'lime');
+                        $('#Title').val('');
+                        $('#FileAttach').val('');
+                        getAttachment();
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    mynotification("خطا در ثبت پیوست!", 'ruby');
+                }
+            });
+        } else {
+            mynotification('خطا در ورود اطلاعات.', 'ruby');
+            return $(this).form('validate');
+        }
+        return $(this).form('validate');
+    }
+    function deleteAttach(rowIndex) {
+        if (!hasGridSelectedValid(rowIndex))
+            return;
+        var selected = $('#listAttachment').datalist('getSelected');
+        $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+            if (r) {
+                var url = '';
+                switch ('@ViewBag.ControllerName') {
+                    case '@ControllerName.Cartable':
+                        url = '@Url.Action(MVC.Personel.Cartable.DeleteFile(), "http")';
+                        break;
+                    case '@ControllerName.Commission':
+                        url = '@Url.Action(MVC.Personel.Commission.DeleteFile(), "http")';
+                        break;
+                    case '@ControllerName.Council':
+                        url = '@Url.Action(MVC.Personel.Council.DeleteFile(), "http")';
+                        break;
+                    default:
+                        url = '';
+                }
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.post(url, { id: selected.id }, function (result) {
+                    $.unblockUI();
+                    if (!result.IsError) {
+                        $('#listAttachment').datalist('reload');
+                        mynotification(result.Message, 'lime');
+                    }
+                    else
+                        mynotification(result.Message, 'ruby');
+                }, 'json');
+            }
+        });
+    }
+    function hasGridSelectedValid(rowIndex) {
+        $('#listAttachment').datagrid('selectRow', rowIndex);
+        var selected = $('#listAttachment').datalist('getSelected');
+        if (selected == null) {
+            mynotification('رکوردی انتخاب نشده است!', 'ruby');
+            return false;
+        }
+        if (selected.Id <= 0) {
+            mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+            return false;
+        }
+        return true;
+    }
+
+    $('input[type=file]').change(function (e) {
+        ValidateFileUpload(this, 3000000, ['gif', 'jpeg', 'jpg', 'png', 'tif', 'pdf', 'doc', 'xls', 'xlss', 'docx']);
+    });
+</script>

@@ -1,0 +1,812 @@
+﻿@using Comision.Helper.Utility
+@using Comision.Model.Enum
+@using Comision.Service.Model
+@using Comision.Utility
+@model Comision.Service.Model.VoteModel
+@{
+    ViewBag.Title = "Vote";
+    //Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+    var ordinalSign = false;
+    var typeDescription = Model.DetailRequestModel.RequestType.GetDescription();
+}
+
+@Styles.Render("~/Content/persianDate/css")
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">صدور رای</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+    <div style="float: left; margin-top: 4px" class="actions">
+        <a href="@Url.Action(MVC.Personel.Cartable.Index())" type="button"
+           class="btn btn-sm btn-circle yellow btn-outline">
+            <i class="fa fa-undo"></i>
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> صدور رای</span>
+                </div>
+                <div class="actions">
+                    @Html.SecureActionLink(null, null, null, AccessLevel.AttachmentCartableShow, "پیوست<i class='fa fa-paperclip'></i>", null, new Dictionary<string, object> { { "class", "btn btn-sm btn-circle purple btn-outline" }, { "onclick", "showDialogAttachment()" }, { "data-toggle", "modal" }, { "href", "javascript:void(0)" } })
+                    @if ((int)Model.RequestType == (int)RequestType.Comision)
+                    {
+                        @Html.SecureActionLink(null, null, null, AccessLevel.PrintCommision, "چاپ پرونده <i class='fa fa-print'></i>", null, new Dictionary<string, object> { { "class", "btn btn-circle btn-inline yellow-crusta" }, { "href", "javascript:void(0)" }, { "onclick", "PrintRequest()" } })
+
+                        @*<a href="javascript:void(0)" onclick="PrintRequest()" class="btn btn-circle btn-inline yellow-crusta">
+                                چاپ پرونده
+                                <i class="fa fa-print"></i>
+                            </a>*@
+                    }
+                    @if ((int)Model.RequestType == (int)RequestType.Council)
+                    {
+                        @Html.SecureActionLink(null, null, null, AccessLevel.PrintCouncil, "چاپ پرونده <i class='fa fa-print'></i>", null, new Dictionary<string, object> { { "class", "btn btn-circle btn-inline yellow-crusta" }, { "href", "javascript:void(0)" }, { "onclick", "PrintRequest()" } })
+
+                        @*<a href="javascript:void(0)" onclick="PrintRequest()" class="btn btn-circle btn-inline yellow-crusta">
+                چاپ پرونده
+                <i class="fa fa-print"></i>
+            </a>*@
+                    }
+                    @if (@HtmlExtensions.CanAccess(null, AccessLevel.VotePermanent))
+                    {
+                        <div class="btn-group">
+                            @*@Html.SecureActionLink(null, null, null, AccessLevel.VotePermanent, "صدور رای دائم<i class='fa fa-angle-down'></i>", null, new Dictionary<string, object> { { "class", "btn btn-circle green-dark dropdown-toggle" }, { "data_toggle", "dropdown" }, { "href", "javascript:void(0)" }, { "aria-expanded", "false" } })*@
+
+                            <button class="btn btn-circle green-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                صدور رای دائم
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+
+                            <ul class="dropdown-menu bottom-up">
+                                <li>
+                                    <a id="btnFavorVote" href="javascript:;" onclick="Vote(@((int) VoteType.FavorVote));"> رای موافق </a>
+                                </li>
+                                <li>
+                                    <a id="btnVetoVote" href="javascript:;" onclick="Vote(@((int) VoteType.Veto));"> رای مخالف </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    }
+                    @if (@HtmlExtensions.CanAccess(null, AccessLevel.VoteTemporary))
+                    {
+                        <div class="btn-group">
+                            <button class="btn btn-circle green-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                صدور رای موقت
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu bottom-up">
+                                <li>
+                                    <a id="btnFavorVoteTemporary" href="javascript:;" onclick="VoteTemporary(@((int) VoteType.FavorVote));"> رای موافق </a>
+                                </li>
+                                <li>
+                                    <a id="btnVetoVoteTemporary" href="javascript:;" onclick="VoteTemporary(@((int) VoteType.Veto));"> رای مخالف </a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    @Html.SecureActionLink(null, null, null, AccessLevel.ReturnRequest, "برگشت درخواست<i class='fa fa-arrow-left fa-fw'></i>", null, new Dictionary<string, object> { { "class", "btn btn-circle btn-inline red" }, { "href", "javascript:void(0)" }, { "data-toggle", "modal" }, { "onclick", "showModalReturn()" } })
+                </div>
+            </div>
+            <div class="portlet box green">
+                <div class="portlet-body" style="border: none;">
+                    <div class="panel-group accordion" id="accordionDetail">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" style="height: 26px">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionDetail" href="#collapse_Detail" aria-expanded="false"> جزئیات پرونده </a>
+                                </h4>
+                            </div>
+                            @*<div id="collapse_Detail" class="panel-collapse collapse" aria-expanded="false">*@
+                            <div class="panel-body">
+                                @*@{ Html.RenderAction(MVC.Personel.Request.DetailRequestPartial(Model.RequestId)); }*@
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="portlet light ">
+                                            @using (Html.BeginForm(MVC.Personel.Commission.Update(), FormMethod.Post, new { id = "requestform", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                                            {
+                                                @Html.HiddenFor(x => x.RequestId)
+                                                <div class="portlet-title">
+                                                    <div class="caption font-red-sunglo">
+                                                        <i class="icon-settings font-red-sunglo"></i>
+                                                        <span class="caption-subject bold uppercase">جزئیات @Model.DetailRequestModel.RequestType.GetDescription()</span>
+                                                    </div>
+                                                </div>
+                                                <div class="portlet-body form">
+
+                                                    <div class="form-body">
+                                                        <div class="form-group">
+                                                            @*<label class="col-md-2 control-label">شماره @Model.DetailRequestModel.RequestType.GetDescription()</label>
+                                                                <div class="col-md-4">
+                                                                    <div class="input-icon">
+                                                                        <b>@Html.DisplayFor(m => m.DetailRequestModel.CommissionNumber, new { @class = "form-control", style = "max-width: none" })</b>
+                                                                    </div>
+                                                                </div>*@
+                                                            <label class="col-md-2 control-label">تاریخ ثبت @Model.DetailRequestModel.RequestType.GetDescription()</label>
+                                                            <div class="col-md-4">
+                                                                <div class="input-icon">
+                                                                    <b>
+                                                                        @Model.DetailRequestModel.Date.ToPeString()
+                                                                        @*@Html.DisplayFor(m => m.Date, new {@class = "form-control", style = "max-width: none"})*@
+                                                                    </b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <table class="table table-bordered table-striped table-condensed flip-content">
+                                                            <thead class="flip-content">
+                                                                <tr>
+                                                                    <th class="numeric" width="12%" style="font-size: 11px"> شماره دانشجویی </th>
+                                                                    <th width="11%" style="font-size: 11px"> نام </th>
+                                                                    <th width="11%" style="font-size: 11px"> نام خانوادگی </th>
+                                                                    @*<th class="numeric" width="10%" style="font-size: 12px"> شماره ملی </th>
+                                                                        <th width="6%" style="font-size: 12px"> جنسیت </th>*@
+                                                                    <th width="15%" style="font-size: 11px"> رشته تحصیلی </th>
+                                                                    <th class="numeric" width="8%" style="font-size: 11px"> تعداد واحد گذرانده </th>
+                                                                    <th class="numeric" width="8%" style="font-size: 11px"> تعداد واحد باقیمانده </th>
+                                                                    <th class="" width="13%" style="font-size: 11px"> مقطع تحصیلی </th>
+                                                                    <th class="" width="12%" style="font-size: 11px"> وضعیت نظام وظیفه </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="numeric" style="font-size: 13px">
+                                                                        <b>@Html.DisplayFor(m => m.DetailRequestModel.StudentNumber, new { @class = "form-control" })</b>
+                                                                    </td>
+                                                                    <td style="font-size: 13px">
+                                                                        <b>@Html.DisplayFor(m => m.DetailRequestModel.Name, new { @class = "form-control" }) </b>
+                                                                    </td>
+                                                                    <td style="font-size: 13px">
+                                                                        <b>@Html.DisplayFor(m => m.DetailRequestModel.Family, new { @class = "form-control" })</b>
+                                                                    </td>
+                                                                    @*<td class="numeric">
+                                                                            <b>@Html.DisplayFor(m => m.NationalCode, new { @class = "form-control" })</b>
+                                                                        </td>
+                                                                        <td>
+                                                                            <b>@Model.Gender.GetDescription()</b>
+                                                                        </td>*@
+                                                                    <td style="font-size: 13px">
+                                                                        <b>@Html.DisplayFor(m => m.DetailRequestModel.FieldofStudy, new { @class = "form-control" })</b>
+                                                                    </td>
+                                                                    <td class="numeric" style="font-size: 13px">
+                                                                        <b>@Html.DisplayFor(m => m.DetailRequestModel.NumberofSpentUnits, new { @class = "form-control" })</b>
+                                                                    </td>
+                                                                    <td class="numeric" style="font-size: 13px">
+                                                                        <b>@Html.DisplayFor(m => m.DetailRequestModel.NumberofRemainingUnits, new { @class = "form-control" })</b>
+                                                                    </td>
+                                                                    <td class="" style="font-size: 13px">
+                                                                        <b>
+                                                                            @Model.DetailRequestModel.Grade.GetDescription()
+                                                                            @*@Html.DisplayFor(m => m.Gender, new {@class = "form-control"})*@
+                                                                        </b>
+                                                                    </td>
+                                                                    <td>
+                                                                        <b>
+                                                                            @Model.DetailRequestModel.MilitaryServiceStatus.GetDescription()
+                                                                        </b>
+                                                                    </td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                        <table class="table table-bordered table-striped table-condensed flip-content">
+                                                            <thead class="flip-content">
+                                                                <tr>
+                                                                    <th width="50%">@(Model.DetailRequestModel.RequestType == RequestType.Comision ? "موارد خاص آموزشی" : "مشکل آموزشی")</th>
+                                                                    <th width="50%">توضیحات </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead class="flip-content">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        @if (Model.DetailRequestModel.RequestType == RequestType.Comision)
+                                                                        {
+                                                                            <div id="dlSpecialEducation" disabled="disabled"></div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextAreaFor(m => m.DetailRequestModel.ProblemsCouncil, new { @class = "form-control", rows = "7", disabled = "disabled" })
+                                                                        }
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.TextAreaFor(m => m.DetailRequestModel.Description, new { @class = "form-control", rows = "7", disabled = "disabled" })
+                                                                        @*<textarea disabled="disabled" class="form-control" rows="10"></textarea>*@
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                        <table class="table table-bordered table-striped table-condensed flip-content">
+                                                            <tbody>
+                                                                @for (var i = 1; i <= 3; i++)
+                                                                {
+                                                                    <tr>
+                                                                        @foreach (var item in Model.DetailRequestModel.DetailRequestSignerModels)
+                                                                        {
+                                                                            var percentWidth = 100 / Model.DetailRequestModel.DetailRequestSignerModels.Count;
+                                                                            var imgWidth = Model.DetailRequestModel.DetailRequestSignerModels.Count * 1;
+                                                                            var imgHeight = Model.DetailRequestModel.DetailRequestSignerModels.Count * 1;
+
+                                                                            <td style="text-align: center;vertical-align:middle" width="@percentWidth%">
+                                                                                @switch (i)
+                                                                                {
+                                                                                    case 1:
+                                                                                        if (item.RowNumber > 1 && item.RowNumber < 5 && !item.Signed)
+                                                                                        {
+                                                                                            if (!ViewBag.ordinal || !ordinalSign)
+                                                                                            {
+                                                                                                ordinalSign = true;
+                                                                                                if (HtmlExtensions.CanAccess(null, AccessLevel.ConfirmRequestOnBehalfof))
+                                                                                                {
+                                                                                                    <a href="#" data-toggle="modal" data-UserId="@item.PersonId" data-postId="@item.PostId" data-RowId="@item.RowNumber" class="btn btn-icon-only default signer">
+                                                                                                        <i class="fa fa-edit"></i>
+                                                                                                    </a>
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        @(" امضای " + item.PostName)
+
+                                                                                        break;
+                                                                                    case 2:
+                                                                                        @item.PersonName;
+                                                                                        break;
+                                                                                    default:
+                                                                                        if (string.IsNullOrEmpty(item.Signature))
+                                                                                        {
+                                                                                            <img src="" alt="ندارد" />
+                                                                                        }
+                                                                                        else
+                                                                                        {  <img src="@Url.Content(item.Signature)" width="130" height="100" alt="" /> }
+
+                                                                                        break;
+                                                                                }
+                                                                            </td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="modalConfirm" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title">تایید و ارسال</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                                                <div class="form-group">
+                                                    @Html.TextArea("Description", new { id = "ConfirmDescription", @class = "form-control", rows = "2" })
+                                                    @*<input class="form-control" type="text" data-tabindex="1">*@
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                                                <button id="btnConfirm" type="button" data-dismiss="modal" class="btn green">تایید و ارسال</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*</div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm(MVC.Personel.Cartable.Vote(), FormMethod.Post, new {id = "addVoteForm", @class = "form-horizontal", enctype = "multipart/form-data", role = "form"}))
+                {
+                    @Html.HiddenFor(x => x.PersonId)
+                    @Html.HiddenFor(x => x.PersonIdOnBehalfof)
+                    @Html.HiddenFor(x => x.PostId)
+                    @Html.HiddenFor(x => x.RequestId)
+                    @Html.HiddenFor(x => x.RequestType)
+                    @Html.HiddenFor(x => x.RowNumber)
+                    @Html.HiddenFor(x => x.VoteType)
+                    @Html.HiddenFor(x => x.VoteStatus)
+                    @Html.HiddenFor(x => x.FieldofStudyId)
+                    <!-- BEGIN FORM-->
+                    <div class="portlet box blue-hoki">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-gift"></i>متن رای
+                            </div>
+                            @*<div class="tools">
+                                    <a href="javascript:;" onclick='saveText(@((int) (Model.RequestType == RequestType.Comision ? TextDefaultType.VoteCommissionText : TextDefaultType.VoteCouncilText)))' data-toggle="modal" class="fa fa-check" data-original-title="" title=""> </a>
+                                    <a href="#modaltextDefault" data-toggle="modal" onclick="showDialogTextDefault('id', 'VoteText', @((int) (Model.RequestType == RequestType.Comision ? TextDefaultType.VoteCommissionText : TextDefaultType.VoteCouncilText)))" class="reload" data-original-title="" title=""> </a>
+                                    <a id="btnClearVoteText" href="javascript:;" class="remove" data-original-title="" title=""> </a>
+                                </div>*@
+                            <div class="actions">
+                                <a class="btn btn-circle btn-icon-only btn-default tooltips" onclick='saveText(@((int) (Model.RequestType == RequestType.Comision ? TextDefaultType.VoteCommissionText : TextDefaultType.VoteCouncilText)))' data-toggle="modal" title="ثبت متن رای" href="javascript:;">
+                                    <i class="icon-action-redo"></i>
+                                </a>
+                                <a class="btn btn-circle btn-icon-only btn-default tooltips" href="javascript:;" data-toggle="modal" title="انتخاب
+                                رای" onclick="showDialogTextDefault('id', 'VoteText', @((int) (Model.RequestType == RequestType.Comision ? TextDefaultType.VoteCommissionText : TextDefaultType.VoteCouncilText)))">
+                                    <i class="icon-arrow-up"></i>
+                                </a>
+                                <a class="btn btn-circle btn-icon-only btn-default tooltips" id="btnClearVoteText" href="javascript:;" title="حذف متن رای">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">شماره @Model.DetailRequestModel.RequestType.GetDescription()</label>
+                                    <div class="col-md-3">
+                                        @Html.TextBoxFor(m => m.DetailRequestModel.CommissionNumber, new {id = "CouncilORCommissionNumber", @class = "form-control", style = "max-width: none"})
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">تاریخ صدور</label>
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(m => m.DateVote, new {@class = "form-control"})
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">متن</label>
+                                    <div class="col-md-9">
+                                        @Html.TextAreaFor(m => m.VoteText, new {@class = "form-control", rows = "2"})
+                                    </div>
+                                </div>
+                                @if (Model.RequestType == RequestType.Comision)
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-2">
+                                            <div class="icheck-inline">
+                                                <label>
+                                                    @Html.EditorFor(m => m.ReferTo, new {@class = "icheck form-control"}) ارجاع داده شود
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    if(Model.RequestType == RequestType.Comision)
+                     {
+                         <div class="portlet box blue-hoki" style="display: @Model.ReferTo:'none' ? 'block'">
+                             <div class="portlet-title">
+                                 <div class="caption">
+                                     <i class="fa fa-gift"></i>متن ارجاعات
+                                 </div>
+                                 @*<div class="tools">
+                                    <a href="javascript:;" onclick="saveText(@((int) TextDefaultType.SpecialEducationVerdictText))" class="collapse" data-original-title="" title=""> </a>
+                                    <a href="#modaltextDefault" data-toggle="modal" onclick="showDialogTextDefault('id', 'VoteDescription', @((int) TextDefaultType.SpecialEducationVerdictText))" class="reload" data-original-title="" title=""> </a>
+                                    <a id="btnClearDescription" href="javascript:;" class="remove" data-original-title="" title=""> </a>
+                                </div>*@
+                                 <div class="actions">
+                                     <a class="btn btn-circle btn-icon-only btn-default tooltips" onclick='saveText(@((int) TextDefaultType.SpecialEducationVerdictText))' href="javascript:;" title="ثبت متن رای">
+                                         <i class="icon-action-redo"></i>
+                                     </a>
+                                     <a class="btn btn-circle btn-icon-only btn-default tooltips" href="javascript:;" data-toggle="modal" title="انتخاب متن رای" onclick="showDialogTextDefault('id', 'VoteDescription', @((int) TextDefaultType.SpecialEducationVerdictText))">
+                                         <i class="icon-arrow-up"></i>
+                                     </a>
+                                     <a class="btn btn-circle btn-icon-only btn-default tooltips" id="btnClearDescription" href="javascript:;" title="حذف متن رای">
+                                         <i class="icon-trash"></i>
+                                     </a>
+                                 </div>
+                             </div>
+                             <div class="portlet-body form">
+                                 <div class="form-body">
+                                     <div class="form-group">
+                                         <label class="col-md-2 control-label">متن</label>
+                                         <div class="col-md-9">
+                                             @Html.TextAreaFor(m => m.VoteDescription, new {id = "VoteDescription", @class = "form-control", rows = "2"})
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalReturn" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">برگشت</h4>
+            </div>
+            <div class="modal-body">
+                <p> لطفا توضیحات را در این قسمت وارد کنید! </p>
+                <div class="form-group">
+                    @Html.TextArea("Description", new { id = "ReturnDescription", @class = "form-control", rows = "2" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn dark btn-outline">انصراف</button>
+                <button id="btnReturn" type="button" data-dismiss="modal" class="btn red" onclick="Return();">برگشت</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modaltextDefault" class="easyui-dialog" modal="true" style="width: 900px; height: 500px;" closed="true">
+</div>
+<div id="modalAttachment" class="easyui-dialog" modal="true" style="width: 900px; height: 500px;" closed="true">
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/PersianDate")
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var chub = $.connection.cartableHub;
+        $.connection.hub.logging = true;
+
+        chub.client.sendNewCartable = function() {
+            $('#dgCartable').datalist('reload');
+        };
+        $.connection.hub.start().done(function() {
+            $('#btnConfirm').click(function() {
+                var requestId = $('#RequestId').val();
+                if (requestId <= 0) {
+                    mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                    return;
+                }
+                var desc = $("#ConfirmDescription").val();
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.ajax({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Cartable.ConfirmOnBehalfof(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: { userId: uId, requestId: requestId, postId: pId, rowNumber: rowId, description: desc,fieldofStudyId:$("#FieldofStudyId").val() },
+                    success: function (result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            chub.server.addNewCartableNotification().done(function() {
+                                mynotification(result.Message, 'lime');
+                                var obj = runSigner.parent().find('img');
+                                $(obj).attr('src', result.ImgSigner);
+                                runSigner.remove();
+                                @*var url = '@Url.Action(MVC.Personel.Request.DetailRequest())?requestId=' + requestId + '&rootUrl=@ViewBag.rootUrl';
+                        window.location.href = url;*@
+                            });
+                        }
+                    },
+                    error: function (xhr, status) {
+                        $.unblockUI();
+                        alert(xhr.responseText());
+                    }
+                });
+            });
+            $('#btnFavorVote').click(function() {
+                var voteText = $('#VoteText').val();
+                if ((voteText == null) || (voteText.trim() === "")) {
+                    mynotification('لطفا متن را را وارد کنید!', 'ruby');
+                    return;
+                }
+                if (Number($('#CouncilORCommissionNumber').val()) <= 0) {
+                    mynotification('لطفا شماره ' + '@typeDescription' +' را درست وارد کنید!', 'ruby');
+                    return;
+                }
+
+                $.messager.confirm('confirm', 'آیا مایل به صدور رای می باشید؟', function (r) {
+                    if (r) {
+                        $('#VoteType').val(@((int)VoteType.FavorVote));
+                        $('#VoteStatus').val(@((int)VoteStatus.Permanent));
+                        if ($('#addVoteForm').valid()) {
+                            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                            $('#addVoteForm').ajaxSubmit({
+                                cashe: false,
+                                url: '@Url.Action(MVC.Personel.Cartable.VotePermanent(), "http")',
+                                type: 'Post',
+                                dataType: 'json',
+                                data: $('#addVoteForm').serialize(),
+                                success: function (result) {
+                                    $.unblockUI();
+                                    if (result.isError) {
+                                        mynotification(result.Message, 'ruby');
+                                    } else {
+                                        chub.server.addNewCartableNotification().done(function() {
+                                            mynotification(result.Message, 'lime');
+                                            var url = '@Url.Action(MVC.Personel.Cartable.Index())';
+                                            window.location.href = url;
+                                        });
+                                    }
+                                },
+                                error: function (xhr, status) {
+                                    $.unblockUI();
+                                    mynotification('خطا در صدور رای!', 'ruby');
+                                }
+                            });
+
+                        } else {
+                            mynotification('خطا در ورود اطلاعات.', 'ruby');
+                            return $(this).form('validate');
+                        }
+                    }
+                    return $(this).form('validate');
+                });
+            });
+            $('#btnVetoVote').click(function() {
+                var voteText = $('#VoteText').val();
+                if ((voteText == null) || (voteText.trim() === "")) {
+                    mynotification('لطفا متن را را وارد کنید!', 'ruby');
+                    return;
+                }
+                if (Number($('#CouncilORCommissionNumber').val()) <= 0) {
+                    mynotification('لطفا شماره ' + '@typeDescription' +' را درست وارد کنید!', 'ruby');
+                    return;
+                }
+                $.messager.confirm('confirm', 'آیا مایل به صدور رای دائم می باشید؟', function (r) {
+                    if (r) {
+                        $('#VoteType').val(@((int)VoteType.Veto));
+                        $('#VoteStatus').val(@((int)VoteStatus.Permanent));
+                        if ($('#addVoteForm').valid()) {
+                            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                            $('#addVoteForm').ajaxSubmit({
+                                cashe: false,
+                                url: '@Url.Action(MVC.Personel.Cartable.VotePermanent(), "http")',
+                                type: 'Post',
+                                dataType: 'json',
+                                data: $('#addVoteForm').serialize(),
+                                success: function (result) {
+                                    $.unblockUI();
+                                    if (result.isError) {
+                                        mynotification(result.Message, 'ruby');
+                                    } else {
+                                        chub.server.addNewCartableNotification().done(function() {
+                                            mynotification(result.Message, 'lime');
+                                            var url = '@Url.Action(MVC.Personel.Cartable.Index())';
+                                            window.location.href = url;
+                                        });
+                                    }
+                                },
+                                error: function (xhr, status) {
+                                    $.unblockUI();
+                                    mynotification('خطا در صدور رای!', 'ruby');
+                                }
+                            });
+
+                        } else {
+                            mynotification('خطا در ورود اطلاعات.', 'ruby');
+                            return $(this).form('validate');
+                        }
+                    }
+                    return $(this).form('validate');
+                });
+            });
+            $('#btnReturn').click(function() {
+                var postId = $('#PostId').val();
+                var requestId = $('#RequestId').val();
+                var rowNumber = $('#RowNumber').val();
+                if (postId <= 0 || requestId < 0 || rowNumber < 0) {
+                    mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                    return false;
+                }
+                var desc = $("#ReturnDescription").val();
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $.ajax({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Cartable.Return(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: { requestId: requestId, postId: postId, rowNumber: rowNumber, description: desc,fieldofStudyId:$("#FieldofStudyId").val() },
+                    success: function (result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            chub.server.addNewCartableNotification().done(function() {
+                                mynotification(result.Message, 'lime');
+                                var url = '@Url.Action(MVC.Personel.Cartable.Index())';
+                                window.location.href = url;
+                            });
+                        }
+                    },
+                    error: function (xhr, status) {
+                        $.unblockUI();
+                        mynotification(xhr.responseText(), 'ruby');
+                    }
+                });
+            });
+        });
+
+        var uId = -1;
+        var pId = -1;
+        var rowId = -1;
+        var runSigner;
+
+        $('#dlSpecialEducation').datalist(
+        {
+            fit: true,
+            loadMsg: 'شکیبا باشید...',
+            singleSelect: false,
+            valueField: 'id',
+            lines: true,
+            queryParams: { requestId: Number(@Model.DetailRequestModel.RequestId) },//$('#Id').val()
+            url: '@Url.Action(MVC.Personel.Request.GetListSpecialEducationforRequest())'
+        });
+
+        $('a.btn.btn-icon-only.default.signer').click(function () {
+            runSigner = $(this);
+            uId = Number($(this).attr('data-UserId'));
+            pId = Number($(this).attr('data-PostId'));
+            rowId = Number($(this).attr('data-RowId'));
+            if (uId <= 0 || pId <= 0 || rowId <= 0) {
+                mynotification('خطا در تایید درخواست!', 'ruby');
+                return;
+            }
+            $("#ConfirmDescription").val("");
+            $('#modalConfirm').modal('show');
+
+        });
+
+        //$('#btnConfirm').click(function () {
+        //    Confirm(uId, pId, rowId);
+        //});
+
+
+        $('#btnClearVoteText').click(function () {
+            $('#VoteText').val("");
+        });
+        $('#btnClearDescription').click(function () {
+            $('#VoteDescription').val("");
+        });
+
+        function showDialogTextDefault(idboxName, textboxName, textDefaultType) {
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Home.GetPartialTextDefault())',
+                dataType: 'html',
+                data: { divName: "modaltextDefault", textDefaultType: textDefaultType, idboxName: idboxName, textboxName: textboxName },
+                type: 'get',
+                success: function (result) {
+                    $('#modaltextDefault').html(result);
+                    $('#modaltextDefault').dialog('open').dialog('setTitle', 'اطلاعات پایه');
+                    $('#modaltextDefault').dialog('center');
+                },
+                error: function () {
+                    mynotification("خطا در بازیابی اطلاعات پایه!", 'ruby');
+                }
+            });
+        }
+        function showDialogAttachment() {
+            var requestId = $('#RequestId').val();
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Cartable.Attachment())',
+                dataType: 'html',
+                data: {requestId : requestId },
+                type: 'get',
+                success: function (result) {
+                    $('#modalAttachment').html(result);
+                    $('#modalAttachment').dialog('open').dialog('setTitle', 'مدیریت پیوست');
+                    $('#modalAttachment').dialog('center');
+                },
+                error: function () {
+                    mynotification("خطا در بازیابی اطلاعات پیوست!", 'ruby');
+                }
+            });
+        }
+
+        function VoteTemporary(voteType) {
+            var voteText = $('#VoteText').val();
+            if ((voteText == null) || (voteText.trim() === "")) {
+                mynotification('لطفا متن را را وارد کنید!', 'ruby');
+                return;
+            }
+
+
+
+            $.messager.confirm('confirm', 'آیا مایل به صدور رای موقت می باشید؟', function (r) {
+                if (r) {
+                    $('#VoteType').val(voteType);
+                    $('#VoteStatus').val(@((int)VoteStatus.Temporary));
+                    if ($('#addVoteForm').valid()) {
+                        $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                        $('#addVoteForm').ajaxSubmit({
+                            cashe: false,
+                            url: '@Url.Action(MVC.Personel.Cartable.VoteTemporary(), "http")',
+                            type: 'Post',
+                            dataType: 'json',
+                            data: $('#addVoteForm').serialize(),
+                            success: function (result) {
+                                $.unblockUI();
+                                if (result.isError) {
+                                    mynotification(result.Message, 'ruby');
+                                } else {
+                                    mynotification(result.Message, 'lime');
+                                }
+                            },
+                            error: function (xhr, status) {
+                                $.unblockUI();
+                                mynotification('خطا در صدور رای!', 'ruby');
+                            }
+                        });
+
+                    } else {
+                        mynotification('خطا در ورود اطلاعات.', 'ruby');
+                        return $(this).form('validate');
+                    }
+                }
+                return $(this).form('validate');
+            });
+        }
+
+        function saveText(textDefaultType) {
+            var text = "";
+            if (textDefaultType === parseInt('@((int)TextDefaultType.SpecialEducationVerdictText)')) {
+                text = $('#VoteDescription').val();
+            }
+            else
+                text = $('#VoteText').val();
+            if ((text == null) || (text === '')) {
+                mynotification("لطفا متن را وارد کنید!", 'ruby');
+                return;
+            }
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.TextDefault.AddOrUpdate(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: { Text: text, TextDefaultType: textDefaultType },
+                success: function (result) {
+                    $.unblockUI();
+                    if (!result.isError) {
+                        mynotification(result.Msg, 'lime');
+                    } else
+                        mynotification(result.Msg, 'ruby');
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    mynotification("خطا در ثبت متن پیشفرض!", 'ruby');
+                }
+            });
+        }
+
+        function showModalReturn() {
+            var postId = $('#PostId').val();
+            var requestId = $('#RequestId').val();
+            var rowNumber = $('#RowNumber').val();
+            if (postId <= 0 || requestId < 0 || rowNumber<0) {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return false;
+            }
+            $("#ReturnDescription").val("");
+            $('#modalReturn').modal('show');
+        }
+
+        function PrintRequest() {
+            var requestId = @Model.RequestId;
+            @*var requestTypeId = @((int)Model.RequestType);*@
+            if (@Model.RequestId <= 0) {
+                mynotification('پرونده نامعتبر می باشد!', 'ruby');
+                return;
+            }
+            var url = "";
+            if (@((int)Model.RequestType) === @((int)RequestType.Comision))
+                url = '@Url.Action(MVC.Personel.Report.PrintCommision())?commisionId= ' + @Model.RequestId;
+            else
+                url = '@Url.Action(MVC.Personel.Report.PrintCouncil())?councilId= ' + @Model.RequestId;
+            window.location.href = url;
+        }
+    </script>
+}

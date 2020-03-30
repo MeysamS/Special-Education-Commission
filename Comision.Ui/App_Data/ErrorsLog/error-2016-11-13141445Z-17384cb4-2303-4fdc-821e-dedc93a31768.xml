@@ -1,0 +1,185 @@
+﻿<error errorId="17384cb4-2303-4fdc-821e-dedc93a31768" application="/LM/W3SVC/2/ROOT" host="ALI-LAPTOP" type="System.ArgumentException" message="The parameters dictionary contains a null entry for parameter 'studentNumber' of non-nullable type 'System.Int64' for method 'System.Web.Mvc.ActionResult GetStudentProfile(Int64, Int32)' in 'Comision.Ui.Areas.Personel.Controllers.CommissionController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.&#xD;&#xA;Parameter name: parameters" source="System.Web.Mvc" detail="System.ArgumentException: The parameters dictionary contains a null entry for parameter 'studentNumber' of non-nullable type 'System.Int64' for method 'System.Web.Mvc.ActionResult GetStudentProfile(Int64, Int32)' in 'Comision.Ui.Areas.Personel.Controllers.CommissionController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.&#xD;&#xA;Parameter name: parameters&#xD;&#xA;   at System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)&#xD;&#xA;   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;BeginInvokeSynchronousActionMethod&gt;b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3d()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;&gt;c__DisplayClass46.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3f()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass33.&lt;BeginInvokeActionMethodWithFilters&gt;b__32(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__15(IAsyncResult asyncResult, Controller controller)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="behzad.saemi@yahoo.com" time="2016-11-13T14:14:45.0884529Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:*/*&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.5&#xD;&#xA;HTTP_COOKIE:_culture=fa-ir; __RequestVerificationToken=Qfd6xdCeY15EwwmvgQWgM2AGo194dgKRsNFntZQCzkMz8N4PBY8wWlyXiKOkXtGYIzH1LIq-pDz2vSPFTOaGWS5sioVQ96Z4VmmE7kWIRuI1; ASP.NET_SessionId=zfqohdl3re041wulrhwe4spg; comisionLogin=plCwNx7mEShfctmIMFDGFUB_QDiRDKurwhTDTeU2VZn2etXR5t9hNwbnG-w_wVBtOemrAnke16nby06ACfeVplnqo3JyTD45VTBmvxOWk5x1dEvY141GBzImJUvp78edVDq5SxQG1LMzm4ACRuViHYODos4tmJde4Cf8X_ybw43AIWQj4qGrtluY8gXaxT7-qDQFDl_tLOo0UlTxsxZa_c_1E8QKucuSkR3gnbUn1DPKOPelus_fCpEv3a6wKvJmHcLMIL8gWldlfTqckPBQ4OF9bJzt81IK4R0VSdMt-IMwsgiYHLq7xFCMEaqwhdYk5YnLU42Jw5yKfI1pGPppG-Fmij3wHmOil14fmp72O_7IYmgpthOl24S9zijSfaPSld3J6RoSVrTIBEgv6GsD4P3EEQYS77O0qYaIEjV6LKesqjPO-Fy1hPlcfdokMbseQNwLP9_cAIM1Is-RSWJ4yD1sL4S6rDXtU4V8Bk4Z9Xi06qR2su8LLpQ7izTeeC2C9dSqJnw19moWMsh9S-YYL4Q0aEz6qeoM_kO93XT2fowXA4TtECN0XePKhYgqAT2ywY-E8TNHX-aev0WKL-QbpLNVVqBgmloN3YdegTzhTDik59mSR_zH4FVC-cRj9tMeZfn6eW55HW8G5TGPXJsebOYefEAJXPvSYTyij7zZmNPOz6tWcnzraC7SQrgAoUBoGeR-fb5RRhEj4IOER_Sw1jNJ8xAG4dAp7wz-rAS3OeCuWPEPPkcMb7GILlxDsLCm4lx9mBQPEEQoY66plndC8ONThYlltYaxz9_pMdl5Jn5eL3FWr-IK85d8Xmx75o_hIqBSuyVIYzvTIfVQPhxy0g&#xD;&#xA;HTTP_HOST:localhost:3298&#xD;&#xA;HTTP_REFERER:http://localhost:3298/Personel/Commission/Create&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0&#xD;&#xA;HTTP_X_REQUESTED_WITH:XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: */*&#xD;&#xA;Accept-Encoding: gzip, deflate&#xD;&#xA;Accept-Language: en-US,en;q=0.5&#xD;&#xA;Cookie: _culture=fa-ir; __RequestVerificationToken=Qfd6xdCeY15EwwmvgQWgM2AGo194dgKRsNFntZQCzkMz8N4PBY8wWlyXiKOkXtGYIzH1LIq-pDz2vSPFTOaGWS5sioVQ96Z4VmmE7kWIRuI1; ASP.NET_SessionId=zfqohdl3re041wulrhwe4spg; comisionLogin=plCwNx7mEShfctmIMFDGFUB_QDiRDKurwhTDTeU2VZn2etXR5t9hNwbnG-w_wVBtOemrAnke16nby06ACfeVplnqo3JyTD45VTBmvxOWk5x1dEvY141GBzImJUvp78edVDq5SxQG1LMzm4ACRuViHYODos4tmJde4Cf8X_ybw43AIWQj4qGrtluY8gXaxT7-qDQFDl_tLOo0UlTxsxZa_c_1E8QKucuSkR3gnbUn1DPKOPelus_fCpEv3a6wKvJmHcLMIL8gWldlfTqckPBQ4OF9bJzt81IK4R0VSdMt-IMwsgiYHLq7xFCMEaqwhdYk5YnLU42Jw5yKfI1pGPppG-Fmij3wHmOil14fmp72O_7IYmgpthOl24S9zijSfaPSld3J6RoSVrTIBEgv6GsD4P3EEQYS77O0qYaIEjV6LKesqjPO-Fy1hPlcfdokMbseQNwLP9_cAIM1Is-RSWJ4yD1sL4S6rDXtU4V8Bk4Z9Xi06qR2su8LLpQ7izTeeC2C9dSqJnw19moWMsh9S-YYL4Q0aEz6qeoM_kO93XT2fowXA4TtECN0XePKhYgqAT2ywY-E8TNHX-aev0WKL-QbpLNVVqBgmloN3YdegTzhTDik59mSR_zH4FVC-cRj9tMeZfn6eW55HW8G5TGPXJsebOYefEAJXPvSYTyij7zZmNPOz6tWcnzraC7SQrgAoUBoGeR-fb5RRhEj4IOER_Sw1jNJ8xAG4dAp7wz-rAS3OeCuWPEPPkcMb7GILlxDsLCm4lx9mBQPEEQoY66plndC8ONThYlltYaxz9_pMdl5Jn5eL3FWr-IK85d8Xmx75o_hIqBSuyVIYzvTIfVQPhxy0g&#xD;&#xA;Host: localhost:3298&#xD;&#xA;Referer: http://localhost:3298/Personel/Commission/Create&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0&#xD;&#xA;X-Requested-With: XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="G:\ALI\Lesson\ComponyProject\Commission\Comision.Ui\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="ApplicationCookie" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="behzad.saemi@yahoo.com" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="behzad.saemi@yahoo.com" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="behzad.saemi@yahoo.com" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Personel/Commission/GetStudentProfile" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="G:\ALI\Lesson\ComponyProject\Commission\Comision.Ui\Personel\Commission\GetStudentProfile" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="studentNumber=NaN&amp;requestType=1" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="37022" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Personel/Commission/GetStudentProfile" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="3298" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/Personel/Commission/GetStudentProfile" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="*/*" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.5" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="_culture=fa-ir; __RequestVerificationToken=Qfd6xdCeY15EwwmvgQWgM2AGo194dgKRsNFntZQCzkMz8N4PBY8wWlyXiKOkXtGYIzH1LIq-pDz2vSPFTOaGWS5sioVQ96Z4VmmE7kWIRuI1; ASP.NET_SessionId=zfqohdl3re041wulrhwe4spg; comisionLogin=plCwNx7mEShfctmIMFDGFUB_QDiRDKurwhTDTeU2VZn2etXR5t9hNwbnG-w_wVBtOemrAnke16nby06ACfeVplnqo3JyTD45VTBmvxOWk5x1dEvY141GBzImJUvp78edVDq5SxQG1LMzm4ACRuViHYODos4tmJde4Cf8X_ybw43AIWQj4qGrtluY8gXaxT7-qDQFDl_tLOo0UlTxsxZa_c_1E8QKucuSkR3gnbUn1DPKOPelus_fCpEv3a6wKvJmHcLMIL8gWldlfTqckPBQ4OF9bJzt81IK4R0VSdMt-IMwsgiYHLq7xFCMEaqwhdYk5YnLU42Jw5yKfI1pGPppG-Fmij3wHmOil14fmp72O_7IYmgpthOl24S9zijSfaPSld3J6RoSVrTIBEgv6GsD4P3EEQYS77O0qYaIEjV6LKesqjPO-Fy1hPlcfdokMbseQNwLP9_cAIM1Is-RSWJ4yD1sL4S6rDXtU4V8Bk4Z9Xi06qR2su8LLpQ7izTeeC2C9dSqJnw19moWMsh9S-YYL4Q0aEz6qeoM_kO93XT2fowXA4TtECN0XePKhYgqAT2ywY-E8TNHX-aev0WKL-QbpLNVVqBgmloN3YdegTzhTDik59mSR_zH4FVC-cRj9tMeZfn6eW55HW8G5TGPXJsebOYefEAJXPvSYTyij7zZmNPOz6tWcnzraC7SQrgAoUBoGeR-fb5RRhEj4IOER_Sw1jNJ8xAG4dAp7wz-rAS3OeCuWPEPPkcMb7GILlxDsLCm4lx9mBQPEEQoY66plndC8ONThYlltYaxz9_pMdl5Jn5eL3FWr-IK85d8Xmx75o_hIqBSuyVIYzvTIfVQPhxy0g" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:3298" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:3298/Personel/Commission/Create" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0" />
+    </item>
+    <item name="HTTP_X_REQUESTED_WITH">
+      <value string="XMLHttpRequest" />
+    </item>
+  </serverVariables>
+  <queryString>
+    <item name="studentNumber">
+      <value string="NaN" />
+    </item>
+    <item name="requestType">
+      <value string="1" />
+    </item>
+  </queryString>
+  <cookies>
+    <item name="_culture">
+      <value string="fa-ir" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="Qfd6xdCeY15EwwmvgQWgM2AGo194dgKRsNFntZQCzkMz8N4PBY8wWlyXiKOkXtGYIzH1LIq-pDz2vSPFTOaGWS5sioVQ96Z4VmmE7kWIRuI1" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="zfqohdl3re041wulrhwe4spg" />
+    </item>
+    <item name="comisionLogin">
+      <value string="plCwNx7mEShfctmIMFDGFUB_QDiRDKurwhTDTeU2VZn2etXR5t9hNwbnG-w_wVBtOemrAnke16nby06ACfeVplnqo3JyTD45VTBmvxOWk5x1dEvY141GBzImJUvp78edVDq5SxQG1LMzm4ACRuViHYODos4tmJde4Cf8X_ybw43AIWQj4qGrtluY8gXaxT7-qDQFDl_tLOo0UlTxsxZa_c_1E8QKucuSkR3gnbUn1DPKOPelus_fCpEv3a6wKvJmHcLMIL8gWldlfTqckPBQ4OF9bJzt81IK4R0VSdMt-IMwsgiYHLq7xFCMEaqwhdYk5YnLU42Jw5yKfI1pGPppG-Fmij3wHmOil14fmp72O_7IYmgpthOl24S9zijSfaPSld3J6RoSVrTIBEgv6GsD4P3EEQYS77O0qYaIEjV6LKesqjPO-Fy1hPlcfdokMbseQNwLP9_cAIM1Is-RSWJ4yD1sL4S6rDXtU4V8Bk4Z9Xi06qR2su8LLpQ7izTeeC2C9dSqJnw19moWMsh9S-YYL4Q0aEz6qeoM_kO93XT2fowXA4TtECN0XePKhYgqAT2ywY-E8TNHX-aev0WKL-QbpLNVVqBgmloN3YdegTzhTDik59mSR_zH4FVC-cRj9tMeZfn6eW55HW8G5TGPXJsebOYefEAJXPvSYTyij7zZmNPOz6tWcnzraC7SQrgAoUBoGeR-fb5RRhEj4IOER_Sw1jNJ8xAG4dAp7wz-rAS3OeCuWPEPPkcMb7GILlxDsLCm4lx9mBQPEEQoY66plndC8ONThYlltYaxz9_pMdl5Jn5eL3FWr-IK85d8Xmx75o_hIqBSuyVIYzvTIfVQPhxy0g" />
+    </item>
+    <item name="ComisionPermission5">
+      <value string="permissions=CreateCommission,UpdateCommission,SendCommissionToCartable,SaveStudentProfile,AttachmentCommission,CreateCouncil,UpdateCouncil,SendCouncilToCartable,ShowCartableRequest,DetailRequest,GetListRequest,ArchiveRequest,ListRequestStudent,CommisionAll,CouncilAll,PrintCommision,PrintCouncil" />
+    </item>
+  </cookies>
+</error>

@@ -1,0 +1,177 @@
+﻿@using Comision.Model.Enum
+@model Comision.Ui.Areas.Admin.Models.TextDefaultViewModel
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var textType = (TextDefaultType)ViewBag.TextDefaultType;
+}
+
+@*djhnfskzdnfksd*@
+<div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="index.html">مدیریت  @ViewBag.TextDefaultTypeDescription </a>
+                <i class="fa fa-angle-left"></i>
+            </li>
+            <li>
+                <span>نمایش</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption font-red-sunglo">
+                        <i class="icon-settings font-red-sunglo"></i>
+                        <span class="caption-subject bold uppercase"> @ViewBag.TextDefaultTypeDescription</span>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    @using (Html.BeginForm(MVC.Admin.Post.AddOrUpdate(), FormMethod.Post, new { id = "addTextDefaultForm", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                    {
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.HiddenFor(x => x.TextDefaultType, new { Value = ((int)textType) })
+                        <div class="form-body">
+                            <div class="form-group">
+                                @Html.LabelFor(f => f.Text, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Text, "", new { @class = "text-danger" })
+                                    <div class="input-icon">
+                                        @Html.TextAreaFor(m => m.Text, new { @class = "form-control", style = "width:800px;max-width: none" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" onclick="saveText();" class="btn blue">ذخیره</button>
+                                <button type="button" onclick="NewText();" class="btn default">انصراف</button>
+                            </div>
+                            <h3 class="form-section">@ViewBag.TextDefaultTypeDescription ثبت شده</h3>
+                        </div>
+                    }
+                    <!-- END FORM-->
+                    <div id="dgTextDefault">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@section Scripts{
+        <script>
+            $('#dgTextDefault').datagrid(
+               {
+                   idField: 'Id',
+                   title: '@ViewBag.TextDefaultTypeDescription',
+                   loadMsg: 'شکیبا باشید...',
+                   rownumbers: true,
+                   singleSelect: true,
+                   //sortName: 'Name',
+                   sortOrder: 'asc',
+                   pagination: true,
+                   pagePosition: 'bottom',
+                   striped: 'true',
+                   height: 400,
+                   fitColumns: true,
+                   pageSize: 10,
+                   url: '@Url.Action(MVC.Admin.TextDefault.GetTextDefault(@textType))',
+                onError: function(index, row) {
+                    $.messager.alert('پیام', row.Msg);
+                },
+                columns: [
+                    [
+                        { field: 'Text', title: 'عنوان', width: 300 },
+                        { field: 'TextDefaultType', title: 'نوع', width: 300 },
+                        { field: 'TextDefaultTypeId', title: 'ایدی', width: 300, hidden: true },
+                        {
+                            field: 'Action',
+                            title: 'عملیات',
+                            width: 100,
+                            align: 'center',
+                            formatter: function(value, rows, index) {
+                                return '<a href="javascript:void(0)"  onclick="deleteText(' + rows.Id + ')">' +
+                                    '<img class="delete"  src="/content/jquery-easyui-1.4.2/themes/icons/cancel.png"/></a>&nbsp&nbsp&nbsp' +
+                                    '<a  href="javascript:void(0)" onclick="editText(' + index + ')">' +
+                                    '<img src="/content/jquery-easyui-1.4.2/themes/icons/pencil.png" title="ویرایش"/></a>&nbsp&nbsp&nbsp';
+                            }
+                        }
+                    ]
+                ]
+            });
+
+            var pager = $('#dgTextDefault').datagrid('getPager');
+            $(pager).pagination({
+                pageSize: 10,
+                showPageList: true,
+                pageList: [10, 20, 50],
+                beforePageText: 'صفحه',
+                afterPageText: 'از {pages}',
+                displayMsg: 'نمایش اطلاعات  {from} تا {to} از {total}'
+            });
+
+            function newText() {
+                $('#Text').val("");
+                $('#Id').val(null);
+            }
+
+            function editText(rowIndex) {
+                $("#dgTextDefault").datagrid("selectRow", rowIndex);
+                var data = $("#dgTextDefault").datagrid("getSelected");
+                $('#Id').val(data.Id);
+                $('#Text').val(data.Text);
+            }
+            
+            function saveText() {
+                if ($('#addTextDefaultForm').valid()) {
+                    $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                    $('#addTextDefaultForm').ajaxSubmit({
+                        cashe: false,
+                        url: '@Url.Action(MVC.Admin.TextDefault.AddOrUpdate(), "http")',
+                        type: 'Post',
+                        dataType: 'json',
+                        data: $('#addTextDefaultForm').serialize(),
+                        success: function (result) {
+                            $.unblockUI();
+                            if (!result.isError) {
+                                $('#dgTextDefault').datagrid('reload');
+                                newText();
+                                mynotification(result.Msg, 'lime');
+                            }
+                            else
+                                mynotification(result.Msg, 'ruby');
+                        },
+                        error: function (xhr, status) {
+                            $.unblockUI();
+                            var response = xhr.responseText.match(/.*<body.*>([\s\S]*)<\/body>.*/);
+                            mynotification("خطا در ثبت متن پیش فرض", 'ruby');
+                        }
+                    });
+                } else {
+                    $.unblockUI();
+                    return $(this).form('validate');
+                }
+            }
+            function deleteText(id) {
+                if (id == null) {
+                    $.messager.show({ title: 'پیام سیستم', msg: "خطا در حذف رکورد مورد نظر!", showType: 'show' });
+                    return;
+                }
+                $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+                    if (r) {
+                        $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                        $.post('@Url.Action(MVC.Admin.TextDefault.Delete(), "http")', { id: id }, function (result) {
+                            $.unblockUI();
+                            if (!result.isError) {
+                                $('#dgTextDefault').datagrid('reload');
+                                mynotification(result.Msg, 'lime');
+                            }
+                            else
+                                mynotification(result.Msg, 'ruby');
+                        }, 'json');
+                    }
+                });
+            }
+        </script>
+    }

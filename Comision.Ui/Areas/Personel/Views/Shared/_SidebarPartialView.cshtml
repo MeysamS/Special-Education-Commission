@@ -1,0 +1,136 @@
+﻿@using Comision.Helper.Filters
+@using Comision.Helper.Utility
+@using Comision.Service.Model
+@using Links
+@using Microsoft.AspNet.Identity
+@{
+    var listSigner = User.ListSigner().Split('#');
+    var userId = Convert.ToInt64(User.Identity.GetUserId());
+}
+
+<li class="nav-item start active open">
+    <a href="javascript:;" class="nav-link nav-toggle">
+        <i class="icon-home"></i>
+        <span class="title">صفحه اصلی</span>
+        <span class="selected"></span>
+        <span class="arrow open"></span>
+    </a>
+</li>
+<li class="nav-item  ">
+    <a href="@Url.Action(MVC.Personel.Profile.Index())" class="nav-link nav-toggle">
+        <i class="icon-diamond"></i>
+        <span class="title">پروفایل</span>
+        <span class="arrow"></span>
+    </a>
+</li>
+@if (listSigner.Any(a => a == "1"))//اگر کارشناس باشد؟؟؟
+{
+    <li class="nav-item  ">
+        @Html.SecureActionLink(null, null, null, AccessLevel.ShowCartableRequest, "<i class='icon-settings'></i><div class='row'><div class='col-md-2'></div><div class='col-md-8'><span class='title'>مدیریت درخواست</span></div><div class='col-md-2'><span id ='requestCount' class='badge badge-danger pull-right'></span></div></div><span class='arrow'></span>", null, new Dictionary<string, object> { { "class", "nav-link nav-toggle" }, { "href", Url.Action(MVC.Personel.Request.Index()) } })
+        @*<a href="@Url.Action(MVC.Personel.Request.Index())" class="nav-link nav-toggle">
+            <i class="icon-settings"></i>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8"><span class="title">مدیریت درخواست</span></div>
+                    <div class="col-md-2">
+                        <span id="requestCount" class="badge badge-danger  pull-right">
+                            {Html.RenderAction(MVC.Personel.Request.GetRequestCount());}
+                        </span>
+                    </div>
+                </div>
+                <span class="arrow"></span>
+                </a>*@
+    </li>
+}
+@if (listSigner.Any(a => a != "1"))//اگر امضاکننده باشد؟؟؟
+{
+    <li class="nav-item">
+        @Html.SecureActionLink(null, null, null, AccessLevel.ShowCartable, "<i class='icon-puzzle'></i><div class='row'><div class='col-md-2'></div><div class='col-md-8'><span class='title'>کارتابل</span></div><div class='col-md-2'><span id = 'cartableCount' class='badge badge-danger pull-right'></span></div></div><span class='arrow'></span>", null, new Dictionary<string, object> { { "class", "nav-link nav-toggle" }, { "href", Url.Action(MVC.Personel.Cartable.Index()) } })
+        @*<a href="@Url.Action(MVC.Personel.Cartable.Index())" class="nav-link nav-toggle">
+                <i class="icon-puzzle"></i>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8"><span class="title">کارتابل</span></div>
+                    <div class="col-md-2">
+                        <span id="cartableCount" class="badge badge-danger pull-right">
+                            {Html.RenderAction(MVC.Personel.Cartable.GetCartableCount());}
+                        </span>
+                    </div>
+                </div>
+                <span class="arrow"></span>
+            </a>*@
+    </li>
+}
+@*@if (listSigner.Any(a => a == "1")) //اگر کارشناس باشد؟؟؟
+{*@
+    <li class="nav-item  ">
+        @Html.SecureActionLink(null, null, null, AccessLevel.FollowUpRequest, "<i class='icon-wallet'></i><span class='title'>پیگیری درخواست</span><span class='arrow'></span>", null, new Dictionary<string, object> { { "class", "nav-link nav-toggle" }, { "href", Url.Action(MVC.Personel.Request.FollowUp()) } })
+        @*<a href="@Url.Action(MVC.Personel.Request.FollowUp())" class="nav-link nav-toggle">
+                <i class="icon-wallet"></i>
+                <span class="title">پیگیری درخواست</span>
+                <span class="arrow"></span>
+            </a>*@
+    </li>
+@*}*@
+
+@*@if (listSigner.Any(a => a != "1"))//اگر امضاکننده باشد؟؟؟
+{*@
+    @if (HtmlExtensions.CanAccess(null, AccessLevel.CommisionAll) || HtmlExtensions.CanAccess(null, AccessLevel.CouncilAll) || HtmlExtensions.CanAccess(null, AccessLevel.ListRequestStudent))
+    {
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-briefcase"></i>
+                <span class="title">گزارشات</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+
+                <li class="nav-item  ">
+                    @Html.SecureActionLink(null, null, null, AccessLevel.CommisionAll, "<i class='icon-wallet'></i> <span class='title'>گزارشات کمیسیون </span> <span class='arrow'></span>", null, new Dictionary<string, object> { { "class", "nav-link nav-toggle" }, { "href", Url.Action(MVC.Personel.Report.CommisionAll()) } })
+                    @*<a href="@Url.Action(MVC.Personel.Report.CommisionAll())" class="nav-link nav-toggle">
+                            <i class="icon-wallet"></i>
+                            <span class="title">گزارشات کمیسیون </span>
+                            <span class="arrow"></span>
+                        </a>*@
+                </li>
+
+                <li class="nav-item  ">
+                    @Html.SecureActionLink(null, null, null, AccessLevel.CouncilAll, "<i class='icon-wallet'></i> <span class='title'>گزارشات شورا </span> <span class='arrow'></span>", null, new Dictionary<string, object> { { "class", "nav-link nav-toggle" }, { "href", Url.Action(MVC.Personel.Report.CouncilAll()) } })
+                    @*<a href="@Url.Action(MVC.Personel.Report.CouncilAll())" class="nav-link nav-toggle">
+                            <i class="icon-wallet"></i>
+                            <span class="title"> گزارشات شورا</span>
+                            <span class="arrow"></span>
+                        </a>*@
+                </li>
+                <li class="nav-item  ">
+                    @Html.SecureActionLink(null, null, null, AccessLevel.ListRequestStudent, "<i class='icon-wallet'></i> <span class='title'>گزارش لیست پرونده های دانشجویان</span> <span class='arrow'></span>", null, new Dictionary<string, object> { { "class", "nav-link nav-toggle" }, { "href", Url.Action(MVC.Personel.Report.ListRequestStudent()) } })
+                    @*<a href="@Url.Action(MVC.Personel.Report.ListRequestStudent())" class="nav-link nav-toggle">
+                            <i class="icon-wallet"></i>
+                            <span class="title"> گزارش لیست پرونده های دانشجویان </span>
+                            <span class="arrow"></span>
+                        </a>*@
+                </li>
+            </ul>
+        </li>
+    }
+@*}*@
+
+        @*<script type="text/javascript" Bundles.Content.jquery_easyui_1_4_2.src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+        @*<script type="text/javascript" Bundles.Content.jquery_easyui_1_4_2.src="~/Scripts/jquery-ui.custom.min.js"></script>*@
+        <script>
+            $(function() {
+                $.ajax({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Cartable.GetCartableRequestCount())',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: { userId: @userId },
+                    success: function(result) {
+                        $('#cartableCount').text(result.CartableCount);
+                        $('#requestCount').text(result.RequestCount);
+                    },
+                    error: function(xhr, status) {
+                    }
+                });
+            });
+        </script>

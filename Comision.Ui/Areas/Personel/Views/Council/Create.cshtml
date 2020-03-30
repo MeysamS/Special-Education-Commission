@@ -1,0 +1,438 @@
+﻿@using Comision.Helper.Utility
+@using Comision.Model.Enum
+@using Comision.Service.Model
+@model Comision.Service.Model.CouncilModel
+@{
+    ViewBag.Title = "Create";
+    //Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/persianDate/css")
+<link href="~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+<link href="~/content/assets/global/plugins/bootstrap-select/css/bootstrap-select-rtl.min.css" rel="stylesheet" type="text/css" />
+<style>
+    .dropdown-menu li {
+        font-family: 'tahoma';
+        font-size: 16px;
+    }
+</style>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">خانه</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>درخواست شورای آموزشی</span>
+        </li>
+    </ul>
+    <div style="float: left; margin-top: 4px" class="actions">
+        <a href="@Url.Action(MVC.Personel.Request.Index())" type="button"
+           class="btn btn-sm btn-circle yellow btn-outline">
+            <i class="fa fa-undo"></i>
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase">ایجاد درخواست شورای آموزشی</span>
+                </div>
+                <button type="button" style="float: left" class="btn default" onclick="ClearEdit();">انصراف</button>
+                @Html.SecureActionLink(null, null, null, AccessLevel.CreateCouncil, "<i class='fa fa-save'></i> ذخیره", null, new Dictionary<string, object> { { "class", "btn btn-inline blue" }, { "style", "float: left" }, { "onclick", "saveRequest()" }, { "href", "javascript:void(0)" } })
+                @*<button type="button" style="float: left" onclick="saveRequest();" class="btn blue"><i class="fa fa-save"></i> ذخیره</button>*@
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm(MVC.Personel.Council.Create(), FormMethod.Post, new { id = "requestform", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                {
+                    <div class="form-body">
+                        @*<div class="form-group">
+                                @Html.LabelFor(m => m.CouncilNumber, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-2">
+                                    <div class="input-icon">
+                                        @Html.TextBoxFor(m => m.CouncilNumber, new { @class = "form-control", style = "max-width: none" })
+                                    </div>
+                                </div>
+                                @Html.LabelFor(m => m.Date, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-2">
+                                    <div class="input-icon">
+                                        @Html.EditorFor(m => m.Date, new { @class = "form-control", style = "max-width: none;height:100px" })
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr style="font-size: 10px">
+                                    @*<th class="numeric" width="25%" style="font-size: 12px"> @Html.LabelFor(m => m.CouncilNumber, new { @class = "col-md-1 control-label" }) </th>*@
+                                    <th width="25%" style="font-size: 12px"> @Html.LabelFor(m => m.Date, new { @class = "col-md-1 control-label" }) </th>
+                                    <th class="numeric" width="20%" style="font-size: 12px"> شماره دانشجویی </th>
+                                    <th width="20%" style="font-size: 12px">  </th>
+                                    <th width="20%" style="font-size: 12px">  </th>
+                                    <th width="15%" style="font-size: 12px">  </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="numeric">
+                                        @*@Html.TextBoxFor(m => m.CouncilNumber, new { @class = "form-control", style = "max-width: none" })*@
+                                        @Html.HiddenFor(m => m.CouncilNumber)
+                                        @Html.EditorFor(m => m.Date, new { @class = "form-control", style = "max-width: none;height:100px" })
+                                    </td>
+                                    <td class="numeric">
+                                     @Html.TextBoxFor(m => m.StudentNumber, new { id = "txtStudentNumber", @class = "form-control" })
+                                    </td>
+                                    <td >
+                                        @Html.SecureActionLink(null, null, null, AccessLevel.SaveStudentProfile, "<i class='fa fa-plus'> اضافه کردن اطلاعات دانشجوی جدید  </i>", null, new Dictionary<string, object>
+                                    {{"class", "btn btn-icon grey-cascade"}, {"href", "javascript:void(0)"}, {"data-toggle", "modal"}, {"onclick", "showModalProfile()"}})
+
+                                    </td>
+                                    <td>
+                                   
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            <thead class="flip-content">
+                                <tr style="font-size: 10px">
+                                    <th width="25%" style="font-size: 12px"> نام و نام خانوادگی </th>
+                                    <th class="numeric" width="20%" style="font-size: 12px"> شماره ملی </th>
+                                    <th width="20%" style="font-size: 12px"> جنسیت </th>
+                                    <th class="" width="20%" style="font-size: 12px"> نظام وظیفه </th>
+                                    <th class="" width="15%" style="font-size: 12px"> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Id)
+                                        @Html.HiddenFor(m => m.PersonId, new { id = "txtPersonId" })
+                                        @Html.TextBoxFor(m => m.NameFamily, new { @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td class="numeric">
+                                        @Html.TextBoxFor(m => m.NationalCode, new { id = "txtNationalCode", @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.GenderString, new { id = "txtGender", @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td class="">
+                                        @Html.TextBoxFor(m => m.MilitaryServiceStatusString, new { id = "txtMilitaryServiceStatus", @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+
+                            <thead class="flip-content">
+                                <tr style="font-size: 10px">
+                                    <th width="25%" style="font-size: 12px"> رشته تحصیلی </th>
+                                    <th class="" width="20%" style="font-size: 12px"> مقطع تحصیلی </th>
+                                    <th class="numeric" width="20%" style="font-size: 12px"> تعداد واحد گذرانده </th>
+                                    <th class="numeric" width="20%" style="font-size: 12px"> تعداد واحد باقیمانده </th>
+                                    <th class="numeric" width="15%" style="font-size: 11px"> تعداد استفاده از شورا </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="">
+                                        @Html.TextBoxFor(m => m.FieldofStudy, new { id = "txtFieldofStudy", disabled = "disabled", @class = "form-control", })
+                                    </td>
+                                    <td class="">
+                                        @Html.TextBoxFor(m => m.GradeString, new { id = "txtGrade", @class = "form-control", disabled = "disabled" })
+                                    </td>
+                                    <td class="numeric">
+                                        @Html.TextBoxFor(m => m.NumberofSpentUnits, new { @class = "form-control" })
+                                    </td>
+                                    <td class="numeric">
+                                        @Html.TextBoxFor(m => m.NumberofRemainingUnits, new { @class = "form-control" })
+                                        @*<input class="form-control" placeholder="">*@
+                                    </td>
+                                    <td class="numeric">
+                                        @Html.TextBoxFor(m => m.NumberofVotesCouncil, new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered table-striped table-condensed flip-content">
+                            <thead class="flip-content">
+                                <tr>
+                                    <th width="50%">
+                                        <div class="portlet-title">
+                                            <div class="caption pull-left">
+                                                مشکل آموزشی
+                                            </div>
+                                            <div class="actions pull-right">
+                                                <a class="btn btn-circle btn-icon-only btn-default tooltips" href="javascript:;" data-original-title="" title="ثبت متن مشکل آموزشی" onclick='saveText(@((int) TextDefaultType.ProblemText))'>
+                                                    <i class="icon-action-redo"></i>
+                                                </a>
+                                                <a class="btn btn-circle btn-icon-only btn-default tooltips" href="javascript:;" data-original-title="" title="انتخاب متن مشکل آموزشی" onclick="showDialogTextDefault('id', 'ProblemsCouncil', @((int) TextDefaultType.ProblemText))">
+                                                    <i class="icon-arrow-up"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th width="50%">توضیحات </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.TextAreaFor(m => m.ProblemsCouncil, new { @class = "form-control", rows = "10" })
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "10" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalProfile" class="modal fade bs-modal-lg in" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; padding-right: 17px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="btnCloseModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">ثبت اطلاعات دانشجو</h4>
+            </div>
+            <div id="dataModalProfile" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn blue" onclick="SaveStudent();">ذخیره</button>
+                <a href='javascript:void(0);' class="btn default" onclick="">انصراف</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div id="modaltextDefault" class="easyui-dialog" modal="true" style="width: 900px; height: 500px;" closed="true">
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/PersianDate")
+    <script src="~/content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/content/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
+    <script>
+        $('#requestform').ajaxForm();
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        function showModalProfile() {
+            var studentNumber = Number($('#txtStudentNumber').val());
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Personel.Commission.GetStudentProfile(), "http")',
+                type: 'get',
+                datatype: 'html',
+                data: { studentNumber: studentNumber,requestType:@((int)RequestType.Council) },
+                success: function (data) {
+                    $.unblockUI();
+                    $('#dataModalProfile').html(data);
+                    $('#modalProfile').modal('show');
+                },
+                error: function (xhr, status) {
+                    ClearStudent();
+                    $.unblockUI();
+                    mynotification("خطا در عملیات", 'ruby');
+                }
+            });
+        }
+        function showDialogTextDefault(idboxName, textboxName, textDefaultType) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Home.GetPartialTextDefault())',
+                dataType: 'html',
+                data: { divName: "modaltextDefault", textDefaultType: textDefaultType, idboxName: idboxName, textboxName: textboxName },
+                type: 'get',
+                success: function (result) {
+                    $.unblockUI();
+                    $('#modaltextDefault').html(result);
+                    $('#modaltextDefault').dialog('open').dialog('setTitle', 'اطلاعات پایه');
+                    $('#modaltextDefault').dialog('center');
+                },
+                error: function () {
+                    $.unblockUI();
+                    mynotification("خطا در بازیابی اطلاعات پایه!", 'ruby');
+                }
+            });
+        }
+        $("#txtStudentNumber").blur(function () {
+            var studentNumber = Number(this.value);
+            GetStudent(studentNumber);
+        });
+        function GetStudent(studentNumber) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Account.IsStudentExist(), "http")',
+                type: 'post',
+                datatype: 'json',
+                data: { studentNumber: studentNumber,requestType:@((int)RequestType.Council) },
+                success: function (data) {
+                    $.unblockUI();
+                    if (data.IsError) {
+                        mynotification(data.Message, 'ruby');
+                        ClearStudent();
+                    } else {
+                        $("#txtStudentNumber").val(data.Data.StudentNumber);
+                        $("#txtPersonId").val(data.Data.PersonId);
+                        $("#NameFamily").val(data.Data.Name);
+                        $("#txtNationalCode").val(data.Data.NationalCode);
+                        $('#txtFieldofStudy').val(data.Data.FieldofStudyString);
+                        $("#txtGender").val(data.Data.GenderString);
+                        $("#txtGrade").val(data.Data.GradeString);
+                        $("#NumberofRemainingUnits").val(data.Data.NumberofRemainingUnits);
+                        $("#NumberofSpentUnits").val(data.Data.NumberofSpentUnits);
+                        $("#txtMilitaryServiceStatus").val(data.Data.MilitaryServiceStatusString);
+                        $("#NumberofVotesCouncil").val(data.Data.NumberofVotesCouncil);
+                    }
+                },
+                error: function (xhr, status) {
+                    ClearStudent();
+                    $.unblockUI();
+                    mynotification("خطا در لود اطلاعات دانشجویی!", 'ruby');
+                }
+            });
+        }
+        function ClearStudent() {
+            //$("#StudentNumber").val("");
+            $("#txtPersonId").val(0);
+            $("#NameFamily").val("");
+            $("#txtNationalCode").val("");
+            $("#txtFieldofStudy").val("");
+            //$("#RequestType").val(0);
+            //$("#RequestStatus").val(0);
+            $("#txtGender").val("");
+            $("#txtGrade").val("");
+            $("#NumberofRemainingUnits").val("");
+            $("#NumberofSpentUnits").val("");
+            $("#txtMilitaryServiceStatus").val("");
+            $("#NumberofVotesCouncil").val("");
+        }
+        function saveText(textDefaultType) {
+            var text = $('#ProblemsCouncil').val();
+            if ((text == null) || (text === '')) {
+                mynotification("لطفا متن را وارد کنید!", 'ruby');
+                return;
+            }
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.TextDefault.AddOrUpdate(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: { Text: text, TextDefaultType: textDefaultType },
+                success: function (result) {
+                    $.unblockUI();
+                    if (!result.isError) {
+                        mynotification(result.Msg, 'lime');
+                    } else
+                        mynotification(result.Msg, 'ruby');
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    mynotification("خطا در ثبت متن پیشفرض!", 'ruby');
+                }
+            });
+        }
+        function SaveStudent() {
+            if (Number($('#StudentNumber').val())<=0 ) {
+                mynotification('لطفا شماره دانشجویی را وارد کنید!', 'ruby');
+                return $(this).form('validate');
+            }
+            if ($('#cmbFieldofStudy').val() < 0) {
+                mynotification('لطفا رشته تحصیلی را وارد کنید!', 'ruby');
+                return $(this).form('validate');
+            }
+            if ($('#saveStudentProfile').valid()) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $('#saveStudentProfile').ajaxSubmit({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Commission.SaveStudentProfile(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    //data: { special: strSpecialEducation },
+                    success: function (result) {
+                        $.unblockUI();
+                        if (result.isError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            mynotification(result.Message, 'lime');
+                            GetStudent($("#StudentNumber").val());
+                            $('#btnCloseModal').click();
+                        }
+                    },
+                    error: function (xhr, status) {
+                        $.unblockUI();
+                        mynotification("خطا در ثبت اطلاعات دانشجویی!", 'ruby');;
+                    }
+                });
+            } else {
+                mynotification('خطا در ورود اطلاعات.', 'ruby');
+                return $(this).form('validate');
+            }
+            return $(this).form('validate');
+        }
+
+        function saveRequest() {
+            //if (Number($('#CouncilNumber').val()) <= 0) {
+            //    mynotification('لطفا شماره طرح در شورا را درست وارد کنید!', 'ruby');
+            //    return $(this).form('validate');
+            //}
+            if (Number($('#txtPersonId').val()) <= 0) {
+                mynotification('اطلاعات دانشجویی به درستی لود نشده است!', 'ruby');
+                return $(this).form('validate');
+            }
+            //if (Number($('#StudentNumber').val()) <= 0) {
+            //    mynotification('لطفا شماره دانشجویی را درست وارد کنید!', 'ruby');
+            //    return $(this).form('validate');
+            //}
+            //if (Number($('#NationalCode').val()) <= 0) {
+            //    mynotification('لطفا شماره ملی را بصورت عددی وارد کنید!', 'ruby');
+            //    return $(this).form('validate');
+            //}
+            if ($('#requestform').valid()) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $('#requestform').ajaxSubmit({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Personel.Council.Create(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: $('#requestform').serialize(),
+                    success: function (result) {
+                        $.unblockUI();
+                        if (result.IsError) {
+                            mynotification(result.Message, 'ruby');
+                        } else {
+                            mynotification(result.Message, 'lime');
+                            var url = '@Url.Action(MVC.Personel.Request.Index())?requestId=' + result.requestId + '';
+                            window.location.href = url;
+                        }
+                    },
+                    error: function (xhr, status) {
+                        $.unblockUI();
+                        mynotification("خطا در ثبت درخواست", 'ruby');
+                    }
+                });
+            } else {
+                mynotification('خطا در ورود اطلاعات.', 'ruby');
+                return $(this).form('validate');
+            }
+            return $(this).form('validate');
+        }
+    </script>
+}

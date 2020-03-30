@@ -1,0 +1,120 @@
+﻿@using Comision.Model.Enum
+@model Comision.Ui.Areas.Admin.Models.TextDefaultViewModel
+@{
+    var type = (TextDefaultType)ViewBag.TextDefaultType;
+}
+
+<div class="modal-body">
+    <div class="portlet box green">
+        <div class="portlet-body" style="border: none;">
+            <div class="panel-group accordion" id="accordion1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="height: 26px">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_1" aria-expanded="false"> جدید </a>
+                        </h4>
+                    </div>
+                    <div id="collapse_1" class="panel-collapse collapse" aria-expanded="false">
+                        <div class="panel-body">
+                            @using (Html.BeginForm(MVC.Admin.TextDefault.AddOrUpdate(), FormMethod.Post, new { id = "addTextDefaultForm", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                            {
+                                <p>
+                                    @Html.HiddenFor(x => x.Id)
+                                    @Html.HiddenFor(x => x.TextDefaultType, new { Value = ((int)type) })
+                                    <div class="form-group">
+                                        @Html.LabelFor(f => f.Text, new { @class = "col-md-1 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.ValidationMessageFor(x => x.Text, "", new { @class = "text-danger" })
+                                            <div class="input-icon">
+                                                @Html.TextAreaFor(m => m.Text, new { @class = "form-control", rows = "2" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="form-group">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10">
+                                            <button type="button" class="btn dark btn-outline" onclick="newText();">انصراف</button>
+                                            <button type="button" class="btn green" onclick="savePartialText();">ثبت متن جدید</button>
+                                        </div>
+                                    </div>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dlselectedTextDefault">
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn dark btn-outline" data-dismiss="modal">انصراف</button>
+    <button id="btnSetValue" type="button" class="btn green" onclick="setPartialValue();">انتخاب</button>
+</div>
+
+<script>
+
+    $('#dlselectedTextDefault').datalist(
+{
+    loadMsg: 'شکیبا باشید...',
+    height:260,
+    rownumbers: true,
+    singleSelect: true,
+    valueField: 'id',
+    checkbox: true,
+    //lines: true,
+    queryParams: { type: @(((int)(TextDefaultType)ViewBag.TextDefaultType)) },
+    url: '@Url.Action(MVC.Home.GetSelectTextDefault())'
+
+});
+
+    function newText() {
+        $('#Text').val("");
+        $('#Id').val(null);
+    }
+
+    function savePartialText() {
+        if ($('#addTextDefaultForm').valid()) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $('#addTextDefaultForm').ajaxSubmit({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.TextDefault.AddOrUpdate(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: $('#addTextDefaultForm').serialize(),
+                success: function (result) {
+                    $.unblockUI();
+                    if (!result.isError) {
+                        $('#dlselectedTextDefault').datalist('reload');
+                        newText();
+                        mynotification(result.Msg, 'lime');
+                    }
+                    else
+                        mynotification(result.Msg, 'ruby');
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    mynotification("خطا درثبت متن پیش فرض", 'ruby');
+                }
+            });
+        } else {
+            $.unblockUI();
+            return $(this).form('validate');
+        }
+    }
+
+    function setPartialValue() {
+        var selected = $('#dlselectedTextDefault').datalist('getSelected');
+        if (selected == null) {
+            mynotification('رکوردی انتخاب نشده است!', 'ruby');
+            return;
+        }
+        @*$("#" + '@ViewBag.idboxName').val(selected.value);*@
+        $("#" + '@ViewBag.textboxName').val(selected.text);
+        $("#" + '@ViewBag.divName').dialog().close();;
+    }
+</script>

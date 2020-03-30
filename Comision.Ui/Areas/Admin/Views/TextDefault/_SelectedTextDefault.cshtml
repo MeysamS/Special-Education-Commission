@@ -1,0 +1,91 @@
+﻿@using Comision.Model.Enum
+@model Comision.Ui.Areas.Admin.Models.TextDefaultViewModel
+@{
+    var type = (TextDefaultType)ViewBag.TextDefaultType;
+}
+
+<div class="portlet light">
+    <div class="portlet-body form">
+        <div id="dlselectedTextDefault">
+        </div>
+            <button style="right: 100%; margin-top: 10px;margin-bottom: 10px " type="button" onclick="Vote();" class="btn green-dark">انتخاب رای</button>
+     
+        <div class="easyui-accordion">
+            <div title="جدید"  style="overflow:auto;padding:10px;">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm(MVC.Admin.TextDefault.AddOrUpdate(), FormMethod.Post, new { id = "addTextDefaultForm", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+            {
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.HiddenFor(x => x.TextDefaultType, new { Value = ((int)type) })
+                    <div class="form-body">
+                        <div class="form-group">
+                            @Html.LabelFor(f => f.Text, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-4">
+                                @Html.ValidationMessageFor(x => x.Text, "", new { @class = "text-danger" })
+                                <div class="input-icon">
+                                    @Html.TextAreaFor(m => m.Text, new { @class = "form-control", rows = "3", style = "width:300px;max-width: none" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" onclick="saveText();" class="btn blue">ذخیره</button>
+                            <button type="button" onclick="NewText();" class="btn default">انصراف</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('#dlselectedTextDefault').datalist(
+    {
+        fit: true,
+        loadMsg: 'شکیبا باشید...',
+        singleSelect: true,
+        valueField: 'id',
+        checkbox: true,
+        lines: true,
+        queryParams: { type: @((int)type) },
+        url: '@Url.Action(MVC.Admin.TextDefault.GetSelectTextDefault())'
+
+    });
+
+    function saveText() {
+        if ($('#addTextDefaultForm').valid()) {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $('#addTextDefaultForm').ajaxSubmit({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.TextDefault.AddOrUpdate(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: $('#addTextDefaultForm').serialize(),
+                success: function (result) {
+                    $.unblockUI();
+                    if (!result.isError) {
+                        $('#dlselectedTextDefault').datalist('reload');
+                        newText();
+                        mynotification(result.Msg, 'lime');
+                    }
+                    else
+                        mynotification(result.Msg, 'ruby');
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    $.messager.show({ title: 'پیام سیستم', msg: xhr.responseText(), showType: 'show' });
+                }
+            });
+        } else {
+            $.unblockUI();
+            return $(this).form('validate');
+        }
+    }
+
+    function newText() {
+        $('#Text').val("");
+        $('#Id').val(null);
+    }
+
+</script>

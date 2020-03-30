@@ -1,0 +1,1297 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="5">
+      <RequestData Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>RequestData</Alias>
+        <BusinessObjects isList="true" count="0" />
+        <Category />
+        <Columns isList="true" count="8">
+          <value>RequestId,System.Int64</value>
+          <value>CommissionCouncilNumber,System.Int64</value>
+          <value>Date,System.Nullable`1[System.DateTime]</value>
+          <value>Description,System.String</value>
+          <value>VoteText,System.String</value>
+          <value>DescriptionVerdict,System.String</value>
+          <value>RowNumber,System.Int32</value>
+          <value>RefertoText,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Guid>4683fa6355dd42f09d690114b042087a</Guid>
+        <Name>RequestData</Name>
+      </RequestData>
+      <Signers Ref="3" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>Signers</Alias>
+        <BusinessObjects isList="true" count="0" />
+        <Category />
+        <Columns isList="true" count="12">
+          <value>PostName1,System.String</value>
+          <value>SignatureUrl1,System.String</value>
+          <value>PostName2,System.String</value>
+          <value>SignatureUrl2,System.String</value>
+          <value>SignatureUrl3,System.String</value>
+          <value>PostName3,System.String</value>
+          <value>PostName4,System.String</value>
+          <value>SignatureUrl4,System.String</value>
+          <value>SignatureUrl5,System.String</value>
+          <value>SignatureUrl6,System.String</value>
+          <value>PostName5,System.String</value>
+          <value>PostName6,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Guid>069372adc1124dd39b34fbb9afdad7e0</Guid>
+        <Name>Signers</Name>
+      </Signers>
+      <MemberDetails Ref="4" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>MemberDetails</Alias>
+        <BusinessObjects isList="true" count="0" />
+        <Category />
+        <Columns isList="true" count="3">
+          <value>PostName,System.String</value>
+          <value>RowNumber,System.Int32</value>
+          <value>FullName,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Guid>09fd1353a67041bcbbac8df9986df98e</Guid>
+        <Name>MemberDetails</Name>
+      </MemberDetails>
+      <SpecialEducation Ref="5" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>SpecialEducation</Alias>
+        <BusinessObjects isList="true" count="0" />
+        <Category />
+        <Columns isList="true" count="3">
+          <value>Id,System.Int32</value>
+          <value>Name,System.String</value>
+          <value>State,System.Boolean</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Guid>5b8c15aa800b4e9fa6fff99922f3c835</Guid>
+        <Name>SpecialEducation</Name>
+      </SpecialEducation>
+      <StudentInformation Ref="6" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>StudentInformation</Alias>
+        <BusinessObjects isList="true" count="0" />
+        <Category />
+        <Columns isList="true" count="8">
+          <value>NameFamili,System.String</value>
+          <value>StudentNumber,System.String</value>
+          <value>FieldofStudyName,System.String</value>
+          <value>GradeName,System.String</value>
+          <value>NumberofRemainingUnits,System.Int32</value>
+          <value>NumberofSpentUnits,System.String</value>
+          <value>MilitaryServiceStatusName,System.String</value>
+          <value>NumberofVotesCouncil,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Guid>2e6272be8cb24cafb50f10da14e52123</Guid>
+        <Name>StudentInformation</Name>
+      </StudentInformation>
+    </BusinessObjects>
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="0" />
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Variables isList="true" count="3">
+      <value>,NumberPrint,NumberPrint,System.String,,False,False</value>
+      <value>,DatePrint,DatePrint,System.DateTime,_x0038__x002F_1_x002F_2016_x0020_1:05:25_x0020_PM,False,False</value>
+      <value>,LogoPrint,LogoPrint,System.String,,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="7" type="Page" isKey="true">
+      <Border>All;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="10">
+        <PageHeaderBand1 Ref="8" type="PageHeaderBand" isKey="true">
+          <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.2,7.67,0.9</ClientRectangle>
+          <Components isList="true" count="8">
+            <Text1 Ref="9" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4.39,0.01,2.5,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Titr,11,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>دانشگاه آزاد اسلامی واحد آیت اله آملی</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text2 Ref="10" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4.92,0.31,1.8,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Mitra,14,Bold</Font>
+              <Guid>bc267867fe27407eb67808e0e453bf4d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>حوزه معاونت آموزشی</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text3 Ref="11" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.12,0.4,2.4,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Nazanin,12,Bold</Font>
+              <Guid>6f96d7c5429f4cc7842bbe7218fa8710</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>فرم صورتجلسه کمیسیون موارد خاص</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text4 Ref="12" type="Text" isKey="true">
+              <AutoWidth>True</AutoWidth>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.9,0.01,0.4,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Mitra,12</Font>
+              <Guid>133315078bc041098d73681e2603fcee</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>:شماره</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <Text5 Ref="13" type="Text" isKey="true">
+              <AutoWidth>True</AutoWidth>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.9,0.4,0.4,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Mitra,12</Font>
+              <Guid>b6ab533809b4497f81fbd1f78f02cc9a</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>:تاریخ</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Image1 Ref="14" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.1,0.1,0.5,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <ImageURL>{LogoPrint}</ImageURL>
+              <Name>Image1</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Stretch>True</Stretch>
+            </Image1>
+            <Text43 Ref="15" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.1,0,0.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Lotus,12,Bold</Font>
+              <Guid>bd18a275cefe4af680f2a473ad77c210</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text43</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{RequestData.RowNumber}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text43>
+            <Text45 Ref="16" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.1,0.4,0.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Lotus,12,Bold</Font>
+              <Guid>3fdf0cf812704ff884b0f90c8ba731bb</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text45</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text45>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </PageHeaderBand1>
+        <Panel1 Ref="17" type="Panel" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,1.3,7.67,0.6</ClientRectangle>
+          <Components isList="true" count="6">
+            <Text6 Ref="18" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.79,0.05,0.9,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Lotus,11,Bold</Font>
+              <Guid>9f8a4a86c729421e8cb224dd0c129373</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="7" />
+              <Parent isRef="17" />
+              <Text>در جلسه شماره</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text7 Ref="19" type="Text" isKey="true">
+              <AutoWidth>True</AutoWidth>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.34,0.04,0.5,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Lotus,12,Bold</Font>
+              <Guid>3064fed40e1a4878a139628701c2ff41</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="7" />
+              <Parent isRef="17" />
+              <Text>{RequestData.CommissionCouncilNumber}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text8 Ref="20" type="Text" isKey="true">
+              <AutoWidth>True</AutoWidth>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4.39,0.05,1.9,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Lotus,11,Bold</Font>
+              <Guid>1f8d349d87da41498cc055056f3ea9f0</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="7" />
+              <Parent isRef="17" />
+              <Text>کمیسیون موارد خاص دانشگاه در تاریخ</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text9 Ref="21" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.74,0.05,0.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Lotus,11,Bold</Font>
+              <Guid>4f732e4ff59243d29f8d567d11864eb8</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="7" />
+              <Parent isRef="17" />
+              <Text>{DateToHijri(RequestData.Date)}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text10 Ref="22" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.03,0.05,3.7,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Lotus,11,Bold</Font>
+              <Guid>25ee9964568644099113d4653d5a5c49</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="7" />
+              <Parent isRef="17" />
+              <Text>در خصوص دانشجو با مشخصات زیر،موارد مطروحه از سوی گروه آموزشی</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+            <Text47 Ref="23" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.2,0.3,6.4,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Lotus,11,Bold</Font>
+              <Guid>709c38f45ec749e2870b7230896d5902</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text47</Name>
+              <Page isRef="7" />
+              <Parent isRef="17" />
+              <Text>.تخصصی مورد بحث و بررسی قرار گرفته و رای نهای به شرح زیر به تصویب کلیه اعضای کمیسیون رسیده است</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text47>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DockStyle>Top</DockStyle>
+          <Name>Panel1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </Panel1>
+        <Panel2 Ref="24" type="Panel" isKey="true">
+          <Border>None;[165:165:165];1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,1.9,7.67,0.23</ClientRectangle>
+          <Components isList="true" count="6">
+            <Text18 Ref="25" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.8,0,1.87,0.23</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Titr,8,Bold</Font>
+              <Guid>47df2b3d478044a9bd40c7f15c84a108</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="7" />
+              <Parent isRef="24" />
+              <Text>نام و نام خانوادگی</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text25 Ref="26" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4.8,0,1,0.23</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Titr,8,Bold</Font>
+              <Guid>3abbfdf535444e579d395dc0c25994b0</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="7" />
+              <Parent isRef="24" />
+              <Text>شماره دانشجویی</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text25>
+            <Text26 Ref="27" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.3,0,1.5,0.23</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Titr,8,Bold</Font>
+              <Guid>0d702cec503c441d977cacb8b54eeb97</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="7" />
+              <Parent isRef="24" />
+              <Text>مقطع و رشته تحصیلی</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text26>
+            <Text27 Ref="28" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.4,0,0.9,0.23</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Titr,8,Bold</Font>
+              <Guid>174c1cb428f741fc8440bf7fd83304d1</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="7" />
+              <Parent isRef="24" />
+              <Text>تعداد واحد گذرانده</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text27>
+            <Text28 Ref="29" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.4,0,1,0.23</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Titr,8,Bold</Font>
+              <Guid>25ca0da7e53142c682654987e01c1256</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="7" />
+              <Parent isRef="24" />
+              <Text>تعداد واحد باقیمانده</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text28>
+            <Text17 Ref="30" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,1.4,0.23</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Fill</DockStyle>
+              <Font>B Titr,8,Bold</Font>
+              <Guid>60bd73ced30940e1b63ddb83ecf7b1d0</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="7" />
+              <Parent isRef="24" />
+              <Text>وضعیت نظام وظیفه</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DockStyle>Top</DockStyle>
+          <Name>Panel2</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <RightToLeft>True</RightToLeft>
+        </Panel2>
+        <Panel3 Ref="31" type="Panel" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,2.13,7.67,0.25</ClientRectangle>
+          <Components isList="true" count="6">
+            <Text12 Ref="32" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.8,0,1.87,0.25</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>23bac91e27914684af934ec1204217aa</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="7" />
+              <Parent isRef="31" />
+              <Text>{StudentInformation.NameFamili}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+            <Text13 Ref="33" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4.8,0,1,0.25</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>0f6ef78805cb41ba8dba2b63ca4fa764</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="7" />
+              <Parent isRef="31" />
+              <Text>{StudentInformation.StudentNumber}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Text14 Ref="34" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.3,0,1.5,0.25</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Mitra,9,Bold</Font>
+              <Guid>6fae9552dc234125a5e08281a61c45cc</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="7" />
+              <Parent isRef="31" />
+              <Text>{StudentInformation.GradeName + ' ' + StudentInformation.FieldofStudyName}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+            <Text15 Ref="35" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.4,0,0.9,0.25</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>9c2fcb98701843b282d2bbf19acfa8e5</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="7" />
+              <Parent isRef="31" />
+              <Text>{StudentInformation.NumberofSpentUnits}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text15>
+            <Text16 Ref="36" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.4,0,1,0.25</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>8872aa3048544616863f3c14a750bddd</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="7" />
+              <Parent isRef="31" />
+              <Text>{StudentInformation.NumberofRemainingUnits}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text19 Ref="37" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,1.4,0.25</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Fill</DockStyle>
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>24a2d17e9ea248968fb051cae80cc79d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="7" />
+              <Parent isRef="31" />
+              <Text>{StudentInformation.MilitaryServiceStatusName}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text19>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DockStyle>Top</DockStyle>
+          <Guid>d66512c898424b8ca1b6fe1244b285d7</Guid>
+          <Name>Panel3</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <RightToLeft>True</RightToLeft>
+        </Panel3>
+        <Panel4 Ref="38" type="Panel" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,2.38,7.67,0.05</ClientRectangle>
+          <Components isList="true" count="0" />
+          <Conditions isList="true" count="0" />
+          <DockStyle>Top</DockStyle>
+          <Name>Panel4</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </Panel4>
+        <Panel7 Ref="39" type="Panel" isKey="true">
+          <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <CanGrow>True</CanGrow>
+          <ClientRectangle>0,2.43,7.67,3.01</ClientRectangle>
+          <Components isList="true" count="2">
+            <Panel5 Ref="40" type="Panel" isKey="true">
+              <Border>Top, Left, Right;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>4.37,0,3.3,3.01</ClientRectangle>
+              <Components isList="true" count="2">
+                <Text21 Ref="41" type="Text" isKey="true">
+                  <Border>All;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,0,3.3,0.21</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Top</DockStyle>
+                  <Font>B Mitra,10,Bold</Font>
+                  <Guid>cf66f76b2bac4bb39cb086def0756807</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text21</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="40" />
+                  <Text>مورد یا موارد خاص آموزشی</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text21>
+                <DataBand1 Ref="42" type="DataBand" isKey="true">
+                  <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <BusinessObjectGuid>5b8c15aa800b4e9fa6fff99922f3c835</BusinessObjectGuid>
+                  <ClientRectangle>0,0.41,3.3,0.22</ClientRectangle>
+                  <Components isList="true" count="3">
+                    <Text22 Ref="43" type="Text" isKey="true">
+                      <Border>Top, Left, Right;Black;1;Solid;False;4;Black</Border>
+                      <Brush>Transparent</Brush>
+                      <ClientRectangle>3.1,0,0.2,0.22</ClientRectangle>
+                      <Conditions isList="true" count="0" />
+                      <DockStyle>Right</DockStyle>
+                      <Font>B Mitra,8,Bold</Font>
+                      <Guid>32251d3a77d349c4910a8293ae2d8960</Guid>
+                      <HorAlignment>Right</HorAlignment>
+                      <Margins>0,5,0,0</Margins>
+                      <Name>Text22</Name>
+                      <Page isRef="7" />
+                      <Parent isRef="42" />
+                      <Text>-{Line}</Text>
+                      <TextBrush>Black</TextBrush>
+                      <Type>Expression</Type>
+                      <VertAlignment>Center</VertAlignment>
+                    </Text22>
+                    <Text46 Ref="44" type="Text" isKey="true">
+                      <Border>Top, Left, Right;Black;1;Solid;False;4;Black</Border>
+                      <Brush>Transparent</Brush>
+                      <ClientRectangle>0.3,0,2.8,0.22</ClientRectangle>
+                      <Conditions isList="true" count="0" />
+                      <DockStyle>Right</DockStyle>
+                      <Font>B Mitra,8,Bold</Font>
+                      <Guid>cdf754a65af9421b9bda7b6e38bc65b1</Guid>
+                      <HorAlignment>Right</HorAlignment>
+                      <Margins>0,5,0,0</Margins>
+                      <Name>Text46</Name>
+                      <Page isRef="7" />
+                      <Parent isRef="42" />
+                      <Text>{SpecialEducation.Name}</Text>
+                      <TextBrush>Black</TextBrush>
+                      <Type>Expression</Type>
+                      <VertAlignment>Center</VertAlignment>
+                    </Text46>
+                    <CheckBox1 Ref="45" type="CheckBox" isKey="true">
+                      <Border>All;Black;1;Solid;False;4;Black</Border>
+                      <Brush>EmptyBrush</Brush>
+                      <Checked>{SpecialEducation.State}</Checked>
+                      <ClientRectangle>0,0,0.3,0.22</ClientRectangle>
+                      <Conditions isList="true" count="0" />
+                      <ContourColor>Black</ContourColor>
+                      <DockStyle>Fill</DockStyle>
+                      <Guid>fe8854a773d24dd2b068d4d800f206ff</Guid>
+                      <Name>CheckBox1</Name>
+                      <Page isRef="7" />
+                      <Parent isRef="42" />
+                      <TextBrush>Black</TextBrush>
+                    </CheckBox1>
+                  </Components>
+                  <Conditions isList="true" count="0" />
+                  <CountData>15</CountData>
+                  <DataRelationName isNull="true" />
+                  <Filters isList="true" count="0" />
+                  <Name>DataBand1</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="40" />
+                  <RightToLeft>True</RightToLeft>
+                  <Sort isList="true" count="0" />
+                </DataBand1>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>f78d39bf6f3e4bb9821bc3aa095134ab</Guid>
+              <Name>Panel5</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+            </Panel5>
+            <Panel6 Ref="46" type="Panel" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,4.37,3.01</ClientRectangle>
+              <Components isList="true" count="4">
+                <Text20 Ref="47" type="Text" isKey="true">
+                  <Border>All;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,0,4.37,0.21</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Top</DockStyle>
+                  <Font>B Mitra,10,Bold</Font>
+                  <Guid>bc9d6d76990c4b5996017c574bcc24a6</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text20</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="46" />
+                  <Text>توضیحات</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text20>
+                <Text23 Ref="48" type="Text" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,0.21,4.37,1.65</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Top</DockStyle>
+                  <Font>B Mitra,10,Bold</Font>
+                  <Guid>81a2a5a97a7c45f298c020540f9d0bfc</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text23</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="46" />
+                  <Text>{RequestData.Description}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+                  <Type>Expression</Type>
+                </Text23>
+                <Text24 Ref="49" type="Text" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,1.86,2.37,1.15</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Left</DockStyle>
+                  <Font>B Mitra,10,Bold</Font>
+                  <Guid>24fce7f2f1ee4d08af5b49634b134d0c</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text24</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="46" />
+                  <Text>{Signers.PostName1}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+                  <Type>Expression</Type>
+                  <VertAlignment>Bottom</VertAlignment>
+                </Text24>
+                <Image2 Ref="50" type="Image" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0.5,1.93,1.3,0.8</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Guid>d1d02721dd914ba3b599e2161c4e0bb5</Guid>
+                  <ImageURL>{Signers.SignatureUrl1}</ImageURL>
+                  <Name>Image2</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="46" />
+                  <Stretch>True</Stretch>
+                </Image2>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Fill</DockStyle>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>baf3db85c2274c4abe2eb7d71cf3508f</Guid>
+              <Name>Panel6</Name>
+              <Page isRef="7" />
+              <Parent isRef="39" />
+            </Panel6>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DockStyle>Top</DockStyle>
+          <GrowToHeight>True</GrowToHeight>
+          <Guid>d468325b92734394abd084f154933f5f</Guid>
+          <Name>Panel7</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </Panel7>
+        <Panel8 Ref="51" type="Panel" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,5.44,7.67,1</ClientRectangle>
+          <Components isList="true" count="6">
+            <Text29 Ref="52" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,2.55,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Left</DockStyle>
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>0b9dfc67259448d18bbbf0ad82f3f6a8</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="7" />
+              <Parent isRef="51" />
+              <Text>{Signers.PostName4}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text29>
+            <Text30 Ref="53" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.55,0,2.56,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Left</DockStyle>
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>40ec031daa514e4abec7b17f954456f1</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="7" />
+              <Parent isRef="51" />
+              <Text>{Signers.PostName3}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text30>
+            <Text31 Ref="54" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.11,0,2.56,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Fill</DockStyle>
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>882b2021eb784fd0baed3894e630fb87</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text31</Name>
+              <Page isRef="7" />
+              <Parent isRef="51" />
+              <Text>{Signers.PostName2}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text31>
+            <Image3 Ref="55" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.7,0.06,1.3,0.7</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Guid>7e908015c22849959b7fcdec624c4451</Guid>
+              <ImageURL>{Signers.SignatureUrl2}</ImageURL>
+              <Name>Image3</Name>
+              <Page isRef="7" />
+              <Parent isRef="51" />
+              <Stretch>True</Stretch>
+            </Image3>
+            <Image4 Ref="56" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.1,0.06,1.3,0.7</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Guid>3a77e39d77854248bb4cbfeb40883bb6</Guid>
+              <ImageURL>{Signers.SignatureUrl3}</ImageURL>
+              <Name>Image4</Name>
+              <Page isRef="7" />
+              <Parent isRef="51" />
+              <Stretch>True</Stretch>
+            </Image4>
+            <Image5 Ref="57" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.6,0.06,1.3,0.7</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Guid>dcf65ce62a034509b801c1820bf52653</Guid>
+              <ImageURL>{Signers.SignatureUrl4}</ImageURL>
+              <Name>Image5</Name>
+              <Page isRef="7" />
+              <Parent isRef="51" />
+              <Stretch>True</Stretch>
+            </Image5>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DockStyle>Top</DockStyle>
+          <Name>Panel8</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </Panel8>
+        <Panel9 Ref="58" type="Panel" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,6.44,7.67,1.1</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text34 Ref="59" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,7.67,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Top</DockStyle>
+              <Font>B Titr,10,Bold</Font>
+              <Guid>fcd671a875a14a5197607065cb1772f4</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text34</Name>
+              <Page isRef="7" />
+              <Parent isRef="58" />
+              <Text>رای کمیسیون موارد خاص دانشگاه</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text34>
+            <Text32 Ref="60" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.2,7.67,0.9</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Fill</DockStyle>
+              <Font>B Mitra,11,Bold</Font>
+              <Guid>66d8a99b23cc44f8bc80e84a0fbe701f</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>5,5,0,0</Margins>
+              <Name>Text32</Name>
+              <Page isRef="7" />
+              <Parent isRef="58" />
+              <Text>{RequestData.VoteText}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+            </Text32>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DockStyle>Top</DockStyle>
+          <Guid>b4c26826db9d422cb7b22edfea63827c</Guid>
+          <Name>Panel9</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </Panel9>
+        <Panel10 Ref="61" type="Panel" isKey="true">
+          <Border>Top, Left, Right;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <CanGrow>True</CanGrow>
+          <ClientRectangle>0,7.54,7.67,1.35</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text33 Ref="62" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,7.67,0.25</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Top</DockStyle>
+              <Font>B Titr,10,Bold</Font>
+              <Guid>3d780d63bce9426eb2e7c9671bd3c768</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,55,0,0</Margins>
+              <Name>Text33</Name>
+              <Page isRef="7" />
+              <Parent isRef="61" />
+              <Text>مشخصات اعضا کمیسیون موارد خاص</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text33>
+            <ColumnHeaderBand1 Ref="63" type="Stimulsoft.Report.Components.StiColumnHeaderBand" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.45,7.67,0.22</ClientRectangle>
+              <Components isList="true" count="3">
+                <Text35 Ref="64" type="Text" isKey="true">
+                  <Border>Right, Bottom;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>7.27,0,0.4,0.22</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Right</DockStyle>
+                  <Font>B Lotus,11,Bold</Font>
+                  <Guid>38310f3cb8a442c0bceb5ace1cbae7e6</Guid>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text35</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="63" />
+                  <Text>ردیف</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text35>
+                <Text37 Ref="65" type="Text" isKey="true">
+                  <Border>Right, Bottom;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>5.87,0,1.4,0.22</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Right</DockStyle>
+                  <Font>B Lotus,10,Bold</Font>
+                  <Guid>5be8f94558434cb8b98c99b76aeba364</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text37</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="63" />
+                  <Text>نام و نام خانوادگی</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text37>
+                <Text38 Ref="66" type="Text" isKey="true">
+                  <Border>Right, Bottom;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>3.87,0,2,0.22</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Right</DockStyle>
+                  <Font>B Lotus,11,Bold</Font>
+                  <Guid>0baca11e02a14600a5688cbe06cbcd96</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text38</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="63" />
+                  <Text>سمت</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text38>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <Guid>572637f152ec4b169b5c4a272c8eecc1</Guid>
+              <Name>ColumnHeaderBand1</Name>
+              <Page isRef="7" />
+              <Parent isRef="61" />
+            </ColumnHeaderBand1>
+            <DataBand2 Ref="67" type="DataBand" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <BusinessObjectGuid>09fd1353a67041bcbbac8df9986df98e</BusinessObjectGuid>
+              <ClientRectangle>0,1.07,7.67,0.22</ClientRectangle>
+              <ColumnDirection>DownThenAcross</ColumnDirection>
+              <Columns>2</Columns>
+              <Components isList="true" count="3">
+                <Text36 Ref="68" type="Text" isKey="true">
+                  <Border>Top, Right, Bottom;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>7.27,0,0.4,0.22</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Right</DockStyle>
+                  <Font>B Lotus,8</Font>
+                  <Guid>3923605714274d948b6abf1fecc72882</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text36</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="67" />
+                  <Text>{MemberDetails.RowNumber}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text36>
+                <Text39 Ref="69" type="Text" isKey="true">
+                  <Border>Top, Right, Bottom;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>5.87,0,1.4,0.22</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Right</DockStyle>
+                  <Font>B Lotus,7.5</Font>
+                  <Guid>51f32e17e23c47679245e0e4f69d0467</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text39</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="67" />
+                  <Text>{MemberDetails.FullName}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text39>
+                <Text40 Ref="70" type="Text" isKey="true">
+                  <Border>Top, Right, Bottom;Black;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <CanGrow>True</CanGrow>
+                  <ClientRectangle>3.87,0,2,0.22</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Right</DockStyle>
+                  <Font>B Lotus,8</Font>
+                  <GrowToHeight>True</GrowToHeight>
+                  <Guid>7efba004c62c431ca80ccd642f0cb6b4</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text40</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="67" />
+                  <Text>{MemberDetails.PostName}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text40>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <CountData>6</CountData>
+              <DataRelationName isNull="true" />
+              <Filters isList="true" count="0" />
+              <Guid>1c455abc367546499aa2247fb2161255</Guid>
+              <Name>DataBand2</Name>
+              <Page isRef="7" />
+              <Parent isRef="61" />
+              <RightToLeft>True</RightToLeft>
+              <Sort isList="true" count="0" />
+            </DataBand2>
+            <FooterBand2 Ref="71" type="FooterBand" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,1.69,7.67,1.14</ClientRectangle>
+              <Components isList="true" count="3">
+                <Text42 Ref="72" type="Text" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>2.1,0,5.57,1.14</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DockStyle>Right</DockStyle>
+                  <Font>B Lotus,10,Bold</Font>
+                  <Guid>86522729616c4518b89a57d982b89d43</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>5,10,0,0</Margins>
+                  <Name>Text42</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="71" />
+                  <Text>{RequestData.DescriptionVerdict}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+                  <Type>DataColumn</Type>
+                </Text42>
+                <Image6 Ref="73" type="Image" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0.37,0.07,1.3,0.69</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Guid>819b4d6740054f06b6378ae76c38dba7</Guid>
+                  <Name>Image6</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="71" />
+                  <Stretch>True</Stretch>
+                </Image6>
+                <Text44 Ref="74" type="Text" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,0.82,2.05,0.2</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Font>B Mitra,10,Bold</Font>
+                  <Guid>92d82ed143fd4f1ab2df814cc42e0d1c</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text44</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="71" />
+                  <Text>{Signers.PostName5}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Bottom</VertAlignment>
+                </Text44>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <Name>FooterBand2</Name>
+              <Page isRef="7" />
+              <Parent isRef="61" />
+            </FooterBand2>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DockStyle>Top</DockStyle>
+          <GrowToHeight>True</GrowToHeight>
+          <Guid>b0fde7e4d630435b89ac78a3462b9d21</Guid>
+          <Name>Panel10</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </Panel10>
+        <Panel12 Ref="75" type="Panel" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,10.29,7.67,0.9</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text41 Ref="76" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.1,0,5.57,0.9</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Right</DockStyle>
+              <Font>B Lotus,10,Bold</Font>
+              <Guid>e6c8b77baac7488794d44c5bc3cc67a2</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>5,10,0,0</Margins>
+              <Name>Text41</Name>
+              <Page isRef="7" />
+              <Parent isRef="75" />
+              <Text>{RequestData.RefertoText}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+            </Text41>
+            <Image7 Ref="77" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.3,0.02,1.4,0.64</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Guid>79a841c281b14c47bada5dcb2ea9034c</Guid>
+              <ImageURL>{Signers.SignatureUrl6}</ImageURL>
+              <Name>Image7</Name>
+              <Page isRef="7" />
+              <Parent isRef="75" />
+              <Stretch>True</Stretch>
+            </Image7>
+            <Text49 Ref="78" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.03,0.68,2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Mitra,10,Bold</Font>
+              <Guid>783a12785f874c8d881d26f1e326d021</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text49</Name>
+              <Page isRef="7" />
+              <Parent isRef="75" />
+              <Text>{Signers.PostName6}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text49>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DockStyle>Bottom</DockStyle>
+          <Guid>24dff10ef3284f939342e51f61aa2610</Guid>
+          <Name>Panel12</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </Panel12>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>29c724fe16004aecac89f5a5e002dcf1</Guid>
+      <Margins>0.3,0.3,0.3,0.2</Margins>
+      <Name>Page1</Name>
+      <PageHeight>11.69</PageHeight>
+      <PageWidth>8.27</PageWidth>
+      <PaperSize>A4</PaperSize>
+      <Report isRef="0" />
+      <Watermark Ref="79" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+        <Font>Arial,100</Font>
+        <TextBrush>[50:0:0:0]</TextBrush>
+      </Watermark>
+    </Page1>
+  </Pages>
+  <PrinterSettings Ref="80" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>12/22/2016 6:21:56 PM</ReportChanged>
+  <ReportCreated>7/24/2016 11:09:33 AM</ReportCreated>
+  <ReportFile>E:\ProjectsMyCompany\Commission\Comision.Ui\Reports\ReportCommission.mrt</ReportFile>
+  <ReportGuid>5f2c3b6eefef4cb2bc32b4296ff6a49e</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Inches</ReportUnit>
+  <ReportVersion>2014.3.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+		
+		public string DateToHijri(object date) 
+		{ 
+			if(date==null)
+				return "";
+			System.Globalization.PersianCalendar hijri = new System.Globalization.PersianCalendar(); 
+            
+			DateTime greg = (DateTime)date; 
+			int year = hijri.GetYear(greg); 
+			int month = hijri.GetMonth(greg); 
+			int day = hijri.GetDayOfMonth(greg); 
+			return year.ToString()+ "/" + month.ToString()+ "/"+ day.ToString() ;
+			return day.ToString() + "/" + month.ToString() + "/" + year.ToString(); 
+		} 
+    }
+
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

@@ -1,0 +1,140 @@
+﻿@using Comision.Helper.Filters
+@using Comision.Model.Enum
+@using Comision.Service.Model
+@model Comision.Model.Enum.RoleType
+@{
+    var listSigner = User.ListSigner().Split('#');
+}
+
+<!-- BEGIN HEADER INNER -->
+<div class="page-header-inner ">
+    <!-- BEGIN LOGO -->
+    <div class="page-logo">
+        <div>
+            <img src='' alt="logo" class="logo-default" />  @*@(string.IsNullOrEmpty(User.Logo()) ? "" : new AddressUrlFile(Path.Combine("~//")).Logo + User.Logo())*@
+        </div>
+        <div class="menu-toggler sidebar-toggler">
+            <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+        </div>
+    </div>
+    <!-- END LOGO -->
+    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+    <!-- END RESPONSIVE MENU TOGGLER -->
+    <!-- BEGIN PAGE ACTIONS -->
+    <!-- DOC: Remove "hide" class to enable the page header actions -->
+    <div class="page-actions">
+        <div class="btn-group">
+            @if (Model == RoleType.None)
+            {
+                if (Convert.ToBoolean(User.IsAdmin()))
+                {
+                    <a href="@Url.Action(MVC.Admin.Person.Index())" class="btn btn-circle btn-inline blue-dark">
+                        مدیریت
+                        <i class='fa fa-adn'></i>
+                    </a>
+                }
+            }
+            else
+            {
+                if (Convert.ToBoolean(User.IsPersonel()))
+                {
+                    if (listSigner.Any(a => a == "1"))
+                    {
+                        <a href="@Url.Action(MVC.Personel.Request.Index())" class="btn btn-circle btn-inline blue-dark">
+                            کارتابل کارشناس
+                            <i class='fa fa-building'></i>
+                        </a>
+                    }
+                    else if (listSigner.Any())
+                    {
+                        <a href="@Url.Action(MVC.Personel.Cartable.Index())" class="btn btn-circle btn-inline blue-dark">
+                            کارتابل
+                            <i class='fa fa-building'></i>
+                        </a>
+                    }
+                }
+            }
+        </div>
+    </div>
+    <!-- END PAGE ACTIONS -->
+    <!-- BEGIN PAGE TOP -->
+    <div class="page-top">
+        <!-- BEGIN HEADER SEARCH BOX -->
+        <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
+        <form class="search-form search-form-expanded" action="page_general_search_3.html" method="GET">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="جستجو..." name="query">
+                <span class="input-group-btn">
+                    <a href="javascript:;" class="btn submit">
+                        <i class="icon-magnifier"></i>
+                    </a>
+                </span>
+            </div>
+        </form>
+        <!-- END HEADER SEARCH BOX -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <div class="top-menu">
+            <ul class="nav navbar-nav pull-right">
+                <!-- END USER LOGIN DROPDOWN -->
+                <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                <li class="dropdown dropdown-user">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="true">
+                        <img alt="" class="img-circle" src="@(new AddressUrlFile(Path.Combine("~\\")).Image+(User.Avatar()??"prifilePicture.png"))">
+                        <span class="username username-hide-on-mobile"> @User.FullName() </span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    @*<ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a href="page_user_profile_1.html">
+                                    <i class="icon-user"></i> My Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="app_calendar.html">
+                                    <i class="icon-calendar"></i> My Calendar
+                                </a>
+                            </li>
+                            <li>
+                                <a href="app_inbox.html">
+                                    <i class="icon-envelope-open"></i> My Inbox
+                                    <span class="badge badge-danger"> 3 </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="app_todo_2.html">
+                                    <i class="icon-rocket"></i> My Tasks
+                                    <span class="badge badge-success"> 7 </span>
+                                </a>
+                            </li>
+                            <li class="divider"> </li>
+                            <li>
+                                @using (Html.BeginForm(MVC.Account.LogOff(), FormMethod.Post, new {id = "logoutForm"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">خروج<i class="icon-logout"></i></a>
+                                }
+                            </li>
+
+                        </ul>*@
+                </li>
+                <li class="dropdown dropdown-extended quick-sidebar-toggler">
+                    @using (Html.BeginForm(MVC.Account.LogOff(), FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="pull-right">
+                            <a href="javascript:document.getElementById('logoutForm').submit()">خروج<i class="icon-logout"></i></a>
+                        </div>
+                    }
+
+                </li>
+                <!-- END QUICK SIDEBAR TOGGLER -->
+            </ul>
+        </div>
+        <!-- END TOP NAVIGATION MENU -->
+    </div>
+    <!-- END PAGE TOP -->
+</div>
+<!-- END HEADER INNER -->

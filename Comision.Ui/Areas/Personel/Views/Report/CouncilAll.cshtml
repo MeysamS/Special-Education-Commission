@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "FollowUp";
+    Layout = "~/Areas/Personel/Views/Shared/_Layout.cshtml";
+    string searcvalue="";
+}
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">گزارشات</a>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>گزارش شورا</span>
+        </li>
+    </ul>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light portlet-fit ">
+            <div class="portlet-title">
+                @Html.Label("جستجو بر اساس", new { @class = "col-md-1 control-label" })
+                <div class="col-md-3">
+                    <div class="input-icon">
+                        @Html.DropDownList("SearchType", TempData["SearchType"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new {id = "cmbSearchType", @class = "form-control"})
+                    </div>
+                </div>
+                <div class="caption col-md-4" style="padding-top: 0">
+                    <div class="search-bar">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input id="txtCouncilNumber" type="text" class="form-control" placeholder="بر اساس نوع جستجو فیلد مورد نظر را پر کنید ...">
+                                    <span class="input-group-btn">
+                                        <button id="btnSearchByCouncilNumber" class="btn blue uppercase bold" type="button"><i class="fa fa-search font-green"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="actions">
+                        <a href="javascript:void(0)" onclick="PrintAll()" class="btn btn-circle btn-inline yellow-crusta">
+                            چاپ گزارش کلی
+                            <i class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="gridCouncilAll" class="portlet-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            loadGridCouncilAll(-1);
+        });
+
+        $('#btnSearchByCouncilNumber').click(function () {
+            var searcvalue= $('#txtCouncilNumber').val();
+            var searchTypeid = $('#cmbSearchType').val();
+            if (searcvalue === "" || searchTypeid==="" ) {
+                mynotification('‍پرونده مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            loadGridCouncilAll(searcvalue, searchTypeid);
+        });
+
+        function loadGridCouncilAll(searcvalue, searchTypeid) {
+            $('#gridCouncilAll').datagrid(
+            {
+                idField: 'Id',
+                loadMsg: 'شکیبا باشید...',
+                rownumbers: true,
+                height: '400',
+                singleSelect: true,
+                fitColumns: true,
+                queryParams: { searcvalue: searcvalue, searchTypeid: searchTypeid},// پارامتر داخل اکشن کنترل مقدار دهی می شود
+                url: '@Url.Action(MVC.Personel.Report.GetAllCouncil())',
+                columns: [
+                    [
+                        { field: 'Id', title: 'Id', hidden: 'hidden' },
+                        { field: 'NameFamily', title: 'نام و نام خانوادگی', width: 100 },
+                        { field: 'StudentNumber', title: 'شماره دانشجویی', width: 90 },
+                        { field: 'ProblemText', title: 'نوع درخواست', width: 100 },
+                        { field: 'VoteText', title: 'نظر شورا', width: 100 },
+                        { field: 'VoteStatus', title: 'وضغیت رای', width: 70 },
+                        {
+                            field: 'Action', title: 'چاپ طرح در شورا', width: 100, align: 'center',
+                            formatter: function (value, rows, index) {
+                                return '<a href="javascript:void(0)"  onclick="PrintCouncil(' + index + ')" class="fa fa-print"></a>';
+                            }
+                        }
+                    ]
+                ]
+            });
+        }
+
+        function PrintAll() {
+
+          
+           var  searcvalue = $('#txtCouncilNumber').val();
+            var searchtype = $('#cmbSearchType').val();
+            if (searcvalue === "") {
+                mynotification('درخواست مورد نظر معتبر نمی باشد!', 'ruby');
+                return $(this).form('validate');
+            }
+            var url = '@Url.Action(MVC.Personel.Report.PrintCouncilAll())?searcvalue=' + searcvalue + '&searchtype='+searchtype;
+            window.location.href = url;
+        }
+
+        function PrintCouncil(rowIndex) {
+            $('#gridCouncilAll').datagrid('selectRow', rowIndex);
+            var selected = $('#gridCouncilAll').datalist('getSelected');
+            if (selected.Id <= 0) {
+                mynotification('پرونده نامعتبر می باشد!', 'ruby');
+                return;
+            }
+            var url = '@Url.Action(MVC.Personel.Report.PrintCouncil())?councilId= ' + selected.Id;
+            window.location.href = url;
+        }
+    </script>
+}
+
+
+
+

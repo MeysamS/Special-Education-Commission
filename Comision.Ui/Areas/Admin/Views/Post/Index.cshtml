@@ -1,0 +1,210 @@
+﻿@model Comision.Service.Model.PostModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <span>مدیریت سمت</span>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> سمت های سیستم</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm(MVC.Admin.Post.AddOrUpdate(), FormMethod.Post, new { id = "addPostForm", @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                {
+                    @Html.TextBoxFor(x => x.Id, new { hidden = "hidden" })
+                    <div class="form-body">
+                        <div class="form-group">
+                            @Html.LabelFor(f => f.Name, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", style = "max-width: none" })
+                                    @*<input class="form-control" placeholder="">*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(f => f.PostType, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    @Html.DropDownListFor(m => m.PostType, ViewData["EPostType"] as IEnumerable<SelectListItem>, "---- انتخاب---- ", new { id = "ComboPostType", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" onclick="savePost();" class="btn blue">ذخیره</button>
+                            <button type="button" onclick="NewPost();" class="btn default">انصراف</button>
+                        </div>
+                        <h3 class="form-section">سمت های ثبت شده</h3>
+
+                    </div>
+
+                }
+                <!-- END FORM-->
+                <div id="dgPost">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+
+        //$(document).ready(function () {
+        //    NewPost();
+        //});
+
+        $('#dgPost').datagrid(
+            {
+                idField: 'Id',
+                title: 'سمت های ثبت شده',
+                loadMsg: 'شکیبا باشید...',
+                rownumbers: true,
+                singleSelect: true,
+                //sortName: 'Name',
+                sortOrder: 'asc',
+                pagination: true,
+                pagePosition: 'bottom',
+                striped: 'true',
+                height: 400,
+                fitColumns: true,
+                pageSize: 10,
+                url: '@Url.Action(MVC.Admin.Post.GetPost())',
+                onError: function (index, row) {
+                    $.messager.alert('پیام', row.Msg);
+                },
+                columns: [
+                    [
+                        { field: 'Name', title: 'عنوان سمت', width: 300 },
+                        { field: 'PostType', title: 'سطح سمت', width: 300 },
+                        { field: 'PostTypeId', title: 'ایدی', width: 300, hidden: true },
+                        {
+                            field: 'Action', title: 'عملیات', width: 100, align: 'center',
+                            formatter: function (value, rows, index) {
+                                return '<a href="javascript:void(0)"  onclick="deletePost(' + rows.Id + ')">' +
+                                    '<img class="delete"  src="/content/jquery-easyui-1.4.2/themes/icons/cancel.png"/></a>&nbsp&nbsp&nbsp' +
+                                    '<a  href="javascript:void(0)" onclick="editPost(' + index + ')">' +
+                                    '<img src="/content/jquery-easyui-1.4.2/themes/icons/pencil.png" title="ویرایش"/></a>&nbsp&nbsp&nbsp';
+                            }
+                        }
+                    ]
+                ]
+            });
+
+        var pager = $('#dgPost').datagrid('getPager');
+        $(pager).pagination({
+            pageSize: 10,
+            showPageList: true,
+            pageList: [10, 20, 50],
+            beforePageText: 'صفحه',
+            afterPageText: 'از {pages}',
+            displayMsg: 'نمایش اطلاعات  {from} تا {to} از {total}'
+        });
+
+        function NewPost() {
+            $('#Name').val("");
+            $('#Id').val(null);
+            //$('#ComboPostType').val("0");
+        }
+        function editPost(rowIndex) {
+            //$('#li2').removeClass("active");
+            //$('#li1').addClass("active");
+            //$('#tab2').removeClass("in active");
+            //$('#tab1').addClass("in active");
+
+            $("#dgPost").datagrid("selectRow", rowIndex);
+            var data = $("#dgPost").datagrid("getSelected");
+            $('#Id').val(data.Id);
+            $('#Name').val(data.Name);
+            $('#ComboPostType').val(data.PostTypeId);
+        }
+        function savePost() {
+            if ($('#Name').val() === "") {
+                mynotification("لطفا عنوان سمت را انتخاب کنید!", 'ruby');
+                return;
+            }
+            if ($('#ComboPostType').val() === "") {
+                mynotification("لطفا سطح سمت را انتخاب کنید!", 'ruby');
+                return;
+            }
+            if ($('#addPostForm').valid()) {
+                $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                $('#addPostForm').ajaxSubmit({
+                    cashe: false,
+                    url: '@Url.Action(MVC.Admin.Post.AddOrUpdate(), "http")',
+                    type: 'Post',
+                    dataType: 'json',
+                    data: $('#addPostForm').serialize(),
+                    success: function (result) {
+                        $.unblockUI();
+                        if (!result.isError) {
+                            $('#dgPost').datagrid('reload');
+                            NewPost();
+                            mynotification(result.Msg, 'lime');
+                        }
+                        else
+                            mynotification(result.Msg, 'ruby');
+                    },
+                    error: function (xhr, status) {
+                        $.unblockUI();
+                        $.messager.show({ title: 'پیام سیستم', msg: xhr.responseText(), showType: 'show' });
+                    }
+                });
+            } else {
+                $.unblockUI();
+                return $(this).form('validate');
+            }
+        }
+
+        function deletePost(id) {
+            if (id == null) {
+                $.messager.show({ title: 'پیام سیستم', msg: "خطا در حذف رکورد مورد نظر!", showType: 'show' });
+                return;
+            }
+            $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+                if (r) {
+                    $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                    $.post('@Url.Action(MVC.Admin.Post.Delete(), "http")', { id: id }, function (result) {
+                        $.unblockUI();
+                        if (!result.isError) {
+                            $('#dgPost').datagrid('reload');
+                            mynotification(result.Msg, 'lime');
+                        }
+                        else
+                            mynotification(result.Msg, 'ruby');
+                    }, 'json');
+                }
+            });
+        }
+
+    </script>
+}
+
+
+
+
+
+
+
+

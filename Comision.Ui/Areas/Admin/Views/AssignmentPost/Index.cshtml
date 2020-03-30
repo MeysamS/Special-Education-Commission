@@ -1,0 +1,255 @@
+﻿@model long?
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <span>انتساب سمت</span>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>نمایش</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> پست های شخص</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">انتخاب شخص</label>
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    <div id="cmbPersons"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">انتخاب سمت</label>
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    <div id="cmbPosts"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">انتخاب ساختار</label>
+                            <div class="col-md-4">
+                                <div class="input-icon">
+                                    <div id="cmbSubStructures"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn blue" onclick="savePostofPerson();">ذخیره</button>
+                            <button type="button" class="btn default" onclick="ClearCombobox();">انصراف</button>
+                        </div>
+                        <h3 class="form-section">لیست سمت های مربوط به شخص انتخاب شده</h3>
+                        <div id="dgAssignPosts">
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryunobtrusive")
+    @Scripts.Render("~/bundles/jqueryAjaxForm")
+    <script>
+        $('#cmbPersons').combogrid({
+            fit: true,
+            fitColumns: true,
+            required: true,
+            panelWidth: 450,
+            valueField: 'PersonId',
+            textField: 'NameFamili',
+            url: '@Url.Action(MVC.Admin.AssignmentPost.GetListPersonel())',
+            onLoadSuccess: function (data) {
+                if ('@Model.HasValue' === 'True') {
+                    var index = -1;
+                    for (var i = 0; i < data.rows.length; ++i) {
+                        if (data.rows[i]['PersonId'].toString() === '@Model') {
+                            index = i;
+                        }
+                    }
+                    var gridPerson = $('#cmbPersons').combogrid('grid');
+                    gridPerson.datagrid("selectRow", index);
+                }
+                //LoadPostofPerson(row.PersonId);
+            },
+            onSelect: function (index, row) {
+                LoadPostofPerson(row.PersonId);
+            },
+            columns: [
+                [
+                    { field: 'PersonId', hidden: 'hidden' },
+                    { field: 'NameFamili', title: 'نام و نام خانوادگی', width: 150 },
+                    { field: 'NationalCode', title: 'شماره ملی', width: 100 },
+                    { field: 'EmployeeNumber', title: 'شماره استخدامی', width: 100 },
+                    { field: 'DateOfEmployeement', hidden: 'hidden', title: 'تاریخ استخدام', width: 100 }
+                ]
+            ]
+        });
+
+        $('#cmbPosts').combogrid({
+            fit: true,
+            fitColumns: true,
+            required: true,
+            url: '@Url.Action(MVC.Admin.AssignmentPost.GetListPost())',
+            valueField: 'Id',
+            textField: 'Name',
+            columns: [
+                [
+                    { field: 'Name', width: 400 }
+                ]
+            ],
+            onLoadSuccess: function (data) {
+                LoadSubStructures(-1, 0);
+            },
+            onSelect: function (index, row) {
+                LoadSubStructures(row.Id, row.PostType);
+            }
+        });
+
+        function LoadSubStructures(postId, postType) {
+            $('#cmbSubStructures').combobox({
+                fit: true,
+                fitColumns: true,
+                required: true,
+                queryParams: { postId: postId, postType: postType },
+                url: '@Url.Action(MVC.Admin.AssignmentPost.GetListStructure())',
+                valueField: 'Id',
+                textField: 'Name'
+                //formatter: function (row) {
+                //    var strpath = "/content/Images/Colors/" + row.Image;
+                //    return '<img src="' + strpath + '"style="width:30px;height:30px"/> <lable style="margin-right:20px;">' + row.text + '</lable>';
+                //}
+            });
+        }
+
+        function LoadPostofPerson(personId) {
+            $('#dgAssignPosts').datagrid({
+                fit: true,
+                idField: 'Id',
+                title: 'لیست سمت های شخص',
+                loadMsg: 'شکیبا باشید...',
+                rownumbers: true,
+                height: '480',
+                singleSelect: true,
+                fitColumns: true,
+                striped: 'true',
+                queryParams: { personId: personId },
+                url: '@Url.Action(MVC.Admin.AssignmentPost.GetListPostofPersonel())',
+                onSuccess: function (index, row) {
+
+                },
+                onError: function (index, row) {
+
+                    $(this).datagrid('cancelEdit', index);
+                    $(this).datagrid('reload');
+                },
+                columns: [
+                    [
+                        { field: 'PersonId', hidden: 'hidden' },
+                        { field: 'PostId', hidden: 'hidden' },
+                        { field: 'PostName', title: 'سمت', width: 300 },
+                        { field: 'LevelName', title: 'سمت', width: 300 },
+                        {
+                            field: 'Action',
+                            title: 'عملیات',
+                            width: 100,
+                            align: 'center',
+                            formatter: function (value, rows, index) {
+                                return '<a href="javascript:void(0)"  onclick="deletePostPerson(' + rows.PersonId + ',' + rows.PostId + ',' + rows.PostTypeId + ',' + rows.LevelId + ')">' +
+                                    '<img class="delete"  src="/content/jquery-easyui-1.4.2/themes/icons/cancel.png"/></a>&nbsp&nbsp&nbsp';
+                            }
+                        }
+                    ]
+                ]
+            });
+        }
+
+        function ClearCombobox() {
+
+        }
+
+        function savePostofPerson() {
+            var gridPerson = $('#cmbPersons').combogrid('grid');
+            var cmbPerson = gridPerson.datagrid('getSelected');
+            var gridPost = $('#cmbPosts').combogrid('grid');
+            var cmbPost = gridPost.datagrid('getSelected');
+            var cmbSubStructure = Number($('#cmbSubStructures').combobox('getValue'));
+            if (cmbPerson == null || cmbPost == null || cmbSubStructure<=0) {
+                mynotification("لطفا آیتم های ورودی را انتخاب کنید!", 'ruby');
+                return;
+            }
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.AssignmentPost.AddOrUpdateAssignmentPost(), "http")',
+                type: 'post',
+                datatype: 'json',
+                data: { PersonId: cmbPerson.PersonId, PostId: cmbPost.Id, PostType: cmbPost.PostType, LevelId: cmbSubStructure },
+                success: function (result) {
+                    $.unblockUI();
+                    if (result.IsError) {
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        $('#dgAssignPosts').datagrid('reload');
+                        //$('#cmbPersons').datagrid('selectRow', cmbPerson.index);
+                        mynotification(result.Message, 'lime');
+                    }
+                },
+                error: function (result) {
+                    $.unblockUI();
+                    mynotification("خطا در انتساب سمت به شخص", 'lime');
+                    xhr.responseText();
+                }
+            });
+        }
+
+        function deletePostPerson(personId, postId, postTypeId,levelId) {
+            if (personId == null || postId == null, postTypeId == null || levelId == null) {
+                mynotification("خطا در حذف رکورد مورد نظر!", 'ruby');
+                return;
+            }
+            $.messager.confirm('confirm', 'حذف شود؟', function (r) {
+                if (r) {
+                    $.blockUI({ boxed: true, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+                    $.post('@Url.Action(MVC.Admin.AssignmentPost.DeleteAssignmentPost(), "http")', { personId: personId, postId: postId, postTypeId: postTypeId, levelId: levelId }, function (result) {
+                        $.unblockUI();
+                        if (!result.isError) {
+                            $('#dgAssignPosts').datagrid('reload');
+                            mynotification(result.Message, 'lime');
+                        } else {
+                            mynotification(result.Message, 'ruby');
+                        }
+                    }, 'json');
+                }
+            });
+        }
+    </script>
+}
+
+
+
+
+

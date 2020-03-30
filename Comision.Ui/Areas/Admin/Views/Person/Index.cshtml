@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <span> کاربران</span>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>لیست کاربران</span>
+        </li>
+    </ul>  
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="slider"></div>
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase">لیست کاربران</span>
+                </div>
+                <div class="actions">
+                    <div class="portlet-input input-inline">
+                        @Html.DropDownList("UserType", TempData["UserType"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new { id = "cmbUserType", @class = "form-control", onchange = "filter(this.value)" })
+
+                        @*<select onchange="filter(this.value)" class="form-control">
+                            <option value="0">پرسنل</option>
+                            <option value="1">دانشجو</option>
+                            <option value="2">همه کاربران</option>
+                        </select>*@
+                    </div>
+                </div>
+            
+            </div>
+            <div class="portlet-body form">              
+                <div class="easyui-panel" title="لیست کاربران">
+                    <div id="listperson">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script>
+        var state = false;
+
+        getUsers();
+
+        function getUsers(userType) {
+            $('#listperson').datalist({
+                loadMsg: 'شکیبا باشید...',
+                height: 'auto',
+                url: '@Url.Action(MVC.Admin.Person.GetPersons())',
+                idField: 'id',
+                checkbox: true,
+                lines: true,
+                pagination: true,
+                pagePosition: 'bottom',
+                striped: 'true',
+                pageSize: 10,
+                queryParams: { userType: userType },
+                textFormatter: function (value, row, index) {
+                    var result = "<div style='float:right;'>" +
+                        "<img style='width:50px;height:50px; border-radius: 50%;margin-left:5px;' src='/Content/Images/Avatars/" + (row.avatar == null ? "profilepicture.png" : row.avatar) + "'/></div>" +
+                        "<div><div>" + row.fullName + "</div>" +
+                        //(row.personelNumber!=null ?"<div class='col-md-3'> شماره استخدامی : " + row.personelNumber + "</div>" :"") +
+                        //(row.studentNumber != null ? "<div class='col-md-3'> شماره دانشجویی : " + row.studentNumber + "</div>" : "") +
+                        "</div>"
+                        + "<div>" + row.email + "</div>";
+
+                    if (row.postName !== "")
+                        result += "<div>سمت : " + row.postName + "</div>";
+                    if (row.roleName !== "")
+                        result += "<div>نقش : " + row.roleName + "</div>";
+                    if (row.mandateName !== "")
+                        result += "<div>اختیارات : " + row.mandateName + "</div>";
+
+                    result += ' <div class="pull-right"><a class="btn btn-default btn-sm" href="@Url.Action(MVC.Admin.AssignmentPostUser.Index())?userId=' + row.id + '">اختیارات</a></div>';
+                    result += ' <div class="pull-right"><a class="btn btn-default btn-sm" href="@Url.Action(MVC.Admin.AssignmentRole.Index())?userId=' + row.id + '">مجوز ها</a></div>';
+                    result += ' <div class="pull-right"><a class="btn btn-default btn-sm" href="@Url.Action(MVC.Admin.AssignmentPost.Index())?personId=' + row.id + '"> سمت ها</a></div>';
+                    result += ' <div class="pull-right"><a class="btn btn-default btn-sm" href="@Url.Action(MVC.Admin.Profile.Index())?personId=' + row.id + '">پروفایل</a></div>';
+                    return result;
+                }
+            });
+            var pager = $('#listperson').datalist('getPager');
+            $(pager).pagination({
+                pageSize: 10,
+                showPageList: true,
+                pageList: [10, 20, 50, 100],
+                beforePageText: 'صفحه',
+                afterPageText: 'از {pages}',
+                displayMsg: 'نمایش اطلاعات  {from} تا {to} از {total}'
+            });
+        }
+      
+        function filter(userType) {
+            getUsers(userType);
+        }
+      
+    </script>
+}
+
+
+
+

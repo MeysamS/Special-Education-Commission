@@ -1,0 +1,196 @@
+﻿@model Comision.Service.Model.StructureTreeModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <span>مدیریت دپارتمان</span>
+            <i class="fa fa-angle-left"></i>
+        </li>
+        <li>
+            <span>دپارتمان</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> دپارتمان دانشگاه</span>
+                </div>
+                <div class="actions">
+                    <button type="button" class="" onclick="del()">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <button type="button" id="btnedit">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("Create", "Structure", FormMethod.Post, new { id = "structForm", @class = "form-horizontal" }))
+                {
+                    @Html.HiddenFor(x => x.Id);
+                    @Html.HiddenFor(x => x.OrgId);
+                    @Html.TextBoxFor(model => model.ParentId, new { hidden = "hidden" })
+                    @Html.TextBoxFor(model => model.StructureType, new { hidden = "hidden" })                    
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">عنوان</label>
+                            <div class="col-md-4">
+                                <div class="input-icon">                                    
+                                    @Html.TextBoxFor(x => x.Text, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(x => x.Text ,"", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" value="ذخیره" class="btn blue" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+
+                <h3 class="form-section">نمایش ساختار</h3>
+                <div id="DepartmanTree">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+   
+    <script>
+        var selectedNodeId;
+        $('#DepartmanTree').tree({
+            title: 'دپارتمان های دانشگاه',
+            url: '@Url.Action(MVC.Admin.Structure.GetStructures())',
+            required: true,
+            loadMsg: 'شکیبا باشید...',
+            lines: true,
+            height: '480',
+            fit: true,
+            onLoadSuccess: function() {
+                var node = $('#DepartmanTree').tree('find', selectedNodeId);
+                if (node) {
+                    $('#DepartmanTree').tree('select', node.target);
+                }
+            },
+            onSelect: function(node) {
+                $('#Text').val('');
+                selectedNodeId = node.id;
+                $('#ParentId').val(selectedNodeId);
+                $('#StructureType').val(node.structureType);
+            }
+        });
+
+        $(":submit").click(function(e) {
+            e.preventDefault();
+            $.validator.unobtrusive.parse("#structForm");
+            if ($('#structForm').valid()) {
+                if ($('#Id').val() === "")
+                    add();
+                else
+                    update();
+            } else {
+                return $(this).form('validate');
+            }
+        });
+
+        function add() {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });            
+            $('#structForm').ajaxSubmit({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.Structure.Create(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: $('#structForm').serialize(),
+                success: function(result) {
+                    $.unblockUI();
+                    if (result.IsError) {
+                        mynotification(result.Message, 'ruby');                        
+                    } else {
+                        $('#Text').val('');
+                        $('#DepartmanTree').tree('reload');
+                        mynotification(result.Message, 'lime');                
+                    }
+                },
+                error: function(xhr, status) {
+                    xhr.responseText();
+                }
+            });
+        }
+
+        $('#btnedit').click(function() {
+            var selectedtree = $('#DepartmanTree').tree('getSelected');
+            $('#Text').val(selectedtree.text);
+            $('#Id').val(selectedtree.id);
+            $('#OrgId').val(selectedtree.orgId);
+        });
+
+        function update() {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            $('#structForm').ajaxSubmit({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.Structure.EditName(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: $('#structForm').serialize(),
+                success: function(result) {
+                    $.unblockUI();
+                    if (result.IsError) {
+                        mynotification(result.Message, 'ruby');                        
+                    } else {
+                        $('#Text').val('');
+                        $('#Id').val('');
+                        $('#OrgId').val('');
+                        $('#DepartmanTree').tree('reload');
+                        mynotification(result.Message, 'lime');
+                    }
+                },
+                error: function(xhr, status) {
+                    xhr.responseText();
+                }
+            });
+        }
+
+        function del() {
+            $.blockUI({ boxed: !0, message: '<h4 style="font-family:tahoma;"><img src="/content/assets/global/img/loading-spinner-grey.gif" /> شکیبا باشید...</h4>' });
+            var selectedtree = $('#DepartmanTree').tree('getSelected');
+            var data = { id: selectedtree.id, orgId: selectedtree.orgId, structureType: selectedtree.structureType }
+            $.ajax({
+                cashe: false,
+                url: '@Url.Action(MVC.Admin.Structure.Delete(), "http")',
+                type: 'Post',
+                dataType: 'json',
+                data: data,
+                success: function(result) {
+                    if (result.IsError) {
+                        $.unblockUI();
+                        mynotification(result.Message, 'ruby');
+                    } else {
+                        $.unblockUI();
+                        $('#Text').val('');
+                        $('#DepartmanTree').tree('reload');
+                        mynotification(result.Message, 'lime');
+                    }
+                },
+                error: function (xhr, status) {
+                    $.unblockUI();
+                    xhr.responseText();
+                }
+            });
+        }
+
+    </script>
+}
+

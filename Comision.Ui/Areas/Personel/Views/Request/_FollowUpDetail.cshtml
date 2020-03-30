@@ -1,0 +1,40 @@
+﻿@using Comision.Utility
+@model IEnumerable<Comision.Model.Domain.Cartable>
+@{
+    
+}
+@*<div class="note note-success">
+    <h4 class="block">شماره پرونده : @Model?.FirstOrDefault().Request.Commission.CommissionNumber</h4>
+    <p> تاریخ ایجاد: @Model?.FirstOrDefault().Request.Commission.CreatedDate.ToPeString()</p>
+</div>*@
+
+<br />
+
+@foreach (var item in Model)
+{
+ 
+    <div class="timeline-item">
+        <div class="timeline-badge">
+            <img class="timeline-badge-userpic" src="@Url.Content("~/Content/Images/Avatars/"+item.Person.Profile.Avatar)">
+        </div>
+        <div class="timeline-body">
+            <div class="timeline-body-arrow"> </div>
+            <div class="timeline-body-head">
+                <div class="timeline-body-head-caption">
+
+                    <a href="javascript:;" style="font-size: 12px" class="timeline-body-title font-blue-madison">@item.Person.Profile.Name @item.Person.Profile.Family</a>
+                         <span>پست سازمانی : @item.Post.Name</span>
+                    <span class="timeline-body-time font-grey-cascade">تاریخ رویداد : @item.CreatedDate.ToPeString()</span>
+                    <span class="timeline-body-time font-grey-cascade">تاریخ درخواست : @item.Request.CreatedDate.ToPeString()</span>
+                </div>
+ 
+            </div>
+            <div class="timeline-body-content">
+                <span class="font-grey-cascade">
+                    @item.Description
+                </span>
+            </div>
+        </div>
+    </div>
+}
+

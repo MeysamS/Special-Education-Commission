@@ -1,0 +1,59 @@
+﻿@model Comision.Service.Model.PersonelModel
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(x => x.EmployeeNumber, new {@class = "col-md-4 control-label"})
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        @Html.TextBoxFor(m => m.EmployeeNumber, new {@class = "form-control", style = "max-width: none"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Grade, new {@class = "col-md-4 control-label"})
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        @Html.DropDownListFor(m => m.Grade, TempData["Grade"] as IEnumerable<SelectListItem>, "-- - انتخاب-- - ", new {id = "cmbPersonelGrade", @class = "form-control"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.DateOfEmployeement, new {@class = "col-md-4 control-label"})
+                <div class="col-md-8">
+                    <div class="input-icon">
+                        @Html.EditorFor(f => f.DateOfEmployeement, new {id = "DateOfEmployeement", @class = "form-control"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Active, new {@class = "col-md-4 control-label"})
+                <div class="col-md-2">
+                    <div class="input-icon">
+                        @Html.EditorFor(f => f.Active, new {@class = "form-control", style = "max-width: none;height:100px"})
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-md-4 control-label">تصویر امضا(حداکثر 60kb)</label>
+                <div class="col-md-8">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                            <img id="imgSignature" src="~/Content/Images/Signature/@Model.Signature" class="header-avatar" />
+                        </div>
+                        <div id="divImageSignature" class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+
+</script>
